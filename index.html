@@ -7,6 +7,9 @@
   <link rel="preconnect" href="https://drive.google.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Frontend-first preloader logo: discovered before fonts/scripts -->
+  <link rel="preload" as="image" href="https://dummyimage.com/320x100/0f7a4d/ffffff.png&text=GREEN+INDIA" fetchpriority="high">
+  <script>window.__FRONTEND_PRELOADER_LOGO__="https://dummyimage.com/320x100/0f7a4d/ffffff.png&text=GREEN+INDIA";</script>
   <meta name="description" id="metaDescription" content="Green India Safety Institute">
   <meta name="keywords" id="metaKeywords" content="Safety Institute, training, courses">
   <meta property="og:title" id="ogTitle" content="Green India Safety Institute">
@@ -60,6 +63,37 @@
     .feature-card,.course-card,.faculty-card,.notice-card{border:1px solid var(--border);border-radius:22px;background:#fff;overflow:hidden;box-shadow:0 10px 35px rgba(0,0,0,.04)} .feature-card{padding:28px} .feature-icon{width:52px;height:52px;border-radius:15px;background:#e9f7f0;color:var(--primary);display:grid;place-items:center;font-size:21px} .feature-title{font-family:Poppins,sans-serif;color:var(--secondary)} .feature-description{color:var(--muted)}
     .course-image-wrap,.faculty-image-wrap{position:relative;background:var(--light)} .course-image,.faculty-image{width:100%;height:220px;object-fit:cover} .course-icon{position:absolute;bottom:-20px;left:20px;width:48px;height:48px;border-radius:14px;background:var(--accent);display:grid;place-items:center} .course-body,.faculty-body{padding:30px 22px 22px} .course-name,.faculty-name{font-family:Poppins,sans-serif;color:var(--secondary);margin:0 0 8px} .course-description{color:var(--muted)} .course-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted)} .course-footer{display:flex;justify-content:space-between;align-items:center;margin-top:18px} .course-fee{font-weight:800;color:var(--primary)} .course-btn{width:38px;height:38px;border-radius:11px;background:var(--primary);color:#fff;display:grid;place-items:center}
     .faculty-image{height:280px} .faculty-designation{color:var(--primary);font-weight:700;font-size:14px} .faculty-exp{font-size:13px;color:var(--muted);margin-top:7px} .faculty-social{display:flex;gap:8px;margin-top:15px} .faculty-social a,.social-link{width:36px;height:36px;border-radius:10px;background:var(--light);display:grid;place-items:center;color:var(--primary)}
+    /* =====================================================
+       STAFF IMAGE SLIDER
+    ====================================================== */
+    .staff-section{background:linear-gradient(180deg,#f7fbf9 0%,#ffffff 100%);overflow:hidden}
+    .staff-slider-shell{position:relative;display:flex;align-items:center;gap:18px}
+    .staff-slider{overflow:hidden;width:100%;padding:18px 4px 30px}
+    .staff-track{display:flex;transition:transform .65s cubic-bezier(.2,.8,.2,1);will-change:transform}
+    .staff-slide{min-width:100%;display:grid;grid-template-columns:minmax(280px,460px) 1fr;gap:42px;align-items:center;padding:10px 4px}
+    .staff-photo-wrap{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:4/4.5;background:var(--light);box-shadow:var(--shadow-hover);transform:translateZ(0)}
+    .staff-photo-wrap:before{content:"";position:absolute;inset:12px;border:1px solid rgba(255,255,255,.55);border-radius:23px;z-index:2;pointer-events:none}
+    .staff-photo{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.2,1);filter:saturate(1.04)}
+    .staff-slide:hover .staff-photo{transform:scale(1.055)}
+    .staff-photo-glow{position:absolute;width:170px;height:170px;border-radius:50%;right:-50px;bottom:-50px;background:rgba(244,197,66,.45);filter:blur(12px);z-index:1}
+    .staff-content{padding:10px 5px}
+    .staff-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;background:rgba(15,122,77,.07);border:1px solid rgba(15,122,77,.12);color:var(--primary);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .staff-name{font-size:clamp(30px,4vw,52px);line-height:1.06;letter-spacing:-.045em;color:var(--secondary);margin:18px 0 10px}
+    .staff-designation{font-size:18px;color:var(--primary);font-weight:800;margin-bottom:10px}
+    .staff-meta{display:flex;flex-wrap:wrap;gap:9px;margin:15px 0 20px}
+    .staff-meta span{padding:8px 11px;border-radius:11px;background:#fff;border:1px solid var(--border);box-shadow:0 8px 24px rgba(7,48,34,.05);font-size:12px;color:var(--text);font-weight:700}
+    .staff-bio{color:var(--muted);font-size:16px;line-height:1.85;max-width:650px}
+    .staff-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+    .staff-action{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border-radius:12px;background:var(--secondary);color:#fff;font-size:13px;font-weight:800}
+    .staff-action.alt{background:#e9f7f0;color:var(--primary)}
+    .staff-nav{flex:0 0 auto;width:50px;height:50px;border-radius:50%;border:1px solid var(--border);background:#fff;color:var(--secondary);box-shadow:var(--shadow-soft);cursor:pointer;transition:.3s;z-index:4}
+    .staff-nav:hover{background:var(--primary);color:#fff;transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+    .staff-dots{display:flex;justify-content:center;gap:8px;margin-top:3px}
+    .staff-dot{width:9px;height:9px;border:0;border-radius:50%;padding:0;background:#cbd9d2;cursor:pointer;transition:.3s}
+    .staff-dot.active{width:28px;border-radius:99px;background:var(--primary)}
+    @media(max-width:900px){.staff-slide{grid-template-columns:1fr;gap:25px}.staff-photo-wrap{max-width:500px;margin:auto;width:100%}.staff-content{text-align:center}.staff-meta,.staff-actions{justify-content:center}.staff-bio{margin-left:auto;margin-right:auto}.staff-nav{width:44px;height:44px}.staff-slider-shell{gap:7px}}
+    @media(max-width:600px){.staff-slider{padding:10px 0 25px}.staff-slide{padding:5px 0}.staff-name{font-size:32px}.staff-designation{font-size:16px}.staff-photo-wrap{aspect-ratio:1/1.12}.staff-nav{width:40px;height:40px}.staff-bio{font-size:14px}}
+
     .gallery-filters{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:25px} .gallery-filter{border:1px solid var(--border);background:#fff;padding:9px 15px;border-radius:999px;cursor:pointer} .gallery-filter.active{background:var(--primary);color:#fff} .gallery-grid{grid-template-columns:repeat(4,1fr)} .gallery-item{position:relative;overflow:hidden;border-radius:18px;aspect-ratio:1/1;background:#e8eeeb;cursor:pointer} .gallery-item img{width:100%;height:100%;object-fit:cover;transition:.35s} .gallery-item:hover img{transform:scale(1.06)}
     .testimonial-slider{overflow:hidden} .testimonial-card{padding:30px;border:1px solid var(--border);border-radius:22px;background:#fff;min-height:220px} .testimonial-stars{color:var(--accent)} .testimonial-text{color:var(--muted);font-size:16px} .testimonial-person{display:flex;align-items:center;gap:12px} .testimonial-person img{width:48px;height:48px;border-radius:50%;object-fit:cover;background:var(--light)}
     .notice-card{padding:24px} .notice-date{font-size:12px;color:var(--primary);font-weight:800} .notice-title{font-family:Poppins,sans-serif;color:var(--secondary)} .notice-description{color:var(--muted)}
@@ -199,11 +233,49 @@
     @media(max-width:600px){.premium-strip-grid,.premium-grid{grid-template-columns:1fr}.story-panel,.quote-panel{padding:26px}.story-panel h3{font-size:27px}.quote-panel p{font-size:21px}.whatsapp-label{display:none}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}.reveal-soft{opacity:1!important;transform:none!important}}
 
-  </style>
+  
+/* ===== V8 PREMIUM IMAGE BANNER + FIXED CONTACT ===== */
+.top-banner-image-slider{position:relative;width:100%;height:390px;overflow:hidden;background:#062d22;z-index:10}
+.top-banner-image-track{display:flex;width:100%;height:100%;transition:transform .75s cubic-bezier(.22,.61,.36,1);will-change:transform}
+.top-banner-image-slide{position:relative;min-width:100%;height:100%;overflow:hidden;display:flex;align-items:center}
+.top-banner-image-slide>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.03);transition:transform 6s ease}
+.top-banner-image-slide:first-child>img{transform:scale(1)}
+.top-banner-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,25,18,.86) 0%,rgba(3,45,31,.66) 42%,rgba(3,45,31,.16) 100%);z-index:1}
+.top-banner-content{position:relative;z-index:2;width:min(1240px,calc(100% - 100px));margin:0 auto;color:#fff;padding:30px 0}
+.top-banner-kicker{display:inline-flex;padding:8px 13px;border-radius:999px;background:rgba(244,197,66,.14);border:1px solid rgba(244,197,66,.4);color:#ffe18a;font-size:11px;font-weight:900;letter-spacing:1.4px;margin-bottom:15px}
+.top-banner-content h2{margin:0 0 12px;max-width:760px;font-family:'Playfair Display',serif;font-size:clamp(32px,4.3vw,62px);line-height:1.02;letter-spacing:-1.2px}
+.top-banner-content p{max-width:680px;margin:0 0 22px;color:rgba(255,255,255,.86);font-size:clamp(14px,1.5vw,18px);line-height:1.7}
+.top-banner-cta{border:0;border-radius:999px;padding:13px 20px;background:#f4c542;color:#062d22;font-weight:900;cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.25);transition:.25s;position:relative;z-index:5}
+.top-banner-cta:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(0,0,0,.32)}
+.top-banner-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:46px;height:46px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(0,0,0,.22);backdrop-filter:blur(8px);color:#fff;cursor:pointer;display:grid;place-items:center;transition:.25s}
+.top-banner-arrow:hover{background:#f4c542;color:#062d22;transform:translateY(-50%) scale(1.06)}
+.top-banner-arrow.prev{left:22px}.top-banner-arrow.next{right:22px}
+.top-banner-image-slider .top-banner-dots{position:absolute;left:50%;right:auto;bottom:17px;top:auto;transform:translateX(-50%);display:flex;gap:7px;z-index:7}
+.top-banner-image-slider .top-banner-dot{width:9px;height:9px;border:0;padding:0;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:.25s}
+.top-banner-image-slider .top-banner-dot.active{background:#f4c542;transform:scale(1.35)}
+@media(max-width:800px){.top-banner-image-slider{height:350px}.top-banner-content{width:calc(100% - 70px)}.top-banner-overlay{background:linear-gradient(90deg,rgba(2,25,18,.82),rgba(3,45,31,.38))}.top-banner-arrow{width:40px;height:40px}.top-banner-arrow.prev{left:12px}.top-banner-arrow.next{right:12px}}
+@media(max-width:600px){.top-banner-image-slider{height:330px}.top-banner-content{width:calc(100% - 48px);padding-top:15px}.top-banner-content h2{font-size:34px}.top-banner-content p{font-size:13px;line-height:1.55}.top-banner-kicker{font-size:9px;padding:7px 10px}.top-banner-cta{padding:11px 16px;font-size:12px}.top-banner-arrow{display:none}.quick-contact-wrap{right:12px;bottom:14px}}
+
+/* ===== V7 TOP BANNER + FLOATING CONTACT ACTIONS ===== */
+.top-banner-slider{position:relative;width:100%;height:46px;overflow:hidden;background:linear-gradient(90deg,#075634,#0f7a4d,#075634);color:#fff;z-index:1100;box-shadow:0 4px 18px rgba(0,0,0,.12)}
+.top-banner-track{display:flex;width:100%;height:100%;transition:transform .65s cubic-bezier(.22,.61,.36,1)}
+.top-banner-slide{min-width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 54px;font-weight:800;font-size:13px;letter-spacing:.2px;text-align:center}
+.top-banner-slide i{color:#f4c542}.top-banner-slide strong{color:#f4c542}
+.top-banner-dots{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;gap:4px}.top-banner-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45)}.top-banner-dot.active{background:#f4c542;transform:scale(1.3)}
+.quick-contact-wrap{position:fixed;right:20px;bottom:22px;z-index:2147483000;display:flex;flex-direction:column;align-items:flex-end;gap:10px;pointer-events:none}.quick-contact-wrap>*{pointer-events:auto}
+.quick-enquiry-btn{height:52px;padding:0 20px;border:0;border-radius:999px;background:linear-gradient(135deg,#f4c542,#ffda62);color:#062d22;font-weight:900;font-size:14px;letter-spacing:.2px;display:flex;align-items:center;gap:9px;box-shadow:0 14px 32px rgba(0,0,0,.20);cursor:pointer;transition:transform .25s ease,box-shadow .25s ease}
+.quick-enquiry-btn:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(0,0,0,.25)}
+.quick-whatsapp-btn{width:58px;height:58px;border:0;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;font-size:28px;box-shadow:0 14px 34px rgba(0,0,0,.22);cursor:pointer;transition:transform .25s ease}.quick-whatsapp-btn:hover{transform:translateY(-4px) scale(1.04)}
+.quick-whatsapp-btn{position:relative}.quick-whatsapp-btn:after{content:"";position:absolute;width:58px;height:58px;border-radius:50%;border:2px solid rgba(37,211,102,.45);animation:waPulse 2s infinite}.quick-contact-wrap{isolation:isolate}.quick-whatsapp-btn:after{z-index:-1}@keyframes waPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.35);opacity:0}}
+.enquiry-modal{position:fixed;inset:0;background:rgba(3,20,14,.72);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;z-index:1300}.enquiry-modal.open{display:flex}
+.enquiry-dialog{width:min(560px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:28px;box-shadow:0 30px 90px rgba(0,0,0,.35);padding:28px;position:relative;animation:modalIn .3s ease}.enquiry-close{position:absolute;right:14px;top:14px;width:38px;height:38px;border:0;border-radius:50%;background:#f1f5f3;color:#16382d;font-size:20px;cursor:pointer}.enquiry-dialog h3{margin:0 40px 7px 0;font-family:'Playfair Display',serif;font-size:30px;color:#075634}.enquiry-dialog>p{margin:0 0 20px;color:#718078}.enquiry-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.enquiry-form-grid .full{grid-column:1/-1}.enquiry-dialog label{display:block;font-size:12px;font-weight:800;color:#355047;margin:0 0 6px}.enquiry-dialog input,.enquiry-dialog select,.enquiry-dialog textarea{width:100%;box-sizing:border-box;border:1px solid rgba(15,122,77,.16);border-radius:13px;padding:12px 13px;font:inherit;outline:none;background:#f8fbf9}.enquiry-dialog textarea{min-height:105px;resize:vertical}.enquiry-dialog input:focus,.enquiry-dialog select:focus,.enquiry-dialog textarea:focus{border-color:#0f7a4d;box-shadow:0 0 0 4px rgba(15,122,77,.08)}.enquiry-submit{margin-top:16px;width:100%;height:48px;border:0;border-radius:14px;background:#0f7a4d;color:#fff;font-weight:900;cursor:pointer}.enquiry-submit:hover{background:#075634}.enquiry-note{font-size:11px!important;margin:9px 0 0!important;text-align:center;color:#8a9791!important}@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:600px){.top-banner-slider{height:48px}.top-banner-slide{font-size:11px;padding:0 42px 0 14px}.quick-contact-wrap{right:12px;bottom:14px;gap:8px}.quick-enquiry-btn{height:48px;padding:0 16px;font-size:13px}.quick-whatsapp-btn{width:54px;height:54px;font-size:25px}.quick-whatsapp-btn:after{width:54px;height:54px}.enquiry-form-grid{grid-template-columns:1fr}.enquiry-form-grid .full{grid-column:auto}.enquiry-dialog{padding:23px;border-radius:22px}}
+
+</style>
 </head>
 <body class="loading">
   <div id="scrollProgress"></div>
-  <div id="preloader"><div class="loader-inner"><img id="loaderLogo" class="loader-logo" alt="Loading"><div class="loader-ring"></div><div style="margin-top:14px;font-weight:700;letter-spacing:.02em">Preparing your experience…</div></div></div><div id="cacheStatus" class="cache-status">Live data</div>
+  <div id="preloader"><div class="loader-inner"><img id="loaderLogo" class="loader-logo" alt="Loading" src="https://dummyimage.com/320x100/0f7a4d/ffffff.png&text=GREEN+INDIA" fetchpriority="high" decoding="sync"><div class="loader-ring"></div><div style="margin-top:14px;font-weight:700;letter-spacing:.02em">Preparing your experience…</div></div></div><div id="cacheStatus" class="cache-status">Live data</div>
 
   <header id="siteHeader"><div class="navbar container">
     <a class="brand" href="#home"><img id="brandLogo" alt=""><span id="brandName"></span></a>
@@ -212,6 +284,30 @@
   </div></header>
 
   <div id="mobileMenu"><button id="mobileClose" type="button"><i class="fa-solid fa-xmark"></i></button><ul id="mobileMenuList"></ul></div>
+
+  <!-- ===== TOP IMAGE BANNER SLIDER ===== -->
+  <section id="topBannerSlider" class="top-banner-image-slider" aria-label="Institute promotional banners">
+    <div id="topBannerTrack" class="top-banner-image-track">
+      <article class="top-banner-image-slide">
+        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=2000&q=85" alt="Professional classroom training" fetchpriority="high" decoding="async">
+        <div class="top-banner-overlay"></div>
+        <div class="top-banner-content"><span class="top-banner-kicker">GREEN INDIA SAFETY INSTITUTE</span><h2>Learn Today. Lead Safely Tomorrow.</h2><p>Professional training, practical learning and career-focused guidance.</p><button type="button" class="top-banner-cta" data-open-enquiry="true">Quick Enquiry <i class="fa-solid fa-arrow-right"></i></button></div>
+      </article>
+      <article class="top-banner-image-slide">
+        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=2000&q=85" alt="Professional training event" loading="lazy" decoding="async">
+        <div class="top-banner-overlay"></div>
+        <div class="top-banner-content"><span class="top-banner-kicker">SKILLS • SAFETY • CAREER</span><h2>Build Skills That Create Confidence.</h2><p>Structured learning designed around practical understanding and professional growth.</p><button type="button" class="top-banner-cta" data-open-enquiry="true">Enquire Now <i class="fa-solid fa-arrow-right"></i></button></div>
+      </article>
+      <article class="top-banner-image-slide">
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=85" alt="Students learning together" loading="lazy" decoding="async">
+        <div class="top-banner-overlay"></div>
+        <div class="top-banner-content"><span class="top-banner-kicker">ADMISSIONS &amp; GUIDANCE</span><h2>Your Learning Journey Starts Here.</h2><p>Connect with our team for course details, admission guidance and support.</p><button type="button" class="top-banner-cta" data-open-enquiry="true">Talk to Us <i class="fa-solid fa-arrow-right"></i></button></div>
+      </article>
+    </div>
+    <button type="button" id="topBannerPrev" class="top-banner-arrow prev" aria-label="Previous banner"><i class="fa-solid fa-chevron-left"></i></button>
+    <button type="button" id="topBannerNext" class="top-banner-arrow next" aria-label="Next banner"><i class="fa-solid fa-chevron-right"></i></button>
+    <div id="topBannerDots" class="top-banner-dots" aria-label="Banner slide indicators"></div>
+  </section>
 
   <main>
     <section id="home"><div id="heroSlider" class="swiper"><div id="heroWrapper" class="swiper-wrapper"></div></div><div class="hero-scroll">Scroll<div class="hero-scroll-line"></div></div></section>
@@ -225,6 +321,20 @@
     <section id="courses"><div class="container"><div id="coursesHeading" class="section-heading"></div><div id="coursesGrid" class="course-grid"></div></div></section>
 
     <section id="faculty"><div class="container"><div id="facultyHeading" class="section-heading"></div><div id="facultyGrid" class="faculty-grid"></div></div></section>
+
+    <section id="staff" class="staff-section">
+      <div class="container">
+        <div id="staffHeading" class="section-heading"></div>
+        <div class="staff-slider-shell">
+          <button id="staffPrev" class="staff-nav staff-prev" type="button" aria-label="Previous staff"><i class="fa-solid fa-chevron-left"></i></button>
+          <div id="staffSlider" class="staff-slider" aria-live="polite">
+            <div id="staffTrack" class="staff-track"></div>
+          </div>
+          <button id="staffNext" class="staff-nav staff-next" type="button" aria-label="Next staff"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+        <div id="staffDots" class="staff-dots" aria-label="Staff slider controls"></div>
+      </div>
+    </section>
 
     <section id="gallery"><div class="container"><div id="galleryHeading" class="section-heading"></div><div id="galleryFilters" class="gallery-filters"></div><div id="galleryGrid" class="gallery-grid"></div></div></section>
 
@@ -339,7 +449,7 @@
     ====================================================== */
 
     const FRONTEND_IMAGES = {
-      logo: "https://drive.google.com/file/d/1YMRLHIxtrr3p9IvHphKod5H-Ka8OA4t7/view?usp=drivesdk",
+        logo: "https://drive.google.com/file/d/1YMRLHIxtrr3p9IvHphKod5H-Ka8OA4t7/view?usp=drivesdk",
       favicon: "https://drive.google.com/file/d/1YMRLHIxtrr3p9IvHphKod5H-Ka8OA4t7/view?usp=drivesdk",
 
       hero: [
@@ -364,6 +474,49 @@
         "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=82",
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=82",
         "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=82"
+      ],
+
+      staff: [
+        {
+          name: "Safety Training Expert",
+          designation: "Senior Safety Trainer",
+          qualification: "NEBOSH / IOSH / Safety Management",
+          experience: "10+ Years Experience",
+          bio: "Experienced professional focused on practical safety training, workplace awareness and career-oriented guidance.",
+          image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=85",
+          phone: "",
+          linkedin: ""
+        },
+        {
+          name: "Professional Safety Faculty",
+          designation: "Safety & Industrial Trainer",
+          qualification: "Industrial Safety / Fire & Emergency",
+          experience: "8+ Years Experience",
+          bio: "Dedicated to practical demonstrations, industrial safety concepts and student skill development.",
+          image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=85",
+          phone: "",
+          linkedin: ""
+        },
+        {
+          name: "Career Guidance Mentor",
+          designation: "Career & Placement Mentor",
+          qualification: "Training, Placement & Career Development",
+          experience: "7+ Years Experience",
+          bio: "Supports learners with career planning, interview preparation and professional development.",
+          image: "https://images.unsplash.com/photo-1566492031773-4f4e44671d66?auto=format&fit=crop&w=900&q=85",
+          phone: "",
+          linkedin: ""
+        },
+        {
+          name: "Training Coordinator",
+          designation: "Academic & Training Coordinator",
+          qualification: "Training Operations & Student Support",
+          experience: "6+ Years Experience",
+          bio: "Coordinates training activities and helps students get a smooth, disciplined and supportive learning experience.",
+          image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=900&q=85",
+          phone: "",
+          linkedin: ""
+        }
       ],
 
       gallery: [
@@ -1380,6 +1533,41 @@
           "footerMenu"
         );
 
+      // Always expose the frontend Staff section in navigation.
+      // It works even when the Google Sheet Menu does not contain
+      // an "Our Team" record.
+      const hasOurTeam =
+        menu.some(function(item) {
+          return String(item["Label"] || "")
+            .trim()
+            .toLowerCase() === "our team";
+        });
+
+      if (!hasOurTeam) {
+        menu.push({
+          Label: "Our Team",
+          Target: "#staff",
+          Icon: "fa-solid fa-users",
+          "Open New Tab": false,
+          Order: 6.5
+        });
+
+        menu.sort(function(a, b) {
+          return Number(a["Order"] || 999) -
+                 Number(b["Order"] || 999);
+        });
+      }
+
+      // Force the Our Team link to the actual frontend section.
+      menu.forEach(function(item) {
+        if (
+          String(item["Label"] || "")
+            .trim()
+            .toLowerCase() === "our team"
+        ) {
+          item["Target"] = "#staff";
+        }
+      });
 
       desktop.innerHTML =
         "";
@@ -2568,6 +2756,252 @@
 
     }
 
+
+    /* =====================================================
+       STAFF LOCAL CACHE
+       Staff details are stored in localStorage.
+       Staff image files are warmed into the browser Cache API.
+       Google Sheet image URLs are never used here.
+    ===================================================== */
+
+    const STAFF_CACHE_KEY = "gisis_staff_cache_v2";
+    const STAFF_CACHE_MAX_AGE = 30 * 24 * 60 * 60 * 1000;
+    const STAFF_IMAGE_CACHE_NAME = "gisis-staff-images-v2";
+
+    function getStaffCache() {
+      try {
+        const raw = localStorage.getItem(STAFF_CACHE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || !Array.isArray(parsed.data) || !parsed.savedAt) return null;
+
+        if (Date.now() - Number(parsed.savedAt) > STAFF_CACHE_MAX_AGE) {
+          localStorage.removeItem(STAFF_CACHE_KEY);
+          return null;
+        }
+
+        return parsed.data;
+      } catch (error) {
+        console.warn("Staff cache read failed:", error);
+        return null;
+      }
+    }
+
+    function saveStaffCache(staff) {
+      if (!Array.isArray(staff) || !staff.length) return;
+      try {
+        localStorage.setItem(
+          STAFF_CACHE_KEY,
+          JSON.stringify({
+            savedAt: Date.now(),
+            data: staff
+          })
+        );
+      } catch (error) {
+        console.warn("Staff details cache save failed:", error);
+      }
+    }
+
+    async function warmStaffImageCache(staff) {
+      if (!("caches" in window) || !Array.isArray(staff)) return;
+
+      try {
+        const cache = await caches.open(STAFF_IMAGE_CACHE_NAME);
+
+        await Promise.all(
+          staff.map(async function(item) {
+            const url = normalizeImageURL(item && item.image);
+            if (!url) return;
+
+            try {
+              const existing = await cache.match(url);
+              if (existing) return;
+
+              const response = await fetch(url, {
+                mode: "cors",
+                credentials: "omit",
+                cache: "force-cache"
+              });
+
+              if (response && response.ok) {
+                await cache.put(url, response.clone());
+              }
+            } catch (error) {
+              // The normal image URL remains the fallback.
+            }
+          })
+        );
+      } catch (error) {
+        console.warn("Staff image cache unavailable:", error);
+      }
+    }
+
+    async function applyCachedStaffImages() {
+      if (!("caches" in window)) return;
+
+      const images = document.querySelectorAll(
+        "#staff .staff-photo[data-staff-url]"
+      );
+
+      if (!images.length) return;
+
+      try {
+        const cache = await caches.open(STAFF_IMAGE_CACHE_NAME);
+
+        await Promise.all(
+          Array.from(images).map(async function(img) {
+            const url = img.getAttribute("data-staff-url");
+            if (!url) return;
+
+            try {
+              const response = await cache.match(url);
+              if (!response) return;
+
+              const blob = await response.blob();
+              if (!blob || !blob.size) return;
+
+              const objectURL = URL.createObjectURL(blob);
+              img.src = objectURL;
+
+              setTimeout(function() {
+                try { URL.revokeObjectURL(objectURL); } catch (e) {}
+              }, 30000);
+            } catch (error) {
+              // Keep the original URL.
+            }
+          })
+        );
+      } catch (error) {
+        console.warn("Cached staff image read failed:", error);
+      }
+    }
+
+    /* =====================================================
+       STAFF SLIDER
+       Staff details + images are controlled from frontend code.
+       Google Sheet image URLs are never used here.
+    ====================================================== */
+
+    let currentStaffSlide = 0;
+    let staffAutoTimer = null;
+
+    function getStaffData() {
+      const liveStaff =
+        Array.isArray(FRONTEND_IMAGES.staff)
+          ? FRONTEND_IMAGES.staff
+          : [];
+
+      if (liveStaff.length) {
+        saveStaffCache(liveStaff);
+        return liveStaff;
+      }
+
+      return getStaffCache() || [];
+    }
+
+    function renderStaff() {
+      const section = document.getElementById("staff");
+      const heading = document.getElementById("staffHeading");
+      const track = document.getElementById("staffTrack");
+      const dots = document.getElementById("staffDots");
+      if (!section || !track || !dots) return;
+
+      const staff = getStaffData();
+      if (!staff.length) {
+        section.classList.add("hidden");
+        return;
+      }
+      section.classList.remove("hidden");
+
+      if (heading) {
+        heading.innerHTML = `
+          <span class="section-label">Our Team</span>
+          <h2 class="section-title">Meet Our Professional Staff</h2>
+          <p class="section-description">Experienced mentors and dedicated professionals working together to create a disciplined, practical and career-focused learning environment.</p>
+        `;
+      }
+
+      currentStaffSlide = Math.max(0, Math.min(currentStaffSlide, staff.length - 1));
+      track.innerHTML = staff.map(function(item, index) {
+        const image = normalizeImageURL(item.image || "");
+        const phone = String(item.phone || "").replace(/[^0-9+]/g, "");
+        const linkedin = safeURL(item.linkedin || "");
+        return `
+          <article class="staff-slide reveal-soft">
+            <div class="staff-photo-wrap">
+              ${image ? `<img class="staff-photo" data-staff-url="${escapeHTML(image)}" src="${escapeHTML(image)}" alt="${escapeHTML(item.name || "Staff")}" fetchpriority="${index === 0 ? "high" : "auto"}" loading="${index === 0 ? "eager" : "lazy"}">` : ""}
+              <span class="staff-photo-glow"></span>
+            </div>
+            <div class="staff-content">
+              <span class="staff-eyebrow"><i class="fa-solid fa-user-tie"></i> Green India Team</span>
+              <h3 class="staff-name">${escapeHTML(item.name || "Professional Staff")}</h3>
+              <div class="staff-designation">${escapeHTML(item.designation || "Staff Member")}</div>
+              <div class="staff-meta">
+                ${item.qualification ? `<span><i class="fa-solid fa-graduation-cap"></i> ${escapeHTML(item.qualification)}</span>` : ""}
+                ${item.experience ? `<span><i class="fa-solid fa-award"></i> ${escapeHTML(item.experience)}</span>` : ""}
+              </div>
+              <p class="staff-bio">${escapeHTML(item.bio || "")}</p>
+              <div class="staff-actions">
+                ${phone ? `<a class="staff-action" href="tel:${escapeHTML(phone)}"><i class="fa-solid fa-phone"></i> Contact</a>` : ""}
+                ${linkedin ? `<a class="staff-action alt" href="${escapeHTML(linkedin)}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>` : ""}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      dots.innerHTML = staff.map(function(_, index) {
+        return `<button type="button" class="staff-dot ${index === currentStaffSlide ? "active" : ""}" data-staff-index="${index}" aria-label="Show staff ${index + 1}"></button>`;
+      }).join("");
+
+      dots.querySelectorAll(".staff-dot").forEach(function(dot) {
+        dot.addEventListener("click", function() {
+          goToStaff(Number(this.dataset.staffIndex));
+          restartStaffAuto();
+        });
+      });
+
+      const prev = document.getElementById("staffPrev");
+      const next = document.getElementById("staffNext");
+      if (prev && !prev.dataset.bound) {
+        prev.dataset.bound = "1";
+        prev.addEventListener("click", function() { goToStaff(currentStaffSlide - 1); restartStaffAuto(); });
+      }
+      if (next && !next.dataset.bound) {
+        next.dataset.bound = "1";
+        next.addEventListener("click", function() { goToStaff(currentStaffSlide + 1); restartStaffAuto(); });
+      }
+
+      goToStaff(currentStaffSlide, false);
+      startStaffAuto();
+    }
+
+    function goToStaff(index, animate = true) {
+      const staff = getStaffData();
+      const track = document.getElementById("staffTrack");
+      const dots = document.getElementById("staffDots");
+      if (!track || !staff.length) return;
+      currentStaffSlide = (index + staff.length) % staff.length;
+      track.style.transition = animate ? "transform .65s cubic-bezier(.2,.8,.2,1)" : "none";
+      track.style.transform = "translate3d(" + (-currentStaffSlide * 100) + "%,0,0)";
+      if (dots) dots.querySelectorAll(".staff-dot").forEach(function(dot, i) {
+        dot.classList.toggle("active", i === currentStaffSlide);
+      });
+    }
+
+    function startStaffAuto() {
+      clearInterval(staffAutoTimer);
+      if (getStaffData().length < 2) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      staffAutoTimer = setInterval(function() { goToStaff(currentStaffSlide + 1); }, 5000);
+    }
+
+    function restartStaffAuto() {
+      startStaffAuto();
+    }
+
+        applyCachedStaffImages();
+    warmStaffImageCache(getStaffData());
 
     /* =====================================================
        GALLERY
@@ -4800,7 +5234,7 @@
 
       applyTheme(); applySEO(); renderBrand(); renderMenu(); renderHero();
       renderStats(); renderAbout(); renderFeatures(); renderCourses();
-      renderFaculty(); renderGallery(); renderTestimonials(); renderNotices();
+      renderFaculty(); renderStaff(); renderGallery(); renderTestimonials(); renderNotices();
       renderCTA(); renderContact(); renderCourseSelect(); renderSocial();
       renderFooter(); renderWhatsApp();
       handleScroll(); setupActiveMenu();
@@ -4886,6 +5320,8 @@
 
       push(frontendImage("logo", 0));
       push(frontendImage("favicon", 0));
+      (FRONTEND_IMAGES.staff || []).slice(0, 2).forEach(function(item){ push(item.image); });
+      warmStaffImageCache(getStaffData());
 
       (SITE_DATA.hero || []).slice(0, 2).forEach(function(item, index) {
         push(frontendImage("hero", index));
@@ -4899,10 +5335,58 @@
     }
 
     /* =====================================================
+       PRELOADER LOGO FIRST-PAINT
+    ====================================================== */
+
+    function preparePreloaderLogo() {
+      const logo = document.getElementById("loaderLogo");
+      const url = normalizeImageURL(window.__FRONTEND_PRELOADER_LOGO__ || frontendImage("logo", 0));
+      if (!logo || !url) return Promise.resolve();
+
+      logo.setAttribute("fetchpriority", "high");
+      logo.setAttribute("decoding", "sync");
+      logo.src = url;
+
+      if (logo.complete && logo.naturalWidth > 0) return Promise.resolve();
+      return new Promise(function(resolve) {
+        let finished = false;
+        const done = function(){ if (finished) return; finished = true; resolve(); };
+        logo.addEventListener("load", done, { once:true });
+        logo.addEventListener("error", done, { once:true });
+        setTimeout(done, 4500);
+      });
+    }
+
+    /* =====================================================
+       OUR TEAM NAVIGATION
+    ====================================================== */
+
+    document.addEventListener("click", function(event) {
+      const link = event.target.closest('a[href="#staff"]');
+      if (!link) return;
+
+      const section = document.getElementById("staff");
+      if (!section) return;
+
+      event.preventDefault();
+
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      try {
+        history.replaceState(null, "", "#staff");
+      } catch (e) {}
+    });
+
+    /* =====================================================
        LOAD WEBSITE
     ====================================================== */
 
     async function loadWebsite() {
+      // Keep the preloader visible until its frontend logo is available.
+      await preparePreloaderLogo();
       const cache = getWebsiteCache();
       let renderedFromCache = false;
       setupNetworkStatus();
@@ -5037,5 +5521,133 @@
     bindImageFallbacks();
 
   </script>
+
+<div class="quick-contact-wrap" aria-label="Quick contact actions">
+  <button class="quick-enquiry-btn" id="quickEnquiryBtn" type="button"><i class="fa-solid fa-paper-plane"></i><span>Quick Enquiry</span></button>
+  <button class="quick-whatsapp-btn" id="quickWhatsappBtn" type="button" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></button>
+</div>
+
+<div class="enquiry-modal" id="quickEnquiryModal" role="dialog" aria-modal="true" aria-labelledby="quickEnquiryTitle">
+  <div class="enquiry-dialog">
+    <button class="enquiry-close" id="quickEnquiryClose" type="button" aria-label="Close enquiry form">&times;</button>
+    <h3 id="quickEnquiryTitle">Quick Enquiry</h3>
+    <p>Tell us what you are looking for. Our team will get back to you shortly.</p>
+    <form id="quickEnquiryForm">
+      <div class="enquiry-form-grid">
+        <div><label for="quickName">Name</label><input id="quickName" name="name" required autocomplete="name" placeholder="Your name"></div>
+        <div><label for="quickMobile">Mobile</label><input id="quickMobile" name="mobile" required inputmode="tel" autocomplete="tel" placeholder="10-digit mobile"></div>
+        <div><label for="quickEmail">Email</label><input id="quickEmail" name="email" type="email" autocomplete="email" placeholder="Optional"></div>
+        <div><label for="quickCourse">Course / Service</label><input id="quickCourse" name="course" placeholder="Course name"></div>
+        <div class="full"><label for="quickMessage">Message</label><textarea id="quickMessage" name="message" placeholder="How can we help you?"></textarea></div>
+      </div>
+      <button class="enquiry-submit" type="submit"><i class="fa-solid fa-paper-plane"></i> Submit Enquiry</button>
+      <p class="enquiry-note" id="quickEnquiryStatus">Your enquiry will be submitted securely.</p>
+    </form>
+  </div>
+</div>
+<script>
+(function(){
+  "use strict";
+
+  /* ================= TOP IMAGE BANNER ================= */
+  const banner = document.getElementById("topBannerSlider");
+  const track = document.getElementById("topBannerTrack");
+  const dots = document.getElementById("topBannerDots");
+  const prev = document.getElementById("topBannerPrev");
+  const next = document.getElementById("topBannerNext");
+  let bannerIndex = 0;
+  let bannerTimer = null;
+
+  function bannerSlides(){ return track ? Array.from(track.children) : []; }
+  function renderBanner(){
+    const slides = bannerSlides();
+    if(!track || !slides.length) return;
+    bannerIndex = (bannerIndex + slides.length) % slides.length;
+    track.style.transform = "translate3d(-" + (bannerIndex * 100) + "%,0,0)";
+    if(dots) Array.from(dots.children).forEach((d,i)=>d.classList.toggle("active", i===bannerIndex));
+  }
+  function startBanner(){
+    clearInterval(bannerTimer);
+    bannerTimer = setInterval(()=>{ bannerIndex++; renderBanner(); }, 5000);
+  }
+  if(track){
+    bannerSlides().forEach((_,i)=>{
+      if(!dots) return;
+      const d=document.createElement("button");
+      d.type="button"; d.className="top-banner-dot";
+      d.setAttribute("aria-label","Go to banner "+(i+1));
+      d.addEventListener("click",()=>{bannerIndex=i;renderBanner();startBanner();});
+      dots.appendChild(d);
+    });
+    renderBanner(); startBanner();
+    prev?.addEventListener("click",()=>{bannerIndex--;renderBanner();startBanner();});
+    next?.addEventListener("click",()=>{bannerIndex++;renderBanner();startBanner();});
+    banner?.addEventListener("mouseenter",()=>clearInterval(bannerTimer));
+    banner?.addEventListener("mouseleave",startBanner);
+  }
+
+  /* ================= QUICK ENQUIRY ================= */
+  const modal = document.getElementById("quickEnquiryModal");
+  const quickBtn = document.getElementById("quickEnquiryBtn");
+  const closeBtn = document.getElementById("quickEnquiryClose");
+  function openEnquiry(){
+    if(!modal) return;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+    setTimeout(()=>document.getElementById("quickName")?.focus(),100);
+  }
+  function closeEnquiry(){
+    if(!modal) return;
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+  }
+  quickBtn?.addEventListener("click",openEnquiry);
+  closeBtn?.addEventListener("click",closeEnquiry);
+  document.querySelectorAll("[data-open-enquiry='true']").forEach(el=>el.addEventListener("click",openEnquiry));
+  modal?.addEventListener("click",e=>{if(e.target===modal) closeEnquiry();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape") closeEnquiry();});
+
+  /* ================= WHATSAPP ================= */
+  const whatsappNumber = "919999999999";
+  const whatsappMessage = "Hello Green India Safety Institute, I would like to know more about your courses, admission and training programs. Please guide me.";
+  function openWhatsApp(){
+    const url="https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(whatsappMessage);
+    window.open(url,"_blank","noopener,noreferrer");
+  }
+  document.getElementById("quickWhatsappBtn")?.addEventListener("click",openWhatsApp);
+
+  /* ================= QUICK ENQUIRY SUBMIT ================= */
+  document.getElementById("quickEnquiryForm")?.addEventListener("submit", async function(e){
+    e.preventDefault();
+    const form=this;
+    const status=document.getElementById("quickEnquiryStatus");
+    const submit=form.querySelector("button[type='submit']");
+    const data=Object.fromEntries(new FormData(form).entries());
+    if(!data.name || !data.mobile){
+      if(status) status.textContent="Please enter your name and mobile number.";
+      return;
+    }
+    if(submit){submit.disabled=true;submit.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Sending...';}
+    try{
+      if(typeof apiCall === "function"){
+        const result=await apiCall("submitEnquiry",{name:data.name,mobile:data.mobile,email:data.email||"",course:data.course||"",message:data.message||"",source:"Quick Enquiry"});
+        if(!result || !result.success) throw new Error(result?.message || "Unable to submit enquiry.");
+        if(status) status.textContent=result.message || "Thank you! Your enquiry has been submitted successfully.";
+        form.reset();
+      }else{
+        throw new Error("Enquiry service unavailable");
+      }
+    }catch(err){
+      const msg="Hello Green India Safety Institute, my name is "+data.name+". Mobile: "+data.mobile+". Course: "+(data.course||"Not specified")+". Message: "+(data.message||"I need course/admission information.");
+      if(status) status.textContent="Unable to submit online. Opening WhatsApp instead...";
+      setTimeout(()=>window.open("https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(msg),"_blank","noopener,noreferrer"),250);
+    }finally{
+      if(submit){submit.disabled=false;submit.innerHTML='<i class="fa-solid fa-paper-plane"></i> Submit Enquiry';}
+    }
+  });
+})();
+</script>
 </body>
 </html>
