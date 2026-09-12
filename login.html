@@ -1,0 +1,44 @@
+<!-- =========================================================
+     STUDENT LOGIN FRONTEND MODULE
+     Paste the CSS + HTML + JS into Index.html.
+     It uses the existing apiCall("studentLogin", params).
+     ========================================================= -->
+<style>
+.student-login-modal{position:fixed;inset:0;background:rgba(3,20,14,.76);backdrop-filter:blur(9px);display:none;align-items:center;justify-content:center;padding:18px;z-index:1500}
+.student-login-modal.open{display:flex}.student-login-dialog{width:min(560px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:28px;box-shadow:0 30px 90px rgba(0,0,0,.35);padding:30px;position:relative}.student-login-close{position:absolute;right:14px;top:14px;width:38px;height:38px;border:0;border-radius:50%;background:#f1f5f3;color:#16382d;font-size:21px;cursor:pointer}.student-login-icon{width:54px;height:54px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(135deg,#0f7a4d,#075634);color:#fff;font-size:22px;margin-bottom:14px}.student-login-dialog h3{margin:0 45px 7px 0;font-family:'Playfair Display',serif;font-size:30px;color:#075634}.student-login-dialog>p{margin:0 0 20px;color:#718078;line-height:1.6}.student-login-input{width:100%;box-sizing:border-box;border:1px solid rgba(15,122,77,.16);border-radius:13px;padding:13px;background:#f8fbf9;font:inherit;outline:none;margin-bottom:14px}.student-login-input:focus{border-color:#0f7a4d;box-shadow:0 0 0 4px rgba(15,122,77,.08)}.student-login-label{display:block;font-size:12px;font-weight:800;color:#355047;margin:0 0 6px}.student-login-submit{width:100%;height:50px;border:0;border-radius:14px;background:linear-gradient(135deg,#0f7a4d,#075634);color:#fff;font-weight:900;cursor:pointer}.student-login-submit:disabled{opacity:.65;cursor:not-allowed}.student-login-status{font-size:12px;text-align:center;color:#718078;margin:10px 0}.student-login-status.error{color:#b42318}.student-login-status.success{color:#0f7a4d}.student-profile-result{display:none;margin-top:20px;padding:18px;border:1px solid rgba(15,122,77,.12);border-radius:20px;background:#f8fbf9}.student-profile-result.show{display:block}.student-profile-table{width:100%;border-collapse:collapse;font-size:13px}.student-profile-table td{padding:9px 6px;border-bottom:1px solid rgba(15,122,77,.08);vertical-align:top}.student-profile-table td:first-child{width:42%;font-weight:800;color:#4d625a}.student-profile-table td:last-child{color:#182c25}@media(max-width:600px){.student-login-dialog{padding:23px;border-radius:22px;max-height:calc(100dvh - 28px)}.student-login-dialog h3{font-size:27px}}
+</style>
+
+<div class="student-login-modal" id="studentLogin" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="student-login-dialog">
+    <button class="student-login-close" type="button" id="studentLoginClose">&times;</button>
+    <div class="student-login-icon"><i class="fa-solid fa-user-graduate"></i></div>
+    <h3>Student Login</h3>
+    <p>Login with your UserID and Password to view your student profile.</p>
+    <form id="studentLoginForm" novalidate>
+      <label class="student-login-label" for="studentUserId">UserID *</label>
+      <input class="student-login-input" id="studentUserId" required autocomplete="username" placeholder="Enter UserID">
+      <label class="student-login-label" for="studentPassword">Password *</label>
+      <input class="student-login-input" id="studentPassword" type="password" required autocomplete="current-password" placeholder="Enter Password">
+      <button class="student-login-submit" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+      <p class="student-login-status" id="studentLoginStatus"></p>
+    </form>
+    <div class="student-profile-result" id="studentProfileResult"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const modal=document.getElementById('studentLogin');
+  const form=document.getElementById('studentLoginForm');
+  const status=document.getElementById('studentLoginStatus');
+  const resultBox=document.getElementById('studentProfileResult');
+  const closeBtn=document.getElementById('studentLoginClose');
+  function esc(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+  function openStudentLogin(){modal?.classList.add('open');modal?.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('studentUserId')?.focus(),100)}
+  function closeStudentLogin(){modal?.classList.remove('open');modal?.setAttribute('aria-hidden','true');document.body.style.overflow=''}
+  window.openStudentLogin=openStudentLogin;
+  closeBtn?.addEventListener('click',closeStudentLogin); modal?.addEventListener('click',e=>{if(e.target===modal)closeStudentLogin()});
+  function profileHTML(p){const rows=[['Name',p.name],['Father\'s Name',p.fatherName],['Mobile',p.mobile],['Address',p.address],['UserID',p.userId],['CourseID',p.courseId],['Course Name',p.courseName],['Course Fee',p.courseFee],['Admission Date',p.admissionDate],['Date Of Birth',p.dateOfBirth]];return '<table class="student-profile-table">'+rows.map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1]||'-')+'</td></tr>').join('')+'</table>'}
+  form?.addEventListener('submit',async e=>{e.preventDefault();const userId=String(document.getElementById('studentUserId').value||'').trim();const password=String(document.getElementById('studentPassword').value||'');if(!userId){status.className='student-login-status error';status.textContent='Please enter your UserID.';return}if(!password){status.className='student-login-status error';status.textContent='Please enter your Password.';return}const btn=form.querySelector('button');btn.disabled=true;status.className='student-login-status';status.textContent='Checking login...';try{const r=await apiCall('studentLogin',{userId,password});if(!r?.success)throw new Error(r?.message||'Invalid UserID or Password.');resultBox.innerHTML=profileHTML(r.student||{});resultBox.classList.add('show');status.className='student-login-status success';status.textContent='Login successful.';document.getElementById('studentPassword').value=''}catch(err){status.className='student-login-status error';status.textContent=err?.message||'Login failed.'}finally{btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-right-to-bracket"></i> Login'}});
+})();
+</script>
