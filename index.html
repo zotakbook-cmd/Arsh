@@ -218,7 +218,7 @@
     .footer-brand img{box-shadow:0 10px 30px rgba(0,0,0,.18)}
     .footer-menu a{transition:.25s}.footer-menu a:hover{color:#fff;transform:translateX(4px)}
     .social-link{transition:.3s}.social-link:hover{transform:translateY(-4px) rotate(-3deg);background:var(--accent);color:#142018}
-    #whatsappButton{animation:waPulse 2.4s infinite}.whatsapp-label{position:absolute;right:64px;white-space:nowrap;background:#fff;color:#163025;padding:7px 11px;border-radius:999px;font-size:12px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.12);opacity:0;transform:translateX(8px);pointer-events:none;transition:.25s}.whatsapp-wrap:hover .whatsapp-label{opacity:1;transform:none}
+   
     @keyframes waPulse{0%,100%{box-shadow:0 10px 30px rgba(0,0,0,.2),0 0 0 0 rgba(37,211,102,.32)}50%{box-shadow:0 10px 30px rgba(0,0,0,.2),0 0 0 13px rgba(37,211,102,0)}}
     @keyframes floatShape{0%,100%{transform:translateY(0)}50%{transform:translateY(12px)}}
     .premium-strip{padding:20px 0;background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -234,34 +234,7 @@
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}.reveal-soft{opacity:1!important;transform:none!important}}
 
   
-/* ===== V8 PREMIUM IMAGE BANNER + FIXED CONTACT ===== */
-.top-banner-image-slider{position:relative;width:100%;height:390px;overflow:hidden;background:#062d22;z-index:10}
-.top-banner-image-track{display:flex;width:100%;height:100%;transition:transform .75s cubic-bezier(.22,.61,.36,1);will-change:transform}
-.top-banner-image-slide{position:relative;min-width:100%;height:100%;overflow:hidden;display:flex;align-items:center}
-.top-banner-image-slide>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.03);transition:transform 6s ease}
-.top-banner-image-slide:first-child>img{transform:scale(1)}
-.top-banner-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,25,18,.86) 0%,rgba(3,45,31,.66) 42%,rgba(3,45,31,.16) 100%);z-index:1}
-.top-banner-content{position:relative;z-index:2;width:min(1240px,calc(100% - 100px));margin:0 auto;color:#fff;padding:30px 0}
-.top-banner-kicker{display:inline-flex;padding:8px 13px;border-radius:999px;background:rgba(244,197,66,.14);border:1px solid rgba(244,197,66,.4);color:#ffe18a;font-size:11px;font-weight:900;letter-spacing:1.4px;margin-bottom:15px}
-.top-banner-content h2{margin:0 0 12px;max-width:760px;font-family:'Playfair Display',serif;font-size:clamp(32px,4.3vw,62px);line-height:1.02;letter-spacing:-1.2px}
-.top-banner-content p{max-width:680px;margin:0 0 22px;color:rgba(255,255,255,.86);font-size:clamp(14px,1.5vw,18px);line-height:1.7}
-.top-banner-cta{border:0;border-radius:999px;padding:13px 20px;background:#f4c542;color:#062d22;font-weight:900;cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.25);transition:.25s;position:relative;z-index:5}
-.top-banner-cta:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(0,0,0,.32)}
-.top-banner-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:46px;height:46px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(0,0,0,.22);backdrop-filter:blur(8px);color:#fff;cursor:pointer;display:grid;place-items:center;transition:.25s}
-.top-banner-arrow:hover{background:#f4c542;color:#062d22;transform:translateY(-50%) scale(1.06)}
-.top-banner-arrow.prev{left:22px}.top-banner-arrow.next{right:22px}
-.top-banner-image-slider .top-banner-dots{position:absolute;left:50%;right:auto;bottom:17px;top:auto;transform:translateX(-50%);display:flex;gap:7px;z-index:7}
-.top-banner-image-slider .top-banner-dot{width:9px;height:9px;border:0;padding:0;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:.25s}
-.top-banner-image-slider .top-banner-dot.active{background:#f4c542;transform:scale(1.35)}
-@media(max-width:800px){.top-banner-image-slider{height:350px}.top-banner-content{width:calc(100% - 70px)}.top-banner-overlay{background:linear-gradient(90deg,rgba(2,25,18,.82),rgba(3,45,31,.38))}.top-banner-arrow{width:40px;height:40px}.top-banner-arrow.prev{left:12px}.top-banner-arrow.next{right:12px}}
-@media(max-width:600px){.top-banner-image-slider{height:330px}.top-banner-content{width:calc(100% - 48px);padding-top:15px}.top-banner-content h2{font-size:34px}.top-banner-content p{font-size:13px;line-height:1.55}.top-banner-kicker{font-size:9px;padding:7px 10px}.top-banner-cta{padding:11px 16px;font-size:12px}.top-banner-arrow{display:none}.quick-contact-wrap{right:12px;bottom:14px}}
-
-/* ===== V7 TOP BANNER + FLOATING CONTACT ACTIONS ===== */
-.top-banner-slider{position:relative;width:100%;height:46px;overflow:hidden;background:linear-gradient(90deg,#075634,#0f7a4d,#075634);color:#fff;z-index:1100;box-shadow:0 4px 18px rgba(0,0,0,.12)}
-.top-banner-track{display:flex;width:100%;height:100%;transition:transform .65s cubic-bezier(.22,.61,.36,1)}
-.top-banner-slide{min-width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 54px;font-weight:800;font-size:13px;letter-spacing:.2px;text-align:center}
-.top-banner-slide i{color:#f4c542}.top-banner-slide strong{color:#f4c542}
-.top-banner-dots{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;gap:4px}.top-banner-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45)}.top-banner-dot.active{background:#f4c542;transform:scale(1.3)}
+/* ===== FIXED CONTACT ACTIONS ===== */
 .quick-contact-wrap{position:fixed;right:20px;bottom:22px;z-index:2147483000;display:flex;flex-direction:column;align-items:flex-end;gap:10px;pointer-events:none}.quick-contact-wrap>*{pointer-events:auto}
 .quick-enquiry-btn{height:52px;padding:0 20px;border:0;border-radius:999px;background:linear-gradient(135deg,#f4c542,#ffda62);color:#062d22;font-weight:900;font-size:14px;letter-spacing:.2px;display:flex;align-items:center;gap:9px;box-shadow:0 14px 32px rgba(0,0,0,.20);cursor:pointer;transition:transform .25s ease,box-shadow .25s ease}
 .quick-enquiry-btn:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(0,0,0,.25)}
@@ -269,8 +242,44 @@
 .quick-whatsapp-btn{position:relative}.quick-whatsapp-btn:after{content:"";position:absolute;width:58px;height:58px;border-radius:50%;border:2px solid rgba(37,211,102,.45);animation:waPulse 2s infinite}.quick-contact-wrap{isolation:isolate}.quick-whatsapp-btn:after{z-index:-1}@keyframes waPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.35);opacity:0}}
 .enquiry-modal{position:fixed;inset:0;background:rgba(3,20,14,.72);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;z-index:1300}.enquiry-modal.open{display:flex}
 .enquiry-dialog{width:min(560px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:28px;box-shadow:0 30px 90px rgba(0,0,0,.35);padding:28px;position:relative;animation:modalIn .3s ease}.enquiry-close{position:absolute;right:14px;top:14px;width:38px;height:38px;border:0;border-radius:50%;background:#f1f5f3;color:#16382d;font-size:20px;cursor:pointer}.enquiry-dialog h3{margin:0 40px 7px 0;font-family:'Playfair Display',serif;font-size:30px;color:#075634}.enquiry-dialog>p{margin:0 0 20px;color:#718078}.enquiry-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.enquiry-form-grid .full{grid-column:1/-1}.enquiry-dialog label{display:block;font-size:12px;font-weight:800;color:#355047;margin:0 0 6px}.enquiry-dialog input,.enquiry-dialog select,.enquiry-dialog textarea{width:100%;box-sizing:border-box;border:1px solid rgba(15,122,77,.16);border-radius:13px;padding:12px 13px;font:inherit;outline:none;background:#f8fbf9}.enquiry-dialog textarea{min-height:105px;resize:vertical}.enquiry-dialog input:focus,.enquiry-dialog select:focus,.enquiry-dialog textarea:focus{border-color:#0f7a4d;box-shadow:0 0 0 4px rgba(15,122,77,.08)}.enquiry-submit{margin-top:16px;width:100%;height:48px;border:0;border-radius:14px;background:#0f7a4d;color:#fff;font-weight:900;cursor:pointer}.enquiry-submit:hover{background:#075634}.enquiry-note{font-size:11px!important;margin:9px 0 0!important;text-align:center;color:#8a9791!important}@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
-@media(max-width:600px){.top-banner-slider{height:48px}.top-banner-slide{font-size:11px;padding:0 42px 0 14px}.quick-contact-wrap{right:12px;bottom:14px;gap:8px}.quick-enquiry-btn{height:48px;padding:0 16px;font-size:13px}.quick-whatsapp-btn{width:54px;height:54px;font-size:25px}.quick-whatsapp-btn:after{width:54px;height:54px}.enquiry-form-grid{grid-template-columns:1fr}.enquiry-form-grid .full{grid-column:auto}.enquiry-dialog{padding:23px;border-radius:22px}}
+@media(max-width:600px){.top-banner-slider{height:48px}.top-banner-slide{font-size:11px;padding:0 42px 0 14px}.quick-contact-wrap{right:12px;bottom:14px;gap:8px}.quick-enquiry-btn{height:48px;padding:0 16px;font-size:13px}.enquiry-form-grid{grid-template-columns:1fr}.enquiry-form-grid .full{grid-column:auto}.enquiry-dialog{padding:23px;border-radius:22px}}
 
+
+/* ===== QUICK ENQUIRY ONLY ===== */
+.quick-enquiry-hidden{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translateY(12px) scale(.96)!important;}
+.quick-enquiry-icon{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#0f7a4d,#075634);color:#fff;font-size:22px;box-shadow:0 12px 28px rgba(15,122,77,.20);margin-bottom:14px;}
+.enquiry-dialog{width:min(440px,100%);}
+.enquiry-dialog>p{line-height:1.6;}
+.enquiry-form-grid .full{grid-column:1/-1;}
+.enquiry-submit{background:linear-gradient(135deg,#0f7a4d,#075634);box-shadow:0 10px 24px rgba(15,122,77,.18);transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;}
+.enquiry-submit:hover{background:linear-gradient(135deg,#0f7a4d,#075634);transform:translateY(-2px);box-shadow:0 14px 28px rgba(15,122,77,.24);filter:brightness(1.04);}
+@media(max-width:600px){.quick-contact-wrap{right:12px;bottom:14px}.quick-enquiry-btn{height:50px;padding:0 17px;font-size:13px}.enquiry-modal{padding:14px}.enquiry-dialog{padding:22px;border-radius:22px;max-height:calc(100dvh - 28px)}.enquiry-dialog h3{font-size:27px}.quick-enquiry-icon{width:48px;height:48px;margin-bottom:11px}.enquiry-dialog input{min-height:46px}.enquiry-submit{height:50px;font-size:14px;}}
+
+/* ===== STUDENT LOGIN + CERTIFICATE VERIFICATION ===== */
+.student-cert-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.student-cert-modal{position:fixed;inset:0;background:rgba(3,20,14,.76);backdrop-filter:blur(9px);display:none;align-items:center;justify-content:center;padding:18px;z-index:1500}
+.student-cert-modal.open{display:flex}
+.student-cert-dialog{width:min(560px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:28px;box-shadow:0 30px 90px rgba(0,0,0,.35);padding:30px;position:relative;animation:modalIn .28s ease}
+.student-cert-close{position:absolute;right:14px;top:14px;width:38px;height:38px;border:0;border-radius:50%;background:#f1f5f3;color:#16382d;font-size:21px;cursor:pointer}
+.student-cert-icon{width:54px;height:54px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(135deg,#0f7a4d,#075634);color:#fff;font-size:22px;box-shadow:0 12px 28px rgba(15,122,77,.20);margin-bottom:14px}
+.student-cert-dialog h3{margin:0 45px 7px 0;font-family:'Playfair Display',serif;font-size:30px;color:#075634}
+.student-cert-dialog>p{margin:0 0 20px;color:#718078;line-height:1.6}
+.sc-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sc-form-grid .full{grid-column:1/-1}
+.sc-label{display:block;font-size:12px;font-weight:800;color:#355047;margin:0 0 6px}
+.sc-input{width:100%;box-sizing:border-box;border:1px solid rgba(15,122,77,.16);border-radius:13px;padding:13px;background:#f8fbf9;font:inherit;outline:none}
+.sc-input:focus{border-color:#0f7a4d;box-shadow:0 0 0 4px rgba(15,122,77,.08)}
+.sc-submit{margin-top:16px;width:100%;height:50px;border:0;border-radius:14px;background:linear-gradient(135deg,#0f7a4d,#075634);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 10px 24px rgba(15,122,77,.18)}
+.sc-submit:disabled{opacity:.65;cursor:not-allowed}
+.sc-status{font-size:12px!important;margin:10px 0 0!important;text-align:center;color:#718078!important}
+.sc-status.error{color:#b42318!important}.sc-status.success{color:#0f7a4d!important}
+.sc-result{margin-top:20px;padding:18px;border:1px solid rgba(15,122,77,.12);border-radius:20px;background:#f8fbf9;display:none}
+.sc-result.show{display:block}
+.sc-profile-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}.sc-profile-badge{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#e5f4ed;color:#0f7a4d;font-weight:900}.sc-profile-title{font-weight:900;color:#075634}.sc-profile-sub{font-size:11px;color:#718078;margin-top:2px}
+.sc-table{width:100%;border-collapse:collapse;font-size:13px}.sc-table td{padding:9px 6px;border-bottom:1px solid rgba(15,122,77,.08);vertical-align:top}.sc-table td:first-child{width:42%;font-weight:800;color:#4d625a}.sc-table td:last-child{color:#182c25}
+.cert-verified{text-align:center;margin-bottom:16px}.cert-stamp{display:inline-flex;align-items:center;justify-content:center;width:122px;height:122px;border:5px solid #168a55;border-radius:50%;color:#168a55;font-weight:1000;font-size:17px;line-height:1.05;text-align:center;transform:rotate(-8deg);box-shadow:inset 0 0 0 3px rgba(22,138,85,.16);letter-spacing:1px}
+.cert-image-wrap{margin-top:16px;background:#fff;border:1px solid rgba(15,122,77,.12);border-radius:16px;padding:10px}.cert-image-wrap img{display:block;width:100%;max-height:430px;object-fit:contain;border-radius:10px;background:#f3f7f5}.cert-image-note{text-align:center;font-size:11px;color:#718078;margin:8px 0 0}
+@media(max-width:600px){.student-cert-dialog{padding:23px;border-radius:22px;max-height:calc(100dvh - 28px)}.student-cert-dialog h3{font-size:27px}.sc-form-grid{grid-template-columns:1fr}.sc-form-grid .full{grid-column:auto}.sc-table{font-size:12px}.cert-stamp{width:108px;height:108px;font-size:15px}}
 </style>
 </head>
 <body class="loading">
@@ -278,38 +287,16 @@
   <div id="preloader"><div class="loader-inner"><img id="loaderLogo" class="loader-logo" alt="Loading" src="https://dummyimage.com/320x100/0f7a4d/ffffff.png&text=GREEN+INDIA" fetchpriority="high" decoding="sync"><div class="loader-ring"></div><div style="margin-top:14px;font-weight:700;letter-spacing:.02em">Preparing your experience…</div></div></div><div id="cacheStatus" class="cache-status">Live data</div>
 
   <header id="siteHeader"><div class="navbar container">
-    <a class="brand" href="#home"><img id="brandLogo" alt=""><span id="brandName"></span></a>
+    <a class="brand" href="#home"><img id="brandLogo" alt=""><span id="brandName"></span><span class="brand-reg">Reg. No. 12345</span></a>
     <ul id="navMenu" class="nav-menu"></ul>
     <button id="menuToggle" type="button" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
   </div></header>
 
+  <!-- Student/Certificate menu actions are injected by JS into the main menu. -->
   <div id="mobileMenu"><button id="mobileClose" type="button"><i class="fa-solid fa-xmark"></i></button><ul id="mobileMenuList"></ul></div>
 
   <!-- ===== TOP IMAGE BANNER SLIDER ===== -->
-  <section id="topBannerSlider" class="top-banner-image-slider" aria-label="Institute promotional banners">
-    <div id="topBannerTrack" class="top-banner-image-track">
-      <article class="top-banner-image-slide">
-        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=2000&q=85" alt="Professional classroom training" fetchpriority="high" decoding="async">
-        <div class="top-banner-overlay"></div>
-        <div class="top-banner-content"><span class="top-banner-kicker">GREEN INDIA SAFETY INSTITUTE</span><h2>Learn Today. Lead Safely Tomorrow.</h2><p>Professional training, practical learning and career-focused guidance.</p><button type="button" class="top-banner-cta" data-open-enquiry="true">Quick Enquiry <i class="fa-solid fa-arrow-right"></i></button></div>
-      </article>
-      <article class="top-banner-image-slide">
-        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=2000&q=85" alt="Professional training event" loading="lazy" decoding="async">
-        <div class="top-banner-overlay"></div>
-        <div class="top-banner-content"><span class="top-banner-kicker">SKILLS • SAFETY • CAREER</span><h2>Build Skills That Create Confidence.</h2><p>Structured learning designed around practical understanding and professional growth.</p><button type="button" class="top-banner-cta" data-open-enquiry="true">Enquire Now <i class="fa-solid fa-arrow-right"></i></button></div>
-      </article>
-      <article class="top-banner-image-slide">
-        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=85" alt="Students learning together" loading="lazy" decoding="async">
-        <div class="top-banner-overlay"></div>
-        <div class="top-banner-content"><span class="top-banner-kicker">ADMISSIONS &amp; GUIDANCE</span><h2>Your Learning Journey Starts Here.</h2><p>Connect with our team for course details, admission guidance and support.</p><button type="button" class="top-banner-cta" data-open-enquiry="true">Talk to Us <i class="fa-solid fa-arrow-right"></i></button></div>
-      </article>
-    </div>
-    <button type="button" id="topBannerPrev" class="top-banner-arrow prev" aria-label="Previous banner"><i class="fa-solid fa-chevron-left"></i></button>
-    <button type="button" id="topBannerNext" class="top-banner-arrow next" aria-label="Next banner"><i class="fa-solid fa-chevron-right"></i></button>
-    <div id="topBannerDots" class="top-banner-dots" aria-label="Banner slide indicators"></div>
-  </section>
-
-  <main>
+<main>
     <section id="home"><div id="heroSlider" class="swiper"><div id="heroWrapper" class="swiper-wrapper"></div></div><div class="hero-scroll">Scroll<div class="hero-scroll-line"></div></div></section>
 
     <section id="stats"><div id="statsWrapper" class="stats-grid container"></div></section>
@@ -407,12 +394,11 @@
 
     <section id="cta"><div class="container"><div id="ctaBox" class="cta-box"></div></div></section>
 
-    <section id="contact"><div class="container"><div id="contactHeading" class="section-heading"></div><div class="contact-grid"><div id="contactList" class="contact-list"></div><form id="enquiryForm"><div class="form-grid"><div class="form-field"><label>Name</label><input id="enquiryName" required></div><div class="form-field"><label>Mobile</label><input id="enquiryMobile" required></div><div class="form-field"><label>Email</label><input id="enquiryEmail" type="email"></div><div class="form-field"><label>Course</label><select id="enquiryCourse"><option value="">Select Course</option></select></div><div class="form-field full"><label>Message</label><textarea id="enquiryMessage"></textarea></div></div><button id="formSubmit" class="btn btn-primary" type="submit">Send Enquiry <i class="fa-solid fa-paper-plane"></i></button><div id="formMessage" class="form-message"></div></form></div></div></section>
+    <section id="contact"><div class="container"><div id="contactHeading" class="section-heading"></div><div class="contact-grid"><div id="contactList" class="contact-list"></div><form id="enquiryForm"><div class="form-grid"><div class="form-field"><label>Name <span>*</span></label><input id="enquiryName" required maxlength="100" autocomplete="name" placeholder="Enter your name"></div><div class="form-field"><label>Mobile <span>*</span></label><input id="enquiryMobile" required type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" placeholder="Enter 10-digit mobile number"></div><div class="form-field"><label>Course <small>(Optional)</small></label><select id="enquiryCourse"><option value="">Select Course</option></select></div><div class="form-field full"><label>Message <span>*</span></label><textarea id="enquiryMessage" required maxlength="1000" placeholder="Write your enquiry..."></textarea></div></div><button id="formSubmit" class="btn btn-primary" type="submit"><i class="fa-brands fa-whatsapp"></i> Open WhatsApp</button><div id="formMessage" class="form-message"></div></form></div></div></section>
   </main>
 
   <footer><div class="container"><div class="footer-grid"><div><a class="footer-brand" href="#home"><img id="footerLogo" alt=""><span id="footerName"></span></a><p id="footerText"></p></div><div><h4 id="footerMenuTitle"></h4><ul id="footerMenu" class="footer-menu"></ul></div><div><h4 id="footerSocialTitle"></h4><div id="socialLinks" class="footer-social"></div><h4 id="footerContactTitle"></h4><div id="footerContact"></div></div></div><div class="footer-bottom"><span id="copyrightText"></span><span id="footerRightText"></span></div></div></footer>
 
-  <a id="whatsappButton" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
   <button id="backToTop" type="button" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
 
   <div id="lightbox"><button id="lightboxClose" type="button"><i class="fa-solid fa-xmark"></i></button><img id="lightboxImage" alt=""></div>
@@ -449,13 +435,15 @@
     ====================================================== */
 
     const FRONTEND_IMAGES = {
-        logo: "https://drive.google.com/file/d/1YMRLHIxtrr3p9IvHphKod5H-Ka8OA4t7/view?usp=drivesdk",
-      favicon: "https://drive.google.com/file/d/1YMRLHIxtrr3p9IvHphKod5H-Ka8OA4t7/view?usp=drivesdk",
+      logo: "https://dummyimage.com/320x100/0f7a4d/ffffff.png&text=GREEN+INDIA",
+      favicon: "https://dummyimage.com/64x64/0f7a4d/ffffff.png&text=G",
 
       hero: [
         "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=2000&q=82",
         "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=2000&q=82",
-        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=82"
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=82",
+        "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=2000&q=82",
+        "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=2000&q=82"
       ],
 
       about: "https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1400&q=82",
@@ -1569,6 +1557,25 @@
         }
       });
 
+      // Always expose Student Login and Certificate Verification in Main Menu.
+      // These are frontend features and do not depend on Menu sheet rows.
+      menu.push({
+        Label: "Student Login",
+        Target: "#studentLogin",
+        Icon: "fa-solid fa-user-graduate",
+        "Open New Tab": false,
+        Order: 90,
+        "Hide Footer": true
+      });
+      menu.push({
+        Label: "Certificate Verification",
+        Target: "#certificateVerification",
+        Icon: "fa-solid fa-certificate",
+        "Open New Tab": false,
+        Order: 91,
+        "Hide Footer": true
+      });
+
       desktop.innerHTML =
         "";
 
@@ -1649,16 +1656,18 @@
           );
 
 
-          footer.insertAdjacentHTML(
-            "beforeend",
-            `
-              <li>
-                <a href="${escapeHTML(target)}">
-                  ${escapeHTML(label)}
-                </a>
-              </li>
-            `
-          );
+          if (!item["Hide Footer"]) {
+            footer.insertAdjacentHTML(
+              "beforeend",
+              `
+                <li>
+                  <a href="${escapeHTML(target)}">
+                    ${escapeHTML(label)}
+                  </a>
+                </li>
+              `
+            );
+          }
 
         }
       );
@@ -1694,11 +1703,21 @@
         "";
 
 
+      const heroImageCount =
+        Array.isArray(FRONTEND_IMAGES.hero)
+          ? FRONTEND_IMAGES.hero.length
+          : 0;
+
       const slides =
-        SITE_DATA.hero;
+        Array.from(
+          { length: Math.max(5, heroImageCount) },
+          function(_, index) {
+            return SITE_DATA.hero[index] || {};
+          }
+        );
 
 
-      if (!slides.length) {
+      if (!heroImageCount) {
 
         document.getElementById(
           "home"
@@ -1719,12 +1738,10 @@
 
 
       slides.forEach(
-        function(item) {
+        function(item, index) {
 
           const bg =
-            frontendImage("hero",
-              slides.indexOf(item)
-            );
+            frontendImage("hero", index);
 
 
           const badge =
@@ -4161,152 +4178,96 @@
 
 
     /* =====================================================
-       FORM SUBMISSION
+       FORM SUBMISSION — SAVE THEN OPEN WHATSAPP
     ====================================================== */
 
-    document
-      .getElementById(
-        "enquiryForm"
-      )
-      .addEventListener(
-        "submit",
-        async function(event) {
+    const enquiryForm = document.getElementById("enquiryForm");
 
-          event.preventDefault();
+    if (enquiryForm) {
+      enquiryForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
 
+        const button = document.getElementById("formSubmit");
+        const messageBox = document.getElementById("formMessage");
+        const original = button ? button.innerHTML : "";
 
-          const button =
-            document.getElementById(
-              "formSubmit"
-            );
+        const name = String(document.getElementById("enquiryName")?.value || "").trim();
+        const mobile = String(document.getElementById("enquiryMobile")?.value || "").replace(/\D/g, "");
+        const course = String(document.getElementById("enquiryCourse")?.value || "").trim();
+        const message = String(document.getElementById("enquiryMessage")?.value || "").trim();
 
+        if (!name) {
+          messageBox.textContent = "Please enter your name.";
+          messageBox.className = "form-message error";
+          document.getElementById("enquiryName")?.focus();
+          return;
+        }
 
-          const messageBox =
-            document.getElementById(
-              "formMessage"
-            );
+        if (!/^[6-9]\d{9}$/.test(mobile)) {
+          messageBox.textContent = "Please enter a valid 10-digit Indian mobile number.";
+          messageBox.className = "form-message error";
+          document.getElementById("enquiryMobile")?.focus();
+          return;
+        }
 
+        if (!message) {
+          messageBox.textContent = "Please enter your message.";
+          messageBox.className = "form-message error";
+          document.getElementById("enquiryMessage")?.focus();
+          return;
+        }
 
-          const original =
-            button.innerHTML;
+        if (button) {
+          button.disabled = true;
+          button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+        }
+        messageBox.className = "form-message";
+        messageBox.textContent = "Saving your enquiry...";
 
+        try {
+          const result = await apiCall("submitEnquiry", {
+            name: name,
+            mobile: mobile,
+            email: "",
+            course: course,
+            message: message,
+            source: "Website - Send Enquiry"
+          });
 
-          button.disabled =
-            true;
-
-
-          button.innerHTML =
-            `
-              <i class="fa-solid fa-spinner fa-spin"></i>
-              <span>
-                Sending...
-              </span>
-            `;
-
-
-          messageBox.className =
-            "form-message";
-
-
-          messageBox.textContent =
-            "";
-
-
-          try {
-
-            const result =
-              await apiCall(
-                "submitEnquiry",
-                {
-
-                  name:
-                    document.getElementById(
-                      "enquiryName"
-                    ).value,
-
-                  mobile:
-                    document.getElementById(
-                      "enquiryMobile"
-                    ).value,
-
-                  email:
-                    document.getElementById(
-                      "enquiryEmail"
-                    ).value,
-
-                  course:
-                    document.getElementById(
-                      "enquiryCourse"
-                    ).value,
-
-                  message:
-                    document.getElementById(
-                      "enquiryMessage"
-                    ).value,
-
-                  source:
-                    "Website"
-
-                }
-              );
-
-
-            if (
-              result &&
-              result.success
-            ) {
-
-              messageBox.className =
-                "form-message success";
-
-
-              messageBox.textContent =
-                setting(
-                  "enquiry_success_message",
-                  result.message ||
-                  "Submitted successfully."
-                );
-
-
-              document
-                .getElementById(
-                  "enquiryForm"
-                )
-                .reset();
-
-            } else {
-
-              throw new Error(
-                result &&
-                result.message
-                  ? result.message
-                  : "Unable to submit."
-              );
-
-            }
-
-          } catch (error) {
-
-            messageBox.className =
-              "form-message error";
-
-
-            messageBox.textContent =
-              error.message ||
-              "Something went wrong.";
-
+          if (!result || !result.success) {
+            throw new Error(result?.message || "Unable to save enquiry.");
           }
 
+          const whatsappMessage =
+            "Hello Green India Safety Institute,\n\n" +
+            "I want to make an enquiry.\n\n" +
+            "Name: " + name + "\n" +
+            "Mobile: " + mobile + "\n" +
+            "Course: " + (course || "Not specified") + "\n" +
+            "Message: " + message + "\n\n" +
+            "Please share the relevant course, admission and training details. Thank you.";
 
-          button.disabled =
-            false;
+          messageBox.className = "form-message success";
+          messageBox.textContent = "Enquiry saved. Opening WhatsApp...";
+          if (button) button.innerHTML = '<i class="fa-solid fa-check"></i> Opening WhatsApp...';
 
+          enquiryForm.reset();
 
-          button.innerHTML =
-            original;
+          const whatsappNumber = "919999999999";
+          const whatsappUrl = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(whatsappMessage);
+          setTimeout(function() { window.location.href = whatsappUrl; }, 180);
 
+        } catch (error) {
+          console.error("Send Enquiry Error:", error);
+          messageBox.className = "form-message error";
+          messageBox.textContent = error?.message || "Unable to save enquiry. Please try again.";
+          if (button) {
+            button.disabled = false;
+            button.innerHTML = original;
+          }
         }
-      );
+      });
+    }
 
 
     /* =====================================================
@@ -5522,26 +5483,64 @@
 
   </script>
 
-<div class="quick-contact-wrap" aria-label="Quick contact actions">
-  <button class="quick-enquiry-btn" id="quickEnquiryBtn" type="button"><i class="fa-solid fa-paper-plane"></i><span>Quick Enquiry</span></button>
-  <button class="quick-whatsapp-btn" id="quickWhatsappBtn" type="button" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></button>
+
+<!-- ===== STUDENT LOGIN MODAL ===== -->
+<div class="student-cert-modal" id="studentLogin" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="studentLoginTitle">
+  <div class="student-cert-dialog">
+    <button class="student-cert-close" type="button" data-close-sc="studentLogin" aria-label="Close Student Login">&times;</button>
+    <div class="student-cert-icon"><i class="fa-solid fa-user-graduate"></i></div>
+    <h3 id="studentLoginTitle">Student Login</h3>
+    <p>Login with your UserID and Password to view your student profile.</p>
+    <form id="studentLoginForm" novalidate>
+      <div class="sc-form-grid">
+        <div class="full"><label class="sc-label" for="studentUserId">UserID <span>*</span></label><input class="sc-input" id="studentUserId" required maxlength="100" autocomplete="username" placeholder="Enter UserID"></div>
+        <div class="full"><label class="sc-label" for="studentPassword">Password <span>*</span></label><input class="sc-input" id="studentPassword" type="password" required maxlength="150" autocomplete="current-password" placeholder="Enter Password"></div>
+      </div>
+      <button class="sc-submit" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+      <p class="sc-status" id="studentLoginStatus"></p>
+    </form>
+    <div class="sc-result" id="studentProfileResult"></div>
+  </div>
 </div>
 
-<div class="enquiry-modal" id="quickEnquiryModal" role="dialog" aria-modal="true" aria-labelledby="quickEnquiryTitle">
+<!-- ===== CERTIFICATE VERIFICATION MODAL ===== -->
+<div class="student-cert-modal" id="certificateVerification" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="certificateVerificationTitle">
+  <div class="student-cert-dialog">
+    <button class="student-cert-close" type="button" data-close-sc="certificateVerification" aria-label="Close Certificate Verification">&times;</button>
+    <div class="student-cert-icon"><i class="fa-solid fa-certificate"></i></div>
+    <h3 id="certificateVerificationTitle">Certificate Verification</h3>
+    <p>Enter the Certificate No and Date of Birth exactly as registered.</p>
+    <form id="certificateVerificationForm" novalidate>
+      <div class="sc-form-grid">
+        <div class="full"><label class="sc-label" for="verifyCertificateNo">Certificate No <span>*</span></label><input class="sc-input" id="verifyCertificateNo" required maxlength="100" placeholder="Enter Certificate No"></div>
+        <div class="full"><label class="sc-label" for="verifyDob">Date of Birth <span>*</span></label><input class="sc-input" id="verifyDob" type="date" required></div>
+      </div>
+      <button class="sc-submit" type="submit"><i class="fa-solid fa-shield-halved"></i> Verify Certificate</button>
+      <p class="sc-status" id="certificateStatus"></p>
+    </form>
+    <div class="sc-result" id="certificateResult"></div>
+  </div>
+</div>
+
+<div class="quick-contact-wrap" aria-label="Quick contact actions">
+  <button class="quick-enquiry-btn" id="quickEnquiryBtn" type="button"><i class="fa-solid fa-paper-plane"></i><span>Quick Enquiry</span></button>
+</div>
+
+<div class="enquiry-modal" id="quickEnquiryModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="quickEnquiryTitle">
   <div class="enquiry-dialog">
     <button class="enquiry-close" id="quickEnquiryClose" type="button" aria-label="Close enquiry form">&times;</button>
+    <div class="quick-enquiry-icon"><i class="fa-solid fa-headset"></i></div>
     <h3 id="quickEnquiryTitle">Quick Enquiry</h3>
-    <p>Tell us what you are looking for. Our team will get back to you shortly.</p>
-    <form id="quickEnquiryForm">
+    <p>Enter your details and continue directly on WhatsApp.</p>
+    <form id="quickEnquiryForm" novalidate>
       <div class="enquiry-form-grid">
-        <div><label for="quickName">Name</label><input id="quickName" name="name" required autocomplete="name" placeholder="Your name"></div>
-        <div><label for="quickMobile">Mobile</label><input id="quickMobile" name="mobile" required inputmode="tel" autocomplete="tel" placeholder="10-digit mobile"></div>
-        <div><label for="quickEmail">Email</label><input id="quickEmail" name="email" type="email" autocomplete="email" placeholder="Optional"></div>
-        <div><label for="quickCourse">Course / Service</label><input id="quickCourse" name="course" placeholder="Course name"></div>
-        <div class="full"><label for="quickMessage">Message</label><textarea id="quickMessage" name="message" placeholder="How can we help you?"></textarea></div>
+        <div class="full"><label for="quickName">Name <span>*</span></label><input id="quickName" name="name" required autocomplete="name" maxlength="100" placeholder="Enter your name"></div>
+        <div class="full"><label for="quickMobile">Mobile <span>*</span></label><input id="quickMobile" name="mobile" required type="tel" inputmode="numeric" autocomplete="tel" maxlength="10" placeholder="Enter 10-digit mobile number"></div>
+        <div class="full"><label for="quickCourse">Course <small>(Optional)</small></label><input id="quickCourse" name="course" maxlength="150" placeholder="Enter course name (optional)"></div>
+        <div class="full"><label for="quickMessage">Message <span>*</span></label><textarea id="quickMessage" name="message" required maxlength="1000" rows="4" placeholder="Write your enquiry..."></textarea></div>
       </div>
-      <button class="enquiry-submit" type="submit"><i class="fa-solid fa-paper-plane"></i> Submit Enquiry</button>
-      <p class="enquiry-note" id="quickEnquiryStatus">Your enquiry will be submitted securely.</p>
+      <button class="enquiry-submit" type="submit"><i class="fa-brands fa-whatsapp"></i> Open WhatsApp</button>
+      <p class="enquiry-note" id="quickEnquiryStatus">Your enquiry will be saved before WhatsApp opens.</p>
     </form>
   </div>
 </div>
@@ -5549,103 +5548,210 @@
 (function(){
   "use strict";
 
-  /* ================= TOP IMAGE BANNER ================= */
-  const banner = document.getElementById("topBannerSlider");
-  const track = document.getElementById("topBannerTrack");
-  const dots = document.getElementById("topBannerDots");
-  const prev = document.getElementById("topBannerPrev");
-  const next = document.getElementById("topBannerNext");
-  let bannerIndex = 0;
-  let bannerTimer = null;
-
-  function bannerSlides(){ return track ? Array.from(track.children) : []; }
-  function renderBanner(){
-    const slides = bannerSlides();
-    if(!track || !slides.length) return;
-    bannerIndex = (bannerIndex + slides.length) % slides.length;
-    track.style.transform = "translate3d(-" + (bannerIndex * 100) + "%,0,0)";
-    if(dots) Array.from(dots.children).forEach((d,i)=>d.classList.toggle("active", i===bannerIndex));
-  }
-  function startBanner(){
-    clearInterval(bannerTimer);
-    bannerTimer = setInterval(()=>{ bannerIndex++; renderBanner(); }, 5000);
-  }
-  if(track){
-    bannerSlides().forEach((_,i)=>{
-      if(!dots) return;
-      const d=document.createElement("button");
-      d.type="button"; d.className="top-banner-dot";
-      d.setAttribute("aria-label","Go to banner "+(i+1));
-      d.addEventListener("click",()=>{bannerIndex=i;renderBanner();startBanner();});
-      dots.appendChild(d);
-    });
-    renderBanner(); startBanner();
-    prev?.addEventListener("click",()=>{bannerIndex--;renderBanner();startBanner();});
-    next?.addEventListener("click",()=>{bannerIndex++;renderBanner();startBanner();});
-    banner?.addEventListener("mouseenter",()=>clearInterval(bannerTimer));
-    banner?.addEventListener("mouseleave",startBanner);
-  }
-
-  /* ================= QUICK ENQUIRY ================= */
   const modal = document.getElementById("quickEnquiryModal");
   const quickBtn = document.getElementById("quickEnquiryBtn");
   const closeBtn = document.getElementById("quickEnquiryClose");
+  const form = document.getElementById("quickEnquiryForm");
+  const status = document.getElementById("quickEnquiryStatus");
+  const submit = form ? form.querySelector("button[type='submit']") : null;
+  const whatsappNumber = "919999999999";
+
   function openEnquiry(){
     if(!modal) return;
     modal.classList.add("open");
     modal.setAttribute("aria-hidden","false");
+    if(quickBtn){
+      quickBtn.classList.add("quick-enquiry-hidden");
+      quickBtn.setAttribute("aria-hidden","true");
+      quickBtn.setAttribute("tabindex","-1");
+    }
     document.body.style.overflow="hidden";
-    setTimeout(()=>document.getElementById("quickName")?.focus(),100);
+    if(status) status.textContent="Your enquiry will be saved before WhatsApp opens.";
+    setTimeout(function(){ document.getElementById("quickName")?.focus(); },120);
   }
+
   function closeEnquiry(){
     if(!modal) return;
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden","true");
+    if(quickBtn){
+      quickBtn.classList.remove("quick-enquiry-hidden");
+      quickBtn.setAttribute("aria-hidden","false");
+      quickBtn.removeAttribute("tabindex");
+    }
     document.body.style.overflow="";
   }
+
   quickBtn?.addEventListener("click",openEnquiry);
   closeBtn?.addEventListener("click",closeEnquiry);
-  document.querySelectorAll("[data-open-enquiry='true']").forEach(el=>el.addEventListener("click",openEnquiry));
-  modal?.addEventListener("click",e=>{if(e.target===modal) closeEnquiry();});
-  document.addEventListener("keydown",e=>{if(e.key==="Escape") closeEnquiry();});
+  document.querySelectorAll("[data-open-enquiry='true']").forEach(function(el){ el.addEventListener("click",openEnquiry); });
+  modal?.addEventListener("click",function(e){ if(e.target===modal) closeEnquiry(); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape" && modal?.classList.contains("open")) closeEnquiry(); });
 
-  /* ================= WHATSAPP ================= */
-  const whatsappNumber = "919999999999";
-  const whatsappMessage = "Hello Green India Safety Institute, I would like to know more about your courses, admission and training programs. Please guide me.";
-  function openWhatsApp(){
-    const url="https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(whatsappMessage);
-    window.open(url,"_blank","noopener,noreferrer");
-  }
-  document.getElementById("quickWhatsappBtn")?.addEventListener("click",openWhatsApp);
-
-  /* ================= QUICK ENQUIRY SUBMIT ================= */
-  document.getElementById("quickEnquiryForm")?.addEventListener("submit", async function(e){
+  form?.addEventListener("submit",async function(e){
     e.preventDefault();
-    const form=this;
-    const status=document.getElementById("quickEnquiryStatus");
-    const submit=form.querySelector("button[type='submit']");
-    const data=Object.fromEntries(new FormData(form).entries());
-    if(!data.name || !data.mobile){
-      if(status) status.textContent="Please enter your name and mobile number.";
-      return;
-    }
-    if(submit){submit.disabled=true;submit.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Sending...';}
+
+    const name = String(document.getElementById("quickName")?.value || "").trim();
+    const mobile = String(document.getElementById("quickMobile")?.value || "").replace(/\D/g, "");
+    const course = String(document.getElementById("quickCourse")?.value || "").trim();
+    const message = String(document.getElementById("quickMessage")?.value || "").trim();
+
+    if(!name){ status.textContent="Please enter your name."; document.getElementById("quickName")?.focus(); return; }
+    if(!/^[6-9]\d{9}$/.test(mobile)){ status.textContent="Please enter a valid 10-digit Indian mobile number."; document.getElementById("quickMobile")?.focus(); return; }
+    if(!message){ status.textContent="Please enter your message."; document.getElementById("quickMessage")?.focus(); return; }
+    if(!/^[6-9]\d{9}$/.test(whatsappNumber.replace(/^91/,""))){ status.textContent="WhatsApp number is not configured correctly."; return; }
+
+    if(submit){ submit.disabled=true; submit.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Saving...'; }
+    status.textContent="Saving your enquiry...";
+
     try{
-      if(typeof apiCall === "function"){
-        const result=await apiCall("submitEnquiry",{name:data.name,mobile:data.mobile,email:data.email||"",course:data.course||"",message:data.message||"",source:"Quick Enquiry"});
-        if(!result || !result.success) throw new Error(result?.message || "Unable to submit enquiry.");
-        if(status) status.textContent=result.message || "Thank you! Your enquiry has been submitted successfully.";
-        form.reset();
-      }else{
-        throw new Error("Enquiry service unavailable");
-      }
+      if(typeof apiCall !== "function") throw new Error("Enquiry service unavailable.");
+
+      const result = await apiCall("submitEnquiry",{
+        name:name,
+        mobile:mobile,
+        email:"",
+        course:course,
+        message:message,
+        source:"Quick Enquiry - WhatsApp"
+      });
+
+      if(!result || !result.success) throw new Error(result?.message || "Unable to save enquiry.");
+
+      const customMessage =
+        "Hello Green India Safety Institute,\n\n" +
+        "I want to make an enquiry.\n\n" +
+        "Name: " + name + "\n" +
+        "Mobile: " + mobile + "\n" +
+        "Course: " + (course || "Not specified") + "\n" +
+        "Message: " + message + "\n\n" +
+        "Please share the relevant course, admission and training details. Thank you.";
+
+      status.textContent="Enquiry saved. Opening WhatsApp...";
+      if(submit) submit.innerHTML='<i class="fa-solid fa-check"></i> Opening WhatsApp...';
+      form.reset();
+
+      const whatsappUrl = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(customMessage);
+      setTimeout(function(){ window.location.href = whatsappUrl; },180);
+
     }catch(err){
-      const msg="Hello Green India Safety Institute, my name is "+data.name+". Mobile: "+data.mobile+". Course: "+(data.course||"Not specified")+". Message: "+(data.message||"I need course/admission information.");
-      if(status) status.textContent="Unable to submit online. Opening WhatsApp instead...";
-      setTimeout(()=>window.open("https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(msg),"_blank","noopener,noreferrer"),250);
-    }finally{
-      if(submit){submit.disabled=false;submit.innerHTML='<i class="fa-solid fa-paper-plane"></i> Submit Enquiry';}
+      console.error("Quick Enquiry Error:",err);
+      status.textContent = err?.message || "Unable to save enquiry. Please try again.";
+      if(submit){ submit.disabled=false; submit.innerHTML='<i class="fa-brands fa-whatsapp"></i> Open WhatsApp'; }
     }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  function openSC(id){
+    const modal=document.getElementById(id);
+    if(!modal)return;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+    const first=modal.querySelector("input");
+    setTimeout(function(){first?.focus();},100);
+  }
+  function closeSC(id){
+    const modal=document.getElementById(id);
+    if(!modal)return;
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden","true");
+    if(!document.querySelector(".student-cert-modal.open,.enquiry-modal.open")) document.body.style.overflow="";
+  }
+  function cleanText(v){return String(v??"").trim();}
+  function esc(v){
+    return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+  function fmtDate(v){
+    if(!v)return "-";
+    const d=new Date(v);
+    if(!isNaN(d.getTime())) return d.toLocaleDateString("en-IN",{day:"2-digit",month:"2-digit",year:"numeric"});
+    return esc(v);
+  }
+  function profileHTML(p){
+    const rows=[
+      ["Name",p.name], ["Father's Name",p.fatherName], ["Mobile",p.mobile], ["Address",p.address],
+      ["UserID",p.userId], ["CourseID",p.courseId], ["Course Name",p.courseName], ["Course Fee",p.courseFee],
+      ["Admission Date",fmtDate(p.admissionDate)], ["Date Of Birth",fmtDate(p.dateOfBirth)]
+    ];
+    return '<div class="sc-profile-head"><div class="sc-profile-badge"><i class="fa-solid fa-user-check"></i></div><div><div class="sc-profile-title">Student Profile</div><div class="sc-profile-sub">Login successful</div></div></div><table class="sc-table">'+rows.map(function(r){return '<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1]||"-")+'</td></tr>';}).join('')+'</table>';
+  }
+  function certHTML(p){
+    let image="";
+    if(p.certificateImageUrl){
+      image='<div class="cert-image-wrap"><img src="'+esc(p.certificateImageUrl)+'" alt="Verified Certificate" loading="lazy" onerror="this.parentElement.style.display=\'none\'"><p class="cert-image-note">Certificate document</p></div>';
+    }
+    const rows=[
+      ["Name",p.name],["Father's Name",p.fatherName],["Address",p.address],["Course Name",p.courseName],
+      ["Admission Date",fmtDate(p.admissionDate)],["Date Of Birth",fmtDate(p.dateOfBirth)],["Certificate No",p.certificateNo]
+    ];
+    return '<div class="cert-verified"><div class="cert-stamp">✓ VERIFIED<br>STUDENT</div></div><table class="sc-table">'+rows.map(function(r){return '<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1]||"-")+'</td></tr>';}).join('')+'</table>'+image;
+  }
+
+  document.addEventListener("click",function(e){
+    const link=e.target.closest("a");
+    if(!link)return;
+    const href=link.getAttribute("href")||"";
+    if(href==="#studentLogin" || href==="#certificateVerification"){
+      e.preventDefault();
+      openSC(href.substring(1));
+      const mobileMenu=document.getElementById("mobileMenu");
+      if(mobileMenu) mobileMenu.classList.remove("open");
+    }
+  });
+  document.querySelectorAll("[data-close-sc]").forEach(function(btn){btn.addEventListener("click",function(){closeSC(btn.getAttribute("data-close-sc"));});});
+  document.querySelectorAll(".student-cert-modal").forEach(function(modal){
+    modal.addEventListener("click",function(e){if(e.target===modal)closeSC(modal.id);});
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key!=="Escape")return;
+    document.querySelectorAll(".student-cert-modal.open").forEach(function(m){closeSC(m.id);});
+  });
+
+  const loginForm=document.getElementById("studentLoginForm");
+  loginForm?.addEventListener("submit",async function(e){
+    e.preventDefault();
+    const userId=cleanText(document.getElementById("studentUserId")?.value);
+    const password=String(document.getElementById("studentPassword")?.value||"");
+    const status=document.getElementById("studentLoginStatus");
+    const resultBox=document.getElementById("studentProfileResult");
+    const btn=loginForm.querySelector("button[type='submit']");
+    resultBox.classList.remove("show"); resultBox.innerHTML="";
+    if(!userId){status.className="sc-status error";status.textContent="Please enter your UserID.";return;}
+    if(!password){status.className="sc-status error";status.textContent="Please enter your Password.";return;}
+    btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';status.className="sc-status";status.textContent="Checking login...";
+    try{
+      const result=await apiCall("studentLogin",{userId:userId,password:password});
+      if(!result||!result.success)throw new Error(result?.message||"Invalid UserID or Password.");
+      resultBox.innerHTML=profileHTML(result.student||{});resultBox.classList.add("show");status.className="sc-status success";status.textContent="Login successful.";
+      document.getElementById("studentPassword").value="";
+    }catch(err){status.className="sc-status error";status.textContent=err?.message||"Login failed. Please try again.";}
+    finally{btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-right-to-bracket"></i> Login';}
+  });
+
+  const certForm=document.getElementById("certificateVerificationForm");
+  certForm?.addEventListener("submit",async function(e){
+    e.preventDefault();
+    const certificateNo=cleanText(document.getElementById("verifyCertificateNo")?.value);
+    const dateOfBirth=cleanText(document.getElementById("verifyDob")?.value);
+    const status=document.getElementById("certificateStatus");
+    const resultBox=document.getElementById("certificateResult");
+    const btn=certForm.querySelector("button[type='submit']");
+    resultBox.classList.remove("show");resultBox.innerHTML="";
+    if(!certificateNo){status.className="sc-status error";status.textContent="Please enter Certificate No.";return;}
+    if(!dateOfBirth){status.className="sc-status error";status.textContent="Please select Date of Birth.";return;}
+    btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';status.className="sc-status";status.textContent="Verifying certificate...";
+    try{
+      const result=await apiCall("verifyCertificate",{certificateNo:certificateNo,dateOfBirth:dateOfBirth});
+      if(!result||!result.success)throw new Error(result?.message||"Certificate verification failed.");
+      resultBox.innerHTML=certHTML(result.student||{});resultBox.classList.add("show");status.className="sc-status success";status.textContent="Certificate verified successfully.";
+    }catch(err){status.className="sc-status error";status.textContent=err?.message||"Certificate not found or details do not match.";}
+    finally{btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-shield-halved"></i> Verify Certificate';}
   });
 })();
 </script>
