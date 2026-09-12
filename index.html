@@ -5643,769 +5643,117 @@
 })();
 </script>
 
-
 <script>
 (function(){
   "use strict";
 
-  /* =========================================================
-     BASIC HELPERS
-  ========================================================= */
-
   function openSC(id){
-    const modal = document.getElementById(id);
-
-    if(!modal) return;
-
+    const modal=document.getElementById(id);
+    if(!modal)return;
     modal.classList.add("open");
     modal.setAttribute("aria-hidden","false");
-
-    document.body.style.overflow = "hidden";
-
-    const first = modal.querySelector("input");
-
-    setTimeout(function(){
-      first?.focus();
-    },100);
+    document.body.style.overflow="hidden";
+    const first=modal.querySelector("input");
+    setTimeout(function(){first?.focus();},100);
   }
-
-
   function closeSC(id){
-    const modal = document.getElementById(id);
-
-    if(!modal) return;
-
+    const modal=document.getElementById(id);
+    if(!modal)return;
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden","true");
-
-    if(
-      !document.querySelector(
-        ".student-cert-modal.open,.enquiry-modal.open"
-      )
-    ){
-      document.body.style.overflow = "";
-    }
+    if(!document.querySelector(".student-cert-modal.open,.enquiry-modal.open")) document.body.style.overflow="";
   }
-
-
-  function cleanText(v){
-    return String(v ?? "").trim();
-  }
-
-
+  function cleanText(v){return String(v??"").trim();}
   function esc(v){
-    return String(v ?? "")
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#039;");
+    return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
   }
-
-
   function fmtDate(v){
-
-    if(!v) return "-";
-
-    const d = new Date(v);
-
-    if(!isNaN(d.getTime())){
-
-      return d.toLocaleDateString(
-        "en-IN",
-        {
-          day:"2-digit",
-          month:"2-digit",
-          year:"numeric"
-        }
-      );
-
-    }
-
+    if(!v)return "-";
+    const d=new Date(v);
+    if(!isNaN(d.getTime())) return d.toLocaleDateString("en-IN",{day:"2-digit",month:"2-digit",year:"numeric"});
     return esc(v);
   }
-
-
-  /* =========================================================
-     STUDENT PROFILE HTML
-  ========================================================= */
-
   function profileHTML(p){
-
-    const rows = [
-
-      ["Name",p.name],
-      ["Father's Name",p.fatherName],
-      ["Mobile",p.mobile],
-      ["Address",p.address],
-      ["UserID",p.userId],
-      ["CourseID",p.courseId],
-      ["Course Name",p.courseName],
-      ["Course Fee",p.courseFee],
-      ["Admission Date",fmtDate(p.admissionDate)],
-      ["Date Of Birth",fmtDate(p.dateOfBirth)]
-
+    const rows=[
+      ["Name",p.name], ["Father's Name",p.fatherName], ["Mobile",p.mobile], ["Address",p.address],
+      ["UserID",p.userId], ["CourseID",p.courseId], ["Course Name",p.courseName], ["Course Fee",p.courseFee],
+      ["Admission Date",fmtDate(p.admissionDate)], ["Date Of Birth",fmtDate(p.dateOfBirth)]
     ];
-
-
-    return (
-
-      '<div class="sc-profile-head">' +
-
-        '<div class="sc-profile-badge">' +
-          '<i class="fa-solid fa-user-check"></i>' +
-        '</div>' +
-
-        '<div>' +
-
-          '<div class="sc-profile-title">' +
-            'Student Profile' +
-          '</div>' +
-
-          '<div class="sc-profile-sub">' +
-            'Login successful' +
-          '</div>' +
-
-        '</div>' +
-
-      '</div>' +
-
-      '<table class="sc-table">' +
-
-        rows.map(function(r){
-
-          return (
-            '<tr>' +
-              '<td>' + esc(r[0]) + '</td>' +
-              '<td>' + esc(r[1] || "-") + '</td>' +
-            '</tr>'
-          );
-
-        }).join("") +
-
-      '</table>'
-
-    );
-
+    return '<div class="sc-profile-head"><div class="sc-profile-badge"><i class="fa-solid fa-user-check"></i></div><div><div class="sc-profile-title">Student Profile</div><div class="sc-profile-sub">Login successful</div></div></div><table class="sc-table">'+rows.map(function(r){return '<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1]||"-")+'</td></tr>';}).join('')+'</table>';
   }
-
-
-  /* =========================================================
-     CERTIFICATE HTML
-  ========================================================= */
-
   function certHTML(p){
-
-    let image = "";
-
-
+    let image="";
     if(p.certificateImageUrl){
-
-      image =
-        '<div class="cert-image-wrap">' +
-
-          '<img src="' +
-            esc(p.certificateImageUrl) +
-            '"' +
-
-            ' alt="Verified Certificate"' +
-
-            ' loading="lazy"' +
-
-            ' onerror="this.parentElement.style.display=\'none\'">' +
-
-          '<p class="cert-image-note">' +
-            'Certificate document' +
-          '</p>' +
-
-        '</div>';
-
+      image='<div class="cert-image-wrap"><img src="'+esc(p.certificateImageUrl)+'" alt="Verified Certificate" loading="lazy" onerror="this.parentElement.style.display=\'none\'"><p class="cert-image-note">Certificate document</p></div>';
     }
-
-
-    const rows = [
-
-      ["Name",p.name],
-      ["Father's Name",p.fatherName],
-      ["Address",p.address],
-      ["Course Name",p.courseName],
-      ["Admission Date",fmtDate(p.admissionDate)],
-      ["Date Of Birth",fmtDate(p.dateOfBirth)],
-      ["Certificate No",p.certificateNo]
-
+    const rows=[
+      ["Name",p.name],["Father's Name",p.fatherName],["Address",p.address],["Course Name",p.courseName],
+      ["Admission Date",fmtDate(p.admissionDate)],["Date Of Birth",fmtDate(p.dateOfBirth)],["Certificate No",p.certificateNo]
     ];
-
-
-    return (
-
-      '<div class="cert-verified">' +
-
-        '<div class="cert-stamp">' +
-          '✓ VERIFIED<br>STUDENT' +
-        '</div>' +
-
-      '</div>' +
-
-
-      '<table class="sc-table">' +
-
-        rows.map(function(r){
-
-          return (
-            '<tr>' +
-              '<td>' + esc(r[0]) + '</td>' +
-              '<td>' + esc(r[1] || "-") + '</td>' +
-            '</tr>'
-          );
-
-        }).join("") +
-
-      '</table>' +
-
-      image
-
-    );
-
+    return '<div class="cert-verified"><div class="cert-stamp">✓ VERIFIED<br>STUDENT</div></div><table class="sc-table">'+rows.map(function(r){return '<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1]||"-")+'</td></tr>';}).join('')+'</table>'+image;
   }
 
-
-  /* =========================================================
-     URL PATH → MODAL ROUTING
-     
-     /login
-        → studentLogin
-
-     /verification
-        → certificateVerification
-  ========================================================= */
-
-  function openModalFromURL(){
-
-    const path =
-      window.location.pathname
-        .replace(/\/+$/,"")
-        .toLowerCase();
-
-
-    /*
-      Example:
-
-      index.html/login
-      pathname may be:
-
-      /index.html/login
-
-      Therefore last path segment is used.
-    */
-
-    const parts =
-      path.split("/").filter(Boolean);
-
-
-    if(!parts.length) return;
-
-
-    const last =
-      parts[parts.length - 1];
-
-
-    /* =======================================================
-       LOGIN ROUTE
-    ======================================================= */
-
-    if(last === "login"){
-
-      openSC("studentLogin");
-
-      return;
-
-    }
-
-
-    /* =======================================================
-       VERIFICATION ROUTE
-    ======================================================= */
-
-    if(
-      last === "verification" ||
-      last === "verify"
-    ){
-
-      openSC("certificateVerification");
-
-      return;
-
-    }
-
-  }
-
-
-  /* =========================================================
-     NAVIGATION LINKS
-     
-     Existing #studentLogin
-     Existing #certificateVerification
-  ========================================================= */
-
-  document.addEventListener(
-    "click",
-    function(e){
-
-      const link =
-        e.target.closest("a");
-
-      if(!link) return;
-
-
-      const href =
-        link.getAttribute("href") || "";
-
-
-      if(
-        href === "#studentLogin" ||
-        href === "#certificateVerification"
-      ){
-
-        e.preventDefault();
-
-
-        openSC(
-          href.substring(1)
-        );
-
-
-        const mobileMenu =
-          document.getElementById(
-            "mobileMenu"
-          );
-
-
-        if(mobileMenu){
-
-          mobileMenu.classList.remove(
-            "open"
-          );
-
-        }
-
-      }
-
-    }
-  );
-
-
-  /* =========================================================
-     CLOSE BUTTONS
-  ========================================================= */
-
-  document
-    .querySelectorAll("[data-close-sc]")
-    .forEach(function(btn){
-
-      btn.addEventListener(
-        "click",
-        function(){
-
-          closeSC(
-            btn.getAttribute(
-              "data-close-sc"
-            )
-          );
-
-        }
-      );
-
-    });
-
-
-  /* =========================================================
-     CLOSE ON BACKDROP CLICK
-  ========================================================= */
-
-  document
-    .querySelectorAll(".student-cert-modal")
-    .forEach(function(modal){
-
-      modal.addEventListener(
-        "click",
-        function(e){
-
-          if(e.target === modal){
-
-            closeSC(modal.id);
-
-          }
-
-        }
-      );
-
-    });
-
-
-  /* =========================================================
-     ESC KEY
-  ========================================================= */
-
-  document.addEventListener(
-    "keydown",
-    function(e){
-
-      if(e.key !== "Escape") return;
-
-
-      document
-        .querySelectorAll(
-          ".student-cert-modal.open"
-        )
-        .forEach(function(m){
-
-          closeSC(m.id);
-
-        });
-
-    }
-  );
-
-
-  /* =========================================================
-     STUDENT LOGIN
-  ========================================================= */
-
-  const loginForm =
-    document.getElementById(
-      "studentLoginForm"
-    );
-
-
-  loginForm?.addEventListener(
-    "submit",
-    async function(e){
-
+  document.addEventListener("click",function(e){
+    const link=e.target.closest("a");
+    if(!link)return;
+    const href=link.getAttribute("href")||"";
+    if(href==="#studentLogin" || href==="#certificateVerification"){
       e.preventDefault();
-
-
-      const userId =
-        cleanText(
-          document.getElementById(
-            "studentUserId"
-          )?.value
-        );
-
-
-      const password =
-        String(
-          document.getElementById(
-            "studentPassword"
-          )?.value || ""
-        );
-
-
-      const status =
-        document.getElementById(
-          "studentLoginStatus"
-        );
-
-
-      const resultBox =
-        document.getElementById(
-          "studentProfileResult"
-        );
-
-
-      const btn =
-        loginForm.querySelector(
-          "button[type='submit']"
-        );
-
-
-      resultBox.classList.remove("show");
-      resultBox.innerHTML = "";
-
-
-      if(!userId){
-
-        status.className =
-          "sc-status error";
-
-        status.textContent =
-          "Please enter your UserID.";
-
-        return;
-
-      }
-
-
-      if(!password){
-
-        status.className =
-          "sc-status error";
-
-        status.textContent =
-          "Please enter your Password.";
-
-        return;
-
-      }
-
-
-      btn.disabled = true;
-
-
-      btn.innerHTML =
-        '<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';
-
-
-      status.className =
-        "sc-status";
-
-
-      status.textContent =
-        "Checking login...";
-
-
-      try{
-
-        const result =
-          await apiCall(
-            "studentLogin",
-            {
-              userId:userId,
-              password:password
-            }
-          );
-
-
-        if(
-          !result ||
-          !result.success
-        ){
-
-          throw new Error(
-            result?.message ||
-            "Invalid UserID or Password."
-          );
-
-        }
-
-
-        resultBox.innerHTML =
-          profileHTML(
-            result.student || {}
-          );
-
-
-        resultBox.classList.add(
-          "show"
-        );
-
-
-        status.className =
-          "sc-status success";
-
-
-        status.textContent =
-          "Login successful.";
-
-
-        document.getElementById(
-          "studentPassword"
-        ).value = "";
-
-
-      }catch(err){
-
-        status.className =
-          "sc-status error";
-
-
-        status.textContent =
-          err?.message ||
-          "Login failed. Please try again.";
-
-      }finally{
-
-        btn.disabled = false;
-
-
-        btn.innerHTML =
-          '<i class="fa-solid fa-right-to-bracket"></i> Login';
-
-      }
-
+      openSC(href.substring(1));
+      const mobileMenu=document.getElementById("mobileMenu");
+      if(mobileMenu) mobileMenu.classList.remove("open");
     }
-  );
-
-
-  /* =========================================================
-     CERTIFICATE VERIFICATION
-  ========================================================= */
-
-  const certForm =
-    document.getElementById(
-      "certificateVerificationForm"
-    );
-
-
-  certForm?.addEventListener(
-    "submit",
-    async function(e){
-
-      e.preventDefault();
-
-
-      const certificateNo =
-        cleanText(
-          document.getElementById(
-            "verifyCertificateNo"
-          )?.value
-        );
-
-
-      const dateOfBirth =
-        cleanText(
-          document.getElementById(
-            "verifyDob"
-          )?.value
-        );
-
-
-      const status =
-        document.getElementById(
-          "certificateStatus"
-        );
-
-
-      const resultBox =
-        document.getElementById(
-          "certificateResult"
-        );
-
-
-      const btn =
-        certForm.querySelector(
-          "button[type='submit']"
-        );
-
-
-      resultBox.classList.remove(
-        "show"
-      );
-
-
-      resultBox.innerHTML = "";
-
-
-      if(!certificateNo){
-
-        status.className =
-          "sc-status error";
-
-
-        status.textContent =
-          "Please enter Certificate No.";
-
-
-        return;
-
-      }
-
-
-      if(!dateOfBirth){
-
-        status.className =
-          "sc-status error";
-
-
-        status.textContent =
-          "Please select Date of Birth.";
-
-
-        return;
-
-      }
-
-
-      btn.disabled = true;
-
-
-      btn.innerHTML =
-        '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
-
-
-      status.className =
-        "sc-status";
-
-
-      status.textContent =
-        "Verifying certificate...";
-
-
-      try{
-
-        const result =
-          await apiCall(
-            "verifyCertificate",
-            {
-              certificateNo:certificateNo,
-              dateOfBirth:dateOfBirth
-            }
-          );
-
-
-        if(
-          !result ||
-          !result.success
-        ){
-
-          throw new Error(
-            result?.message ||
-            "Certificate verification failed."
-          );
-
-        }
-
-
-        resultBox.innerHTML =
-          certHTML(
-            result.student || {}
-          );
-
-
-        resultBox.classList.add(
-          "show"
-        );
-
-
-        status.className =
-          "sc-status success";
-
-
-        status.textContent =
-          "Certificate verified successfully.";
-
-
-      }catch(err){
-
-        status.className =
-          "sc-status error";
-
-
-        status.textContent =
-          err?.message ||
-          "Certificate not found or details do not match.";
-
-      }finally{
-
-        btn.disabled = false;
-
-
-        btn.innerHTML =
-          '<i class="fa-solid fa-shield-halved"></i> Verify Certificate';
-
-      }
-
-    }
-  );
+  });
+  document.querySelectorAll("[data-close-sc]").forEach(function(btn){btn.addEventListener("click",function(){closeSC(btn.getAttribute("data-close-sc"));});});
+  document.querySelectorAll(".student-cert-modal").forEach(function(modal){
+    modal.addEventListener("click",function(e){if(e.target===modal)closeSC(modal.id);});
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key!=="Escape")return;
+    document.querySelectorAll(".student-cert-modal.open").forEach(function(m){closeSC(m.id);});
+  });
+
+  const loginForm=document.getElementById("studentLoginForm");
+  loginForm?.addEventListener("submit",async function(e){
+    e.preventDefault();
+    const userId=cleanText(document.getElementById("studentUserId")?.value);
+    const password=String(document.getElementById("studentPassword")?.value||"");
+    const status=document.getElementById("studentLoginStatus");
+    const resultBox=document.getElementById("studentProfileResult");
+    const btn=loginForm.querySelector("button[type='submit']");
+    resultBox.classList.remove("show"); resultBox.innerHTML="";
+    if(!userId){status.className="sc-status error";status.textContent="Please enter your UserID.";return;}
+    if(!password){status.className="sc-status error";status.textContent="Please enter your Password.";return;}
+    btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';status.className="sc-status";status.textContent="Checking login...";
+    try{
+      const result=await apiCall("studentLogin",{userId:userId,password:password});
+      if(!result||!result.success)throw new Error(result?.message||"Invalid UserID or Password.");
+      resultBox.innerHTML=profileHTML(result.student||{});resultBox.classList.add("show");status.className="sc-status success";status.textContent="Login successful.";
+      document.getElementById("studentPassword").value="";
+    }catch(err){status.className="sc-status error";status.textContent=err?.message||"Login failed. Please try again.";}
+    finally{btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-right-to-bracket"></i> Login';}
+  });
+
+  const certForm=document.getElementById("certificateVerificationForm");
+  certForm?.addEventListener("submit",async function(e){
+    e.preventDefault();
+    const certificateNo=cleanText(document.getElementById("verifyCertificateNo")?.value);
+    const dateOfBirth=cleanText(document.getElementById("verifyDob")?.value);
+    const status=document.getElementById("certificateStatus");
+    const resultBox=document.getElementById("certificateResult");
+    const btn=certForm.querySelector("button[type='submit']");
+    resultBox.classList.remove("show");resultBox.innerHTML="";
+    if(!certificateNo){status.className="sc-status error";status.textContent="Please enter Certificate No.";return;}
+    if(!dateOfBirth){status.className="sc-status error";status.textContent="Please select Date of Birth.";return;}
+    btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';status.className="sc-status";status.textContent="Verifying certificate...";
+    try{
+      const result=await apiCall("verifyCertificate",{certificateNo:certificateNo,dateOfBirth:dateOfBirth});
+      if(!result||!result.success)throw new Error(result?.message||"Certificate verification failed.");
+      resultBox.innerHTML=certHTML(result.student||{});resultBox.classList.add("show");status.className="sc-status success";status.textContent="Certificate verified successfully.";
+    }catch(err){status.className="sc-status error";status.textContent=err?.message||"Certificate not found or details do not match.";}
+    finally{btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-shield-halved"></i> Verify Certificate';}
+  });
+})();
 </script>
 </body>
 </html>
