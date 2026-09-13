@@ -1,3 +1,0 @@
-# Clean public routes for Cloudflare Pages
-/login /login.html 200
-/verify /verify.html 200
