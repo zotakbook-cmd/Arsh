@@ -1,9 +1,6 @@
-```jsonc
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-
   "name": "arsh",
-
   "compatibility_date": "2026-09-11",
 
   "assets": {
@@ -12,4 +9,3 @@
     "not_found_handling": "404-page"
   }
 }
-```
