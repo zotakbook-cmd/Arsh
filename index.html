@@ -8,14 +8,14 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Frontend-first preloader logo: discovered before fonts/scripts -->
-  <link rel="preload" as="image" href="https://dummyimage.com/320x100/0f7a4d/ffffff.png&text=GREEN+INDIA" fetchpriority="high">
-  <script>window.__FRONTEND_PRELOADER_LOGO__="https://dummyimage.com/320x100/0f7a4d/ffffff.png&text=GREEN+INDIA";</script>
-  <meta name="description" id="metaDescription" content="Arsh Technical Academy Pvt. Ltd.">
+  <link rel="preload" as="image" href="https://dummyimage.com/320x100/0f7a4d/ffffff.png&text=ARSH+TECHNICAL+ACADEMY" fetchpriority="high">
+  <script>window.__FRONTEND_PRELOADER_LOGO__="https://dummyimage.com/320x100/0f7a4d/ffffff.png&text=ARSH+TECHNICAL+ACADEMY";</script>
+  <meta name="description" id="metaDescription" content="Green India Safety Institute">
   <meta name="keywords" id="metaKeywords" content="Safety Institute, training, courses">
-  <meta property="og:title" id="ogTitle" content="Arsh Technical Academy Pvt. Ltd.">
-  <meta property="og:description" id="ogDescription" content="Arsh Technical Academy Pvt. Ltd.">
+  <meta property="og:title" id="ogTitle" content="Green India Safety Institute">
+  <meta property="og:description" id="ogDescription" content="Green India Safety Institute">
   <meta property="og:image" id="ogImage" content="">
-  <title>Arsh Technical Academy Pvt. Ltd.</title>
+  <title>Green India Safety Institute</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -279,15 +279,258 @@
 .enquiry-submit{background:linear-gradient(135deg,#0f7a4d,#075634);box-shadow:0 10px 24px rgba(15,122,77,.18);transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;}
 .enquiry-submit:hover{background:linear-gradient(135deg,#0f7a4d,#075634);transform:translateY(-2px);box-shadow:0 14px 28px rgba(15,122,77,.24);filter:brightness(1.04);}
 @media(max-width:600px){.quick-contact-wrap{right:12px;bottom:14px}.quick-enquiry-btn{height:50px;padding:0 17px;font-size:13px}.enquiry-modal{padding:14px}.enquiry-dialog{padding:22px;border-radius:22px;max-height:calc(100dvh - 28px)}.enquiry-dialog h3{font-size:27px}.quick-enquiry-icon{width:48px;height:48px;margin-bottom:11px}.enquiry-dialog input{min-height:46px}.enquiry-submit{height:50px;font-size:14px;}}
+
+
+    /* =========================================================
+       TOPBAR + BANNER + CLEAN MAIN MENU LAYOUT
+       Only the page shell/navigation layout is changed here.
+       Existing website sections and functionality remain intact.
+    ========================================================= */
+    .site-topbar{
+      height:34px;
+      background:var(--secondary);
+      color:rgba(255,255,255,.88);
+      font-size:12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .site-topbar-inner{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .topbar-left,.topbar-date{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      min-width:0;
+    }
+    .topbar-left a,.topbar-date{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      white-space:nowrap;
+    }
+    .topbar-left a{color:rgba(255,255,255,.88);transition:color .2s ease}
+    .topbar-left a:hover{color:var(--accent)}
+    .topbar-left i,.topbar-date i{color:var(--accent);font-size:11px}
+
+    .site-banner{
+      height:180px;
+      width:100%;
+      overflow:hidden;
+      background:var(--secondary);
+      position:relative;
+    }
+    .site-banner img{
+      width:100%;
+      height:180px;
+      display:block;
+      object-fit:cover;
+      object-position:center;
+    }
+    .site-banner:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:linear-gradient(180deg,rgba(6,45,34,.05),rgba(6,45,34,.18));
+    }
+
+    #siteHeader{
+      position:sticky;
+      top:0;
+      left:auto;
+      right:auto;
+      background:rgba(255,255,255,.97);
+      backdrop-filter:blur(16px);
+      box-shadow:0 5px 20px rgba(5,38,27,.07);
+      border-bottom:1px solid var(--border);
+    }
+    .navbar{
+      height:68px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+    .nav-menu{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:1px;
+      list-style:none;
+      margin:0;
+      padding:0;
+      white-space:nowrap;
+    }
+    .nav-menu li{margin:0;padding:0;flex:0 0 auto}
+    .nav-menu a{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:5px;
+      padding:10px 8px;
+      border-radius:9px;
+      font-weight:700;
+      font-size:12px;
+      line-height:1.2;
+      color:var(--secondary);
+      white-space:nowrap;
+      transition:background .2s ease,color .2s ease,transform .2s ease;
+    }
+    .nav-menu a i{font-size:10px;opacity:.72}
+    .nav-menu a:hover,.nav-menu a.active{
+      background:var(--light);
+      color:var(--primary);
+    }
+    .nav-menu a.active{box-shadow:inset 0 -2px 0 var(--primary)}
+    #menuToggle{display:none}
+
+    main{padding-top:0}
+    #home{
+      padding:0;
+      min-height:0;
+    }
+    .swiper,.hero-slide{
+      height:calc(100svh - 34px - 180px - 68px);
+      min-height:360px;
+    }
+
+    @media(max-width:1180px){
+      .nav-menu a{font-size:11px;padding-left:6px;padding-right:6px;gap:4px}
+      .nav-menu a i{font-size:9px}
+    }
+
+    @media(max-width:900px){
+      .site-topbar{height:42px}
+      .site-topbar-inner{width:calc(100% - 28px)}
+      .topbar-left,.topbar-date{gap:10px}
+      .topbar-left a span,.topbar-date span{max-width:210px;overflow:hidden;text-overflow:ellipsis}
+
+      .site-banner,.site-banner img{height:180px}
+
+      #siteHeader{position:sticky;top:0}
+      .navbar{height:64px;padding-left:0;padding-right:0;justify-content:flex-end}
+      .nav-menu{display:none!important}
+      #menuToggle{
+        display:grid;
+        place-items:center;
+        width:44px;
+        height:44px;
+        flex:0 0 44px;
+        border:0;
+        background:var(--light);
+        color:var(--secondary);
+        border-radius:12px;
+        cursor:pointer;
+      }
+      main{padding-top:0}
+      .swiper,.hero-slide{
+        height:calc(100svh - 42px - 180px - 64px);
+        min-height:330px;
+      }
+    }
+
+    @media(max-width:600px){
+      .site-topbar{height:auto;min-height:42px}
+      .site-topbar-inner{
+        min-height:42px;
+        width:calc(100% - 24px);
+        gap:8px;
+      }
+      .topbar-left{gap:10px;min-width:0;overflow:hidden}
+      .topbar-left a{gap:5px;min-width:0;font-size:10px}
+      .topbar-left a span{
+        max-width:110px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+      }
+      .topbar-left a:nth-child(2) span{max-width:105px}
+      .topbar-date{gap:5px;font-size:10px;flex:0 0 auto}
+      .topbar-date span{max-width:112px}
+      .topbar-left i,.topbar-date i{font-size:10px}
+
+      .site-banner,.site-banner img{height:180px}
+      .site-banner img{object-position:center}
+
+      .navbar{height:60px}
+      #menuToggle{width:42px;height:42px;flex-basis:42px}
+      .swiper,.hero-slide{
+        height:calc(100svh - 42px - 180px - 60px);
+        min-height:300px;
+      }
+      .hero-content{padding:24px 0 40px}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      .nav-menu a{transition:none}
+    }
+
+
+/* PREMIUM HEADER */
+:root{--premium-primary:#123f91;--premium-primary-2:#1b5cc8;--premium-accent:#d6ad43;--premium-ink:#10233f}
+#siteTopbar{height:34px;min-height:34px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:18px;background:#fff;border-bottom:1px solid rgba(16,35,63,.12);color:#526276;font-size:12px;line-height:1}
+#siteTopbar .topbar-left,#siteTopbar .topbar-right{display:flex;align-items:center;gap:18px;min-width:0}
+#siteTopbar .topbar-item{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+#siteTopbar i{color:var(--premium-primary);font-size:11px}#currentDate,#currentTime{font-variant-numeric:tabular-nums}
+#siteBanner{height:180px!important;min-height:180px!important;margin:0!important;padding:0!important;overflow:hidden;position:relative;background:#eef3f9}
+#siteBanner img{width:100%;height:100%;display:block;object-fit:cover}
+#siteHeader{position:relative!important;top:auto!important;margin:0!important;padding:0!important;z-index:1000;background:rgba(255,255,255,.98);border-bottom:1px solid rgba(18,63,145,.14);box-shadow:0 6px 24px rgba(16,35,63,.075);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+#siteHeader .navbar{width:100%;min-height:64px;height:64px;margin:0;padding:0 12px;display:flex;align-items:center;justify-content:center}
+#siteHeader .brand{display:none!important}
+#siteHeader .nav-menu{width:100%;margin:0!important;padding:0!important;display:flex;align-items:center;justify-content:center;gap:3px;list-style:none}
+#siteHeader .nav-menu li{margin:0;padding:0}
+#siteHeader .nav-menu a{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:0 11px;border-radius:11px;color:var(--premium-ink);font-size:15px;font-weight:750;letter-spacing:.005em;text-decoration:none;white-space:nowrap;transition:all .2s ease}
+#siteHeader .nav-menu a:after{content:"";position:absolute;left:12px;right:12px;bottom:5px;height:2px;border-radius:99px;background:linear-gradient(90deg,var(--premium-primary),var(--premium-accent));transform:scaleX(0);transition:transform .22s ease}
+#siteHeader .nav-menu a:hover,#siteHeader .nav-menu a:focus-visible{color:var(--premium-primary);background:rgba(18,63,145,.065);outline:none;transform:translateY(-1px)}
+#siteHeader .nav-menu a:hover:after,#siteHeader .nav-menu a:focus-visible:after,#siteHeader .nav-menu a.active:after,#siteHeader .nav-menu li.active>a:after{transform:scaleX(1)}
+#siteHeader .nav-menu a.active,#siteHeader .nav-menu li.active>a{color:var(--premium-primary);background:rgba(18,63,145,.075)}
+#siteHeader .nav-menu a[href="/login"],#siteHeader .nav-menu a[href*="login"]{color:#fff;background:linear-gradient(135deg,var(--premium-primary),var(--premium-primary-2));box-shadow:0 7px 18px rgba(18,63,145,.23)}
+#siteHeader .nav-menu a[href="/login"]:after,#siteHeader .nav-menu a[href*="login"]:after{display:none}
+#siteHeader .nav-menu a[href="/verify"],#siteHeader .nav-menu a[href*="verify"]{color:var(--premium-primary);border:1px solid rgba(18,63,145,.22)}
+#siteHeader .nav-menu a[href="/verify"]:hover,#siteHeader .nav-menu a[href*="verify"]:hover{color:#fff;background:var(--premium-primary)}
+#siteBanner+#siteHeader,#siteHeader+main,#siteHeader+#mobileMenu{margin-top:0!important}
+#home.hero,section#home.hero{margin-top:0!important;padding-top:0!important;padding-bottom:0!important;min-height:calc(100vh - 34px - 180px - 64px);height:calc(100vh - 34px - 180px - 64px);overflow:hidden}
+@media(max-width:1250px){#siteHeader .nav-menu{gap:1px}#siteHeader .nav-menu a{font-size:14px;padding:0 8px}}
+@media(max-width:980px){#siteHeader .nav-menu{display:none!important}#siteHeader .navbar{height:56px;min-height:56px;justify-content:flex-end}#menuToggle{display:inline-flex!important}#home.hero,section#home.hero{min-height:calc(100svh - 34px - 180px - 56px);height:calc(100svh - 34px - 180px - 56px)}}
+@media(max-width:600px){#siteTopbar{height:32px;min-height:32px;padding:0 9px;font-size:10px}#siteTopbar .topbar-left,#siteTopbar .topbar-right{gap:9px}#siteTopbar .topbar-item{gap:4px}#siteBanner{height:180px!important;min-height:180px!important}#siteHeader .navbar{height:54px;min-height:54px;padding:0 10px}#home.hero,section#home.hero{min-height:calc(100svh - 32px - 180px - 54px);height:calc(100svh - 32px - 180px - 54px)}}
+
+html.fast-first-loaded #pageLoader,html.fast-first-loaded #preloader,html.fast-first-loaded .page-loader,html.fast-first-loaded .preloader{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 </style>
+<script>(function(){function hide(){document.documentElement.classList.add("fast-first-loaded");["#pageLoader","#preloader",".page-loader",".preloader"].forEach(function(s){document.querySelectorAll(s).forEach(function(e){e.style.display="none";e.style.opacity="0";e.style.visibility="hidden";e.style.pointerEvents="none";e.setAttribute("aria-hidden","true")})})}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",hide,{once:true});else hide();window.addEventListener("load",hide,{once:true})})();</script>
 </head>
 <body class="loading">
   <div id="scrollProgress"></div>
   <div id="preloader"><div class="loader-inner"><img id="loaderLogo" class="loader-logo" alt="Loading" src="https://dummyimage.com/320x100/0f7a4d/ffffff.png&text=GREEN+INDIA" fetchpriority="high" decoding="sync"><div class="loader-ring"></div><div style="margin-top:14px;font-weight:700;letter-spacing:.02em">Preparing your experience…</div></div></div><div id="cacheStatus" class="cache-status">Live data</div>
 
+  <!-- ===== TOP CONTACT BAR ===== -->
+  <div id="siteTopbar" class="site-topbar">
+    <div class="container site-topbar-inner">
+      <div class="topbar-left" aria-label="Institute contact information">
+        <a id="topbarEmail" href="mailto:info@example.com"><i class="fa-solid fa-envelope"></i><span>info@example.com</span></a>
+        <a id="topbarMobile" href="tel:+910000000000"><i class="fa-solid fa-phone"></i><span>+91 00000 00000</span></a>
+      </div>
+      <div class="topbar-date"><i class="fa-regular fa-calendar"></i><span id="currentDate"></span> <span id="currentTime" aria-label="Current time"></span></div>
+    </div>
+  </div>
+
+  <!-- ===== 180px BANNER IMAGE ===== -->
+  <div class="site-banner" aria-label="Institute banner">
+    <img
+      id="siteBannerImage"
+      src="https://dummyimage.com/1600x360/0f7a4d/ffffff.png&text=ARSH+TECHNICAL+ACADEMY"
+      alt="Green India Safety Institute banner"
+      loading="eager"
+      decoding="async"
+    >
+  </div>
+
+  <!-- ===== MAIN MENU ONLY ===== -->
   <header id="siteHeader"><div class="navbar container">
-    <a class="brand" href="#home"><img id="brandLogo" alt=""><span id="brandName"></span><span class="brand-reg">Reg. No. 12345</span></a>
-    <ul id="navMenu" class="nav-menu"></ul>
+    <ul id="navMenu" class="nav-menu" aria-label="Main menu"></ul>
     <button id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><i class="fa-solid fa-bars"></i></button>
   </div></header>
 
@@ -367,7 +610,7 @@
           <div class="quote-panel reveal-soft">
             <div class="quote-mark">“</div>
             <p>Quality education is not only about what a learner studies; it is about the confidence, discipline and practical ability they develop along the way.</p>
-            <small>— Arsh Technical Academy Pvt. Ltd.</small>
+            <small>— Green India Safety Institute</small>
           </div>
         </div>
       </div>
@@ -433,8 +676,8 @@
     ====================================================== */
 
     const FRONTEND_IMAGES = {
-      logo: "https://drive.google.com/file/d/1tos8XG-recPwvrEbUO7CE3rY8djRbTLv/view?usp=sharing",
-      favicon: "https://drive.google.com/file/d/1tos8XG-recPwvrEbUO7CE3rY8djRbTLv/view?usp=sharing",
+      logo: "https://dummyimage.com/320x100/0f7a4d/ffffff.png&text=GREEN+INDIA",
+      favicon: "https://dummyimage.com/64x64/0f7a4d/ffffff.png&text=G",
 
       hero: [
         "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=2000&q=82",
@@ -1434,56 +1677,36 @@
 
     function renderBrand() {
 
-      const name =
-        setting(
-          "site_name"
-        );
-
-
+      const name = setting("site_name", "Green India Safety Institute");
       const logo = frontendImage("logo", 0);
 
+      /*
+       * The public header no longer contains the old brand/logo block.
+       * Keep this function for the existing footer/preloader system,
+       * but make every element lookup optional so one missing element
+       * can never stop the complete website from rendering.
+       */
+      const brandName = document.getElementById("brandName");
+      const brandLogo = document.getElementById("brandLogo");
+      const footerName = document.getElementById("footerName");
+      const footerLogo = document.getElementById("footerLogo");
+      const loaderLogo = document.getElementById("loaderLogo");
 
-      document.getElementById(
-        "brandName"
-      ).textContent =
-        name;
+      if (brandName) brandName.textContent = name;
 
+      if (brandLogo) {
+        brandLogo.src = logo;
+        brandLogo.alt = name;
+      }
 
-      document.getElementById(
-        "brandLogo"
-      ).src =
-        logo;
+      if (footerName) footerName.textContent = name;
 
+      if (footerLogo) {
+        footerLogo.src = logo;
+        footerLogo.alt = name;
+      }
 
-      document.getElementById(
-        "brandLogo"
-      ).alt =
-        name;
-
-
-      document.getElementById(
-        "footerName"
-      ).textContent =
-        name;
-
-
-      document.getElementById(
-        "footerLogo"
-      ).src =
-        logo;
-
-
-      document.getElementById(
-        "footerLogo"
-      ).alt =
-        name;
-
-
-      document.getElementById(
-        "loaderLogo"
-      ).src =
-        logo;
-
+      if (loaderLogo && logo) loaderLogo.src = logo;
     }
 
 
@@ -1724,128 +1947,129 @@
 
     function renderMenu() {
 
-      const menu =
-        [...SITE_DATA.menu]
-          .sort(
-            (a,b) =>
-              Number(a["Order"] || 999) -
-              Number(b["Order"] || 999)
-          );
-
       const desktop = document.getElementById("navMenu");
       const mobile = document.getElementById("mobileMenuList");
       const footer = document.getElementById("footerMenu");
 
-      if (!desktop || !mobile || !footer) return;
+      if (!desktop || !mobile) return;
 
-      /* Always expose the frontend Staff section in navigation. */
-      const hasOurTeam = menu.some(function(item) {
-        return String(item["Label"] || "").trim().toLowerCase() === "our team";
-      });
-
-      if (!hasOurTeam && document.getElementById("staff")) {
-        menu.push({
-          Label: "Our Team",
-          Target: "#staff",
-          Icon: "fa-solid fa-users",
-          "Open New Tab": false,
-          Order: 6.5
-        });
-      }
-
-      /* Force the known frontend section to its real ID. */
-      menu.forEach(function(item) {
-        if (String(item["Label"] || "").trim().toLowerCase() === "our team") {
-          item["Target"] = "#staff";
-        }
-      });
-
-      /* Always expose dedicated public pages. */
-      const hasStudentLogin = menu.some(function(item) {
-        return String(item["Label"] || "").trim().toLowerCase() === "student login";
-      });
-
-      const hasCertificateVerification = menu.some(function(item) {
-        return String(item["Label"] || "").trim().toLowerCase() === "certificate verification";
-      });
-
-      if (!hasStudentLogin) {
-        menu.push({
-          Label: "Student Login",
-          Target: "/login",
-          Icon: "fa-solid fa-user-graduate",
-          "Open New Tab": false,
-          Order: 90
-        });
-      }
-
-      if (!hasCertificateVerification) {
-        menu.push({
-          Label: "Certificate Verification",
-          Target: "/verify",
-          Icon: "fa-solid fa-certificate",
-          "Open New Tab": false,
-          Order: 91
-        });
-      }
-
-      menu.sort(function(a, b) {
-        return Number(a["Order"] || 999) - Number(b["Order"] || 999);
-      });
+      /*
+       * Main menu is intentionally fixed so Google Sheets menu data
+       * cannot change the requested public navigation order/labels.
+       * Existing footer menu remains data-driven and unchanged.
+       */
+      const mainMenu = [
+        { Label: "Home", Target: "#home", Icon: "fa-solid fa-house" },
+        { Label: "About", Target: "#about", Icon: "fa-solid fa-circle-info" },
+        { Label: "Cources", Target: "#courses", Icon: "fa-solid fa-book-open" },
+        { Label: "Features", Target: "#features", Icon: "fa-solid fa-star" },
+        { Label: "Gallery", Target: "#gallery", Icon: "fa-solid fa-images" },
+        { Label: "Faculty", Target: "#faculty", Icon: "fa-solid fa-chalkboard-user" },
+        /* No separate placement section currently exists; keep it tied to the existing faculty/career area. */
+        { Label: "Placement", Target: "#faculty", Icon: "fa-solid fa-briefcase" },
+        { Label: "Testmonials", Target: "#testimonials", Icon: "fa-solid fa-comment-dots" },
+        { Label: "Contact", Target: "#contact", Icon: "fa-solid fa-phone" },
+        { Label: "Student Login", Target: "/login", Icon: "fa-solid fa-user-graduate" },
+        { Label: "Certificate Verification", Target: "/verify", Icon: "fa-solid fa-certificate" }
+      ];
 
       desktop.innerHTML = "";
       mobile.innerHTML = "";
-      footer.innerHTML = "";
 
-      menu.forEach(function(item) {
+      mainMenu.forEach(function(item) {
+        const label = item.Label;
+        const target = item.Target;
+        const icon = iconClass(item.Icon, "fa-solid fa-link");
 
-        const label = String(item["Label"] || "").trim();
-        if (!label) return;
+        const html = `
+          <li>
+            <a href="${escapeHTML(target)}" aria-label="${escapeHTML(label)}">
+              <i class="${icon}"></i>
+              <span>${escapeHTML(label)}</span>
+            </a>
+          </li>
+        `;
 
-        const target = resolveMenuTarget(item);
-        const icon = iconClass(item["Icon"], "fa-solid fa-link");
-        const newTab = item["Open New Tab"] ? 'target="_blank" rel="noopener"' : "";
-
-        desktop.insertAdjacentHTML(
-          "beforeend",
-          `
-            <li>
-              <a href="${escapeHTML(target)}" ${newTab}>
-                <i class="${icon}"></i>
-                <span>${escapeHTML(label)}</span>
-              </a>
-            </li>
-          `
-        );
-
-        mobile.insertAdjacentHTML(
-          "beforeend",
-          `
-            <li>
-              <a href="${escapeHTML(target)}" ${newTab}>
-                <i class="${icon}"></i>
-                <span>${escapeHTML(label)}</span>
-              </a>
-            </li>
-          `
-        );
-
-        footer.insertAdjacentHTML(
-          "beforeend",
-          `
-            <li>
-              <a href="${escapeHTML(target)}">
-                ${escapeHTML(label)}
-              </a>
-            </li>
-          `
-        );
+        desktop.insertAdjacentHTML("beforeend", html);
+        mobile.insertAdjacentHTML("beforeend", html);
       });
+
+      /* Footer remains controlled by the existing Google Sheets menu. */
+      if (footer) {
+        footer.innerHTML = "";
+
+        const footerMenu = [...(SITE_DATA.menu || [])].sort(function(a, b) {
+          return Number(a["Order"] || 999) - Number(b["Order"] || 999);
+        });
+
+        footerMenu.forEach(function(item) {
+          const label = String(item["Label"] || "").trim();
+          if (!label) return;
+
+          const target = resolveMenuTarget(item);
+
+          footer.insertAdjacentHTML(
+            "beforeend",
+            `
+              <li>
+                <a href="${escapeHTML(target)}">
+                  ${escapeHTML(label)}
+                </a>
+              </li>
+            `
+          );
+        });
+      }
 
       const footerMenuTitle = document.getElementById("footerMenuTitle");
       if (footerMenuTitle) {
         footerMenuTitle.textContent = setting("footer_menu_title");
       }
+    }
+
+
+    /* =====================================================
+       TOPBAR DATE + CONTACT
+    ====================================================== */
+
+    function renderTopbar() {
+
+      const emailEl = document.getElementById("topbarEmail");
+      const mobileEl = document.getElementById("topbarMobile");
+      const dateEl = document.getElementById("currentDate");
+
+      if (!emailEl || !mobileEl || !dateEl) return;
+
+      let email = "";
+      let mobile = "";
+
+      (SITE_DATA.contact || []).forEach(function(item) {
+        const label = String(item["Label"] || "").toLowerCase();
+        const value = String(item["Value"] || "").trim();
+
+        if (!value) return;
+
+        if (!email && /email|e-mail|mail/.test(label)) email = value;
+        if (!mobile && /mobile|phone|contact|whatsapp|call/.test(label)) mobile = value;
+      });
+
+      if (!email) email = setting("email", "info@example.com");
+      if (!mobile) mobile = setting("mobile", "+91 00000 00000");
+
+      const emailHref = email.includes("@") ? "mailto:" + email : "#";
+      const mobileDigits = mobile.replace(/[^0-9+]/g, "");
+      const mobileHref = mobileDigits ? "tel:" + mobileDigits : "#";
+
+      emailEl.href = emailHref;
+      emailEl.querySelector("span").textContent = email;
+      mobileEl.href = mobileHref;
+      mobileEl.querySelector("span").textContent = mobile;
+
+      dateEl.textContent = new Intl.DateTimeFormat("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      }).format(new Date());
     }
 
 
@@ -3112,7 +3336,7 @@
               <span class="staff-photo-glow"></span>
             </div>
             <div class="staff-content">
-              <span class="staff-eyebrow"><i class="fa-solid fa-user-tie"></i> Arsh Technical Academy Team</span>
+              <span class="staff-eyebrow"><i class="fa-solid fa-user-tie"></i> Green India Team</span>
               <h3 class="staff-name">${escapeHTML(item.name || "Professional Staff")}</h3>
               <div class="staff-designation">${escapeHTML(item.designation || "Staff Member")}</div>
               <div class="staff-meta">
@@ -5392,7 +5616,7 @@
       applyTheme(); applySEO(); renderBrand(); renderMenu(); renderHero();
       renderStats(); renderAbout(); renderFeatures(); renderCourses();
       renderFaculty(); renderStaff(); renderGallery(); renderTestimonials(); renderNotices();
-      renderCTA(); renderContact(); renderCourseSelect(); renderSocial();
+      renderCTA(); renderContact(); renderTopbar(); renderCourseSelect(); renderSocial();
       renderFooter(); renderWhatsApp();
       handleScroll(); setupActiveMenu();
 
@@ -5823,7 +6047,7 @@
       }
 
       const customMessage =
-        "Hello Arsh Technical Academy Pvt. Ltd.,\n\n" +
+        "Hello Green India Safety Institute,\n\n" +
         "I want to make an enquiry.\n\n" +
         "Name: " + name + "\n" +
         "Mobile: " + mobile + "\n\n" +
@@ -5855,5 +6079,6 @@
   });
 })();
 </script>
+<script>(function(){function t(){var e=document.getElementById("currentTime");if(!e)return;e.textContent=new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true})}t();setInterval(t,1000)})();</script>
 </body>
 </html>
