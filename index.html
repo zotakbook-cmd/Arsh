@@ -991,9 +991,471 @@ html.fast-first-loaded #pageLoader,html.fast-first-loaded #preloader,html.fast-f
 
     <section id="contact"><div class="container"><div id="contactHeading" class="section-heading"></div><div class="contact-grid"><div id="contactList" class="contact-list"></div><form id="enquiryForm"><div class="form-grid"><div class="form-field"><label>Name</label><input id="enquiryName" required></div><div class="form-field"><label>Mobile</label><input id="enquiryMobile" required></div><div class="form-field"><label>Email</label><input id="enquiryEmail" type="email"></div><div class="form-field"><label>Course</label><select id="enquiryCourse"><option value="">Select Course</option></select></div><div class="form-field full"><label>Message</label><textarea id="enquiryMessage"></textarea></div></div><button id="formSubmit" class="btn btn-primary" type="submit">Send Enquiry <i class="fa-solid fa-paper-plane"></i></button><div id="formMessage" class="form-message"></div></form></div></div></section>
   </main>
+ <style>
+/* =========================================================
+   PREMIUM FOOTER
+   ========================================================= */
 
-  <footer><div class="container"><div class="footer-grid"><div><a class="footer-brand" href="#home"><img id="footerLogo" alt=""><span id="footerName"></span></a><p id="footerText"></p></div><div><h4 id="footerMenuTitle"></h4><ul id="footerMenu" class="footer-menu"></ul></div><div><h4 id="footerSocialTitle"></h4><div id="socialLinks" class="footer-social"></div><h4 id="footerContactTitle"></h4><div id="footerContact"></div></div></div><div class="footer-bottom"><span id="copyrightText"></span><span id="footerRightText"></span></div></div></footer>
+footer {
+  position: relative;
+  overflow: hidden;
+  margin-top: 70px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(37, 99, 235, 0.20), transparent 30%),
+    radial-gradient(circle at 90% 20%, rgba(168, 85, 247, 0.18), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgba(6, 182, 212, 0.10), transparent 35%),
+    #070b16;
+  color: #fff;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
 
+/* Decorative glow */
+footer::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  top: -220px;
+  left: -180px;
+  border-radius: 50%;
+  background: rgba(37, 99, 235, .12);
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+footer::after {
+  content: "";
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  right: -180px;
+  bottom: -220px;
+  border-radius: 50%;
+  background: rgba(168, 85, 247, .12);
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+footer .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   MAIN FOOTER GRID
+   ========================================================= */
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.35fr .8fr 1fr;
+  gap: 70px;
+  padding: 75px 0 55px;
+}
+
+/* =========================================================
+   BRAND AREA
+   ========================================================= */
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.footer-brand img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  border-radius: 15px;
+  background: rgba(255,255,255,.07);
+  padding: 6px;
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow:
+    0 10px 35px rgba(0,0,0,.35),
+    0 0 25px rgba(59,130,246,.12);
+}
+
+.footer-brand span {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -.5px;
+  background: linear-gradient(
+    90deg,
+    #ffffff,
+    #93c5fd,
+    #c4b5fd
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+#footerText {
+  max-width: 420px;
+  margin: 0;
+  color: rgba(255,255,255,.62);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+/* =========================================================
+   FOOTER HEADINGS
+   ========================================================= */
+
+footer h4 {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 22px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+footer h4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -9px;
+  width: 28px;
+  height: 3px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #3b82f6,
+    #8b5cf6,
+    #ec4899
+  );
+}
+
+/* =========================================================
+   FOOTER MENU
+   ========================================================= */
+
+.footer-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-menu li {
+  margin: 0;
+  padding: 0;
+}
+
+.footer-menu a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: rgba(255,255,255,.62);
+  text-decoration: none;
+  font-size: 14px;
+  transition:
+    color .25s ease,
+    transform .25s ease;
+}
+
+.footer-menu a::before {
+  content: "›";
+  color: #60a5fa;
+  font-size: 17px;
+  font-weight: 700;
+  transition: transform .25s ease;
+}
+
+.footer-menu a:hover {
+  color: #fff;
+  transform: translateX(5px);
+}
+
+.footer-menu a:hover::before {
+  transform: translateX(3px);
+}
+
+/* =========================================================
+   SOCIAL LINKS
+   ========================================================= */
+
+.footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 34px;
+}
+
+.footer-social a {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  color: rgba(255,255,255,.78);
+  text-decoration: none;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,.10),
+    rgba(255,255,255,.035)
+  );
+
+  border: 1px solid rgba(255,255,255,.09);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 8px 25px rgba(0,0,0,.18);
+
+  transition:
+    transform .3s ease,
+    color .3s ease,
+    background .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+.footer-social a:hover {
+  transform: translateY(-5px);
+  color: #fff;
+  border-color: rgba(96,165,250,.45);
+  background: linear-gradient(
+    135deg,
+    rgba(37,99,235,.35),
+    rgba(139,92,246,.30)
+  );
+
+  box-shadow:
+    0 12px 30px rgba(37,99,235,.18),
+    0 0 20px rgba(139,92,246,.12);
+}
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+#footerContact {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+#footerContact a,
+#footerContact span,
+#footerContact p {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  color: rgba(255,255,255,.62);
+  font-size: 13px;
+  line-height: 1.6;
+  text-decoration: none;
+  transition: color .25s ease;
+}
+
+#footerContact a:hover {
+  color: #fff;
+}
+
+#footerContact svg,
+#footerContact i {
+  flex: 0 0 auto;
+  color: #60a5fa;
+}
+
+/* =========================================================
+   FOOTER BOTTOM
+   ========================================================= */
+
+.footer-bottom {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 70px;
+  padding: 18px 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+  color: rgba(255,255,255,.48);
+  font-size: 12px;
+}
+
+.footer-bottom::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 110px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    #3b82f6,
+    #8b5cf6,
+    transparent
+  );
+}
+
+#copyrightText {
+  line-height: 1.6;
+}
+
+#footerRightText {
+  text-align: right;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   PREMIUM TOP LINE
+   ========================================================= */
+
+footer .footer-grid::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(700px, 70%);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(59,130,246,.65),
+    rgba(139,92,246,.65),
+    rgba(236,72,153,.55),
+    transparent
+  );
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 45px 35px;
+    padding: 60px 0 45px;
+  }
+
+  .footer-grid > div:first-child {
+    grid-column: 1 / -1;
+  }
+
+  #footerText {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  footer {
+    margin-top: 50px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 38px;
+    padding: 50px 0 35px;
+  }
+
+  .footer-grid > div:first-child {
+    grid-column: auto;
+  }
+
+  .footer-brand img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .footer-brand span {
+    font-size: 19px;
+  }
+
+  #footerText {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 20px 0;
+  }
+
+  #footerRightText {
+    text-align: left;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .footer-menu a,
+  .footer-menu a::before,
+  .footer-social a {
+    transition: none;
+  }
+}
+</style>
+
+
+<footer>
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <!-- BRAND -->
+      <div>
+        <a class="footer-brand" href="#home">
+          <img id="footerLogo" alt="">
+          <span id="footerName"></span>
+        </a>
+
+        <p id="footerText"></p>
+      </div>
+
+      <!-- MENU -->
+      <div>
+        <h4 id="footerMenuTitle"></h4>
+
+        <ul id="footerMenu" class="footer-menu"></ul>
+      </div>
+
+      <!-- SOCIAL + CONTACT -->
+      <div>
+
+        <h4 id="footerSocialTitle"></h4>
+
+        <div id="socialLinks" class="footer-social"></div>
+
+        <h4 id="footerContactTitle"></h4>
+
+        <div id="footerContact"></div>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span id="copyrightText"></span>
+      <span id="footerRightText"></span>
+    </div>
+
+  </div>
+</footer>
+ 
   <button id="backToTop" type="button" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
 
   <div id="lightbox"><button id="lightboxClose" type="button"><i class="fa-solid fa-xmark"></i></button><img id="lightboxImage" alt=""></div>
