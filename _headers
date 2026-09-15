@@ -1,0 +1,25 @@
+# HTML: short browser/edge freshness so deployments become visible quickly.
+/index.html
+  Cache-Control: public, max-age=60, stale-while-revalidate=300
+/login.html
+  Cache-Control: public, max-age=60, stale-while-revalidate=300
+/verify.html
+  Cache-Control: public, max-age=60, stale-while-revalidate=300
+
+# Static assets: safe to cache for a long time when they are versioned/immutable.
+/*.css
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/*.js
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+/*.ico
+  Cache-Control: public, max-age=31536000, immutable
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable

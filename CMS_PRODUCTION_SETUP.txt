@@ -1,0 +1,134 @@
+GREEN INDIA SAFETY INSTITUTE - PRODUCTION CMS UPDATE
+====================================================
+
+This package adds a production-ready CMS layer around the existing
+Google Sheets + Apps Script + GitHub website architecture.
+
+1. FILES
+--------
+- index.html          Public website (CMS image/theme integration)
+- cms/index.html      CMS admin panel
+- CMS_Backend.gs      Apps Script CMS backend
+- sw.js               Updated shell cache version
+- _redirects          Existing /login and /verify routes
+- _headers            Existing cache headers
+
+2. APPS SCRIPT ROUTING
+----------------------
+In the SAME Apps Script project as the existing website backend, route
+these GET actions to cmsDoGet_(params):
+
+case "cmsLogin":
+case "getCMSData":
+case "getCMSSheet":
+case "getCMSPublicData":
+case "getCMSSettings":
+  return cmsDoGet_(params);
+
+At the TOP of existing doPost(e), route CMS write actions:
+
+var cmsAction = String((e && e.parameter && e.parameter.action) || "");
+if (cmsAction.indexOf("cms") === 0 ||
+    cmsAction === "uploadGitHubImage" ||
+    cmsAction === "deleteGitHubImage") {
+  return cmsDoPost_(e);
+}
+
+3. REQUIRED SCRIPT PROPERTIES
+-----------------------------
+GITHUB_TOKEN
+GITHUB_OWNER
+GITHUB_REPO
+GITHUB_BRANCH   (normally main)
+SITE_BASE_URL   (https://arsh.libgo.in)
+
+Do NOT put the GitHub token in GitHub Pages, Cloudflare, index.html,
+or cms/index.html.
+
+4. GOOGLE SHEETS
+----------------
+Existing website sheets remain supported. The CMS uses the first row as
+headers for generic CRUD.
+
+Settings sheet:
+Key | Value
+
+Useful production settings now supported:
+site_name
+seo_title
+seo_description
+seo_keywords
+logo_url
+favicon_url
+og_image_url
+primary_color
+secondary_color
+accent_color
+light_color
+text_color
+muted_color
+border_color
+hero_1_image ... hero_5_image
+about_image
+features_label / features_title / features_description
+courses_label / courses_title / courses_description
+faculty_label / faculty_title / faculty_description
+gallery_label / gallery_title / gallery_description
+testimonials_label / testimonials_title / testimonials_description
+notices_label / notices_title / notices_description
+contact_label / contact_title / contact_description
+cta_label / cta_title / cta_description
+
+Dedicated content sheets:
+LearningJourney:
+Label, Title, Description, Number, Card Title, Card Description, Icon, Order, Status
+
+InstitutePromise:
+Label, Title, Description, Point 1, Point 2, Point 3, Point 4, Quote, Quote Author, Order, Status
+
+FAQ:
+Label, Title, Description, Question, Answer, Order, Status
+
+5. CMS FEATURES
+----------------
+- Admin/SuperAdmin authentication using Admin sheet
+- 6-hour server-side session cache
+- Website Settings manager
+- Theme manager
+- Logo/favicon/OG image upload
+- Up to 5 hero image uploads
+- About image upload
+- SEO manager
+- Section heading/content controls
+- Menu Manager
+- Courses, Faculty, Gallery, Testimonials, Notices, Contact, Social
+- FAQ, Learning Journey, Institute Promise
+- Generic row add/edit/delete
+- GitHub image upload from browser through Apps Script
+- GitHub image delete for site-hosted images
+- Live website preview
+- Public data cache for 60 seconds
+- Public cache invalidation after CMS saves/deletes
+- Static frontend fallback remains available when Sheets/API data is empty
+
+6. IMPORTANT IMAGE BEHAVIOR
+----------------------------
+Course/Faculty/Gallery/Testimonial rows can use an Image URL, Image,
+or Photo column directly. If not present, the existing frontend image
+fallbacks remain available.
+
+7. DEPLOYMENT
+-------------
+1. Update Apps Script with CMS_Backend.gs and the routing cases above.
+2. Save and deploy the Apps Script web app.
+3. Upload the updated index.html, cms/index.html and sw.js to GitHub.
+4. Keep CMS at /cms/ if that is the chosen folder path.
+5. Open /cms/ and login with an Admin/SuperAdmin account.
+6. Configure Website Settings and save.
+7. Open the live site and verify the new settings.
+
+8. SECURITY
+-----------
+The public endpoint exposes only public website sheets. Admin and
+StudentDB are not returned by getCMSPublicData.
+GitHub credentials remain server-side in Apps Script Script Properties.
