@@ -8556,20 +8556,21 @@ html.fast-first-loaded .preloader{
        * cannot change the requested public navigation order/labels.
        * Existing footer menu remains data-driven and unchanged.
        */
-      const mainMenu = [
-        { Label: "Home", Target: "#home", Icon: "fa-solid fa-house" },
-        { Label: "About", Target: "#about", Icon: "fa-solid fa-circle-info" },
-        { Label: "Courses", Target: "#courses", Icon: "fa-solid fa-book-open" },
-        { Label: "Features", Target: "#features", Icon: "fa-solid fa-star" },
-        { Label: "Gallery", Target: "#gallery", Icon: "fa-solid fa-images" },
-        { Label: "Faculty", Target: "#faculty", Icon: "fa-solid fa-chalkboard-user" },
-        /* No separate placement section currently exists; keep it tied to the existing faculty/career area. */
-        { Label: "Placement", Target: "#faculty", Icon: "fa-solid fa-briefcase" },
-        { Label: "Testmonials", Target: "#testimonials", Icon: "fa-solid fa-comment-dots" },
-        { Label: "Contact", Target: "#contact", Icon: "fa-solid fa-phone" },
-        { Label: "Student Login", Target: "/login", Icon: "fa-solid fa-user-graduate" },
-        { Label: "Certificate Verification", Target: "/verify", Icon: "fa-solid fa-certificate" }
-      ];
+const mainMenu = [
+  { Label: "Home", Target: "#home", Icon: "fa-solid fa-house" },
+  { Label: "About", Target: "#about", Icon: "fa-solid fa-circle-info" },
+  { Label: "Courses", Target: "#courses", Icon: "fa-solid fa-book-open" },
+  { Label: "Features", Target: "#features", Icon: "fa-solid fa-star" },
+  { Label: "Gallery", Target: "#gallery", Icon: "fa-solid fa-images" },
+  { Label: "Faculty", Target: "#faculty", Icon: "fa-solid fa-chalkboard-user" },
+  /* No separate placement section currently exists; keep it tied to the existing faculty/career area. */
+  { Label: "Placement", Target: "/faculty", Icon: "fa-solid fa-briefcase" },
+  { Label: "Franchise", Target: "#franchise", Icon: "fa-solid fa-building" },
+  { Label: "Testmonials", Target: "#testimonials", Icon: "fa-solid fa-comment-dots" },
+  { Label: "Contact", Target: "#contact", Icon: "fa-solid fa-phone" },
+  { Label: "Student Login", Target: "/login", Icon: "fa-solid fa-user-graduate" },
+  { Label: "Certificate Verification", Target: "/verify", Icon: "fa-solid fa-certificate" }
+];
 
       desktop.innerHTML = "";
       mobile.innerHTML = "";
