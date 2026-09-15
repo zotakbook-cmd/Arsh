@@ -1,0 +1,4394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>All Courses | Arsh Technical Academy Pvt. Ltd.</title>
+
+  <meta
+    name="description"
+    content="Explore technical, industrial safety, fire safety, electrical, mechanical, HVAC, welding and professional training courses."
+  >
+
+  <!-- =========================================================
+       GOOGLE FONTS
+  ========================================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- =========================================================
+       ICONS
+  ========================================================== -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <style>
+
+    /* =========================================================
+       ROOT
+    ========================================================== */
+
+    :root{
+      --primary:#2563eb;
+      --primary-dark:#1d4ed8;
+      --cyan:#06b6d4;
+      --purple:#7c3aed;
+      --pink:#ec4899;
+      --orange:#f97316;
+      --yellow:#eab308;
+      --green:#10b981;
+      --red:#ef4444;
+
+      --dark:#07111f;
+      --dark-2:#0b1729;
+      --dark-3:#102039;
+
+      --light:#f7f9fc;
+      --white:#ffffff;
+
+      --text:#172033;
+      --muted:#64748b;
+
+      --border:rgba(15,23,42,.09);
+
+      --shadow-sm:0 8px 25px rgba(15,23,42,.06);
+      --shadow-md:0 18px 50px rgba(15,23,42,.10);
+      --shadow-lg:0 30px 80px rgba(15,23,42,.15);
+
+      --radius-sm:14px;
+      --radius-md:22px;
+      --radius-lg:30px;
+
+      --container:1380px;
+    }
+
+
+    /* =========================================================
+       RESET
+    ========================================================== */
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"DM Sans",sans-serif;
+      background:
+        radial-gradient(
+          circle at 10% 0%,
+          rgba(37,99,235,.07),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 90% 10%,
+          rgba(124,58,237,.06),
+          transparent 28%
+        ),
+        var(--light);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    button,
+    input,
+    select{
+      font:inherit;
+    }
+
+    button{
+      border:0;
+      cursor:pointer;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+
+    /* =========================================================
+       UTILITIES
+    ========================================================== */
+
+    .container{
+      width:min(var(--container), calc(100% - 40px));
+      margin:auto;
+    }
+
+    .section{
+      padding:95px 0;
+      position:relative;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 13px;
+      border-radius:999px;
+      background:rgba(37,99,235,.08);
+      border:1px solid rgba(37,99,235,.12);
+      color:var(--primary);
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .eyebrow i{
+      font-size:10px;
+    }
+
+
+    /* =========================================================
+       HERO
+    ========================================================== */
+
+    .courses-hero{
+      min-height:650px;
+      position:relative;
+      overflow:hidden;
+      background:
+        radial-gradient(
+          circle at 15% 20%,
+          rgba(6,182,212,.20),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(124,58,237,.24),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 55% 100%,
+          rgba(236,72,153,.14),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          #06101d 0%,
+          #0a1729 48%,
+          #111b38 100%
+        );
+      color:#fff;
+    }
+
+    .courses-hero::before{
+      content:"";
+      position:absolute;
+      width:480px;
+      height:480px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.07);
+      left:-180px;
+      bottom:-280px;
+    }
+
+    .courses-hero::after{
+      content:"";
+      position:absolute;
+      width:650px;
+      height:650px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.05);
+      right:-300px;
+      top:-300px;
+    }
+
+    .hero-grid{
+      min-height:650px;
+      display:grid;
+      grid-template-columns:1.02fr .98fr;
+      align-items:center;
+      gap:65px;
+      position:relative;
+      z-index:2;
+    }
+
+    .hero-content{
+      max-width:720px;
+    }
+
+    .hero-content .eyebrow{
+      background:rgba(255,255,255,.08);
+      border-color:rgba(255,255,255,.12);
+      color:#8beaff;
+      backdrop-filter:blur(12px);
+    }
+
+    .hero-title{
+      margin-top:24px;
+      font-family:"Space Grotesk",sans-serif;
+      font-size:clamp(48px,6vw,82px);
+      line-height:.98;
+      letter-spacing:-.055em;
+      font-weight:700;
+    }
+
+    .hero-title .gradient-text{
+      background:
+        linear-gradient(
+          90deg,
+          #38bdf8,
+          #22d3ee,
+          #a78bfa,
+          #f472b6
+        );
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hero-description{
+      max-width:650px;
+      margin-top:25px;
+      color:rgba(255,255,255,.72);
+      font-size:17px;
+      line-height:1.8;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:34px;
+    }
+
+    .btn{
+      min-height:50px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:0 20px;
+      border-radius:15px;
+      font-weight:800;
+      transition:.3s ease;
+    }
+
+    .btn-primary{
+      color:#fff;
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #7c3aed
+        );
+      box-shadow:
+        0 14px 35px rgba(37,99,235,.30);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-3px);
+      box-shadow:
+        0 20px 45px rgba(37,99,235,.40);
+    }
+
+    .btn-light{
+      color:#fff;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.13);
+      backdrop-filter:blur(12px);
+    }
+
+    .btn-light:hover{
+      background:rgba(255,255,255,.14);
+      transform:translateY(-3px);
+    }
+
+
+    /* =========================================================
+       HERO VISUAL
+    ========================================================== */
+
+    .hero-visual{
+      position:relative;
+      min-height:500px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-image-wrap{
+      width:min(560px,100%);
+      height:420px;
+      border-radius:34px;
+      overflow:hidden;
+      position:relative;
+      transform:rotate(2deg);
+      border:1px solid rgba(255,255,255,.15);
+      box-shadow:
+        0 40px 90px rgba(0,0,0,.38),
+        0 0 0 12px rgba(255,255,255,.025);
+    }
+
+    .hero-image-wrap::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(4,10,20,.02),
+          rgba(4,10,20,.60)
+        );
+    }
+
+    .hero-image-wrap img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .hero-floating{
+      position:absolute;
+      z-index:5;
+      padding:18px;
+      border-radius:20px;
+      background:rgba(10,22,40,.78);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 20px 50px rgba(0,0,0,.28);
+      backdrop-filter:blur(18px);
+    }
+
+    .hero-floating.top{
+      top:30px;
+      left:-5px;
+    }
+
+    .hero-floating.bottom{
+      right:-10px;
+      bottom:35px;
+    }
+
+    .floating-icon{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:13px;
+      background:
+        linear-gradient(
+          135deg,
+          #06b6d4,
+          #2563eb
+        );
+      margin-bottom:10px;
+    }
+
+    .floating-number{
+      font-family:"Space Grotesk",sans-serif;
+      font-size:24px;
+      font-weight:800;
+    }
+
+    .floating-text{
+      color:rgba(255,255,255,.60);
+      font-size:12px;
+      margin-top:3px;
+    }
+
+
+    /* =========================================================
+       SEARCH / FILTER AREA
+    ========================================================== */
+
+    .course-section{
+      margin-top:-45px;
+      position:relative;
+      z-index:10;
+    }
+
+    .filter-panel{
+      padding:24px;
+      border-radius:26px;
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(255,255,255,.8);
+      box-shadow:
+        0 25px 70px rgba(15,23,42,.12);
+      backdrop-filter:blur(20px);
+    }
+
+    .filter-top{
+      display:grid;
+      grid-template-columns:1.4fr .7fr .7fr;
+      gap:14px;
+    }
+
+    .input-box{
+      position:relative;
+    }
+
+    .input-box i{
+      position:absolute;
+      left:17px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#94a3b8;
+      pointer-events:none;
+    }
+
+    .input-box input,
+    .select-box select{
+      width:100%;
+      height:54px;
+      padding:0 18px 0 48px;
+      border-radius:15px;
+      border:1px solid #e5eaf1;
+      background:#f8fafc;
+      outline:none;
+      color:#172033;
+      transition:.25s ease;
+      font-weight:600;
+    }
+
+    .select-box{
+      position:relative;
+    }
+
+    .select-box i{
+      position:absolute;
+      left:17px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#64748b;
+      pointer-events:none;
+      z-index:2;
+    }
+
+    .select-box select{
+      appearance:none;
+      padding-left:48px;
+      padding-right:42px;
+      cursor:pointer;
+    }
+
+    .select-box::after{
+      content:"\f078";
+      font-family:"Font Awesome 6 Free";
+      font-weight:900;
+      position:absolute;
+      right:17px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#64748b;
+      pointer-events:none;
+      font-size:11px;
+    }
+
+    .input-box input:focus,
+    .select-box select:focus{
+      border-color:rgba(37,99,235,.45);
+      box-shadow:
+        0 0 0 4px rgba(37,99,235,.08);
+      background:#fff;
+    }
+
+    .category-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
+      margin-top:18px;
+    }
+
+    .category-pill{
+      padding:9px 14px;
+      border-radius:999px;
+      background:#f3f6fa;
+      color:#526174;
+      border:1px solid #e5eaf1;
+      font-size:12px;
+      font-weight:800;
+      transition:.25s ease;
+    }
+
+    .category-pill:hover{
+      transform:translateY(-2px);
+      border-color:rgba(37,99,235,.22);
+      color:var(--primary);
+    }
+
+    .category-pill.active{
+      color:#fff;
+      border-color:transparent;
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #7c3aed
+        );
+      box-shadow:
+        0 8px 22px rgba(37,99,235,.20);
+    }
+
+
+    /* =========================================================
+       SECTION HEADER
+    ========================================================== */
+
+    .section-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:30px;
+      margin-bottom:35px;
+    }
+
+    .section-title{
+      margin-top:14px;
+      font-family:"Space Grotesk",sans-serif;
+      font-size:clamp(32px,4vw,52px);
+      line-height:1.05;
+      letter-spacing:-.04em;
+    }
+
+    .section-title span{
+      color:var(--primary);
+    }
+
+    .section-subtitle{
+      max-width:620px;
+      margin-top:12px;
+      color:var(--muted);
+      line-height:1.75;
+    }
+
+    .course-count{
+      flex:none;
+      padding:12px 16px;
+      border-radius:14px;
+      background:#fff;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow-sm);
+      color:#64748b;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .course-count strong{
+      color:#111827;
+      font-size:18px;
+      margin-right:4px;
+    }
+
+
+    /* =========================================================
+       COURSE GRID
+    ========================================================== */
+
+    .courses-grid{
+      display:grid;
+      grid-template-columns:
+        repeat(3,minmax(0,1fr));
+      gap:22px;
+    }
+
+    .course-card{
+      position:relative;
+      overflow:hidden;
+      border-radius:25px;
+      background:#fff;
+      border:1px solid rgba(15,23,42,.07);
+      box-shadow:0 10px 35px rgba(15,23,42,.055);
+      transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease;
+      opacity:0;
+      transform:translateY(20px);
+    }
+
+    .course-card.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .course-card:hover{
+      transform:translateY(-9px);
+      box-shadow:
+        0 28px 70px rgba(15,23,42,.14);
+      border-color:rgba(37,99,235,.13);
+    }
+
+    .course-image{
+      height:220px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .course-image::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(4,10,20,.02) 35%,
+          rgba(4,10,20,.68)
+        );
+      z-index:1;
+    }
+
+    .course-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:
+        transform .6s ease;
+    }
+
+    .course-card:hover .course-image img{
+      transform:scale(1.09);
+    }
+
+    .course-badge{
+      position:absolute;
+      z-index:3;
+      left:15px;
+      top:15px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.94);
+      color:#172033;
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      box-shadow:0 7px 20px rgba(0,0,0,.12);
+    }
+
+    .course-level{
+      position:absolute;
+      z-index:3;
+      right:15px;
+      top:15px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(7,17,31,.72);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.15);
+      backdrop-filter:blur(10px);
+      font-size:10px;
+      font-weight:800;
+    }
+
+    .course-image-bottom{
+      position:absolute;
+      z-index:3;
+      left:18px;
+      bottom:17px;
+      right:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      color:#fff;
+    }
+
+    .course-category{
+      font-size:11px;
+      font-weight:700;
+      color:rgba(255,255,255,.75);
+    }
+
+    .course-icon{
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      border-radius:12px;
+      background:rgba(255,255,255,.13);
+      border:1px solid rgba(255,255,255,.17);
+      backdrop-filter:blur(10px);
+    }
+
+    .course-content{
+      padding:22px;
+    }
+
+    .course-title{
+      min-height:52px;
+      font-family:"Space Grotesk",sans-serif;
+      font-size:21px;
+      line-height:1.25;
+      letter-spacing:-.025em;
+    }
+
+    .course-description{
+      margin-top:10px;
+      color:#68768a;
+      font-size:13px;
+      line-height:1.7;
+      min-height:66px;
+    }
+
+    .course-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:17px;
+    }
+
+    .meta-item{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 9px;
+      border-radius:9px;
+      background:#f6f8fb;
+      color:#617087;
+      font-size:10px;
+      font-weight:800;
+    }
+
+    .meta-item i{
+      color:var(--primary);
+    }
+
+    .course-actions{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:20px;
+      padding-top:18px;
+      border-top:1px solid #edf0f4;
+    }
+
+    .details-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      color:#172033;
+      font-size:12px;
+      font-weight:900;
+      transition:.25s ease;
+    }
+
+    .details-btn i{
+      color:var(--primary);
+      transition:.25s ease;
+    }
+
+    .details-btn:hover{
+      color:var(--primary);
+    }
+
+    .details-btn:hover i{
+      transform:translateX(4px);
+    }
+
+    .enquire-btn{
+      padding:9px 13px;
+      border-radius:10px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(37,99,235,.10),
+          rgba(124,58,237,.10)
+        );
+      color:var(--primary);
+      font-size:11px;
+      font-weight:900;
+      transition:.25s ease;
+    }
+
+    .enquire-btn:hover{
+      color:#fff;
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #7c3aed
+        );
+      transform:translateY(-2px);
+    }
+
+
+    /* =========================================================
+       EMPTY STATE
+    ========================================================== */
+
+    .empty-state{
+      display:none;
+      padding:70px 20px;
+      text-align:center;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:25px;
+    }
+
+    .empty-state.show{
+      display:block;
+    }
+
+    .empty-icon{
+      width:70px;
+      height:70px;
+      display:grid;
+      place-items:center;
+      margin:0 auto 16px;
+      border-radius:22px;
+      background:#f1f5f9;
+      color:#64748b;
+      font-size:25px;
+    }
+
+    .empty-state h3{
+      font-family:"Space Grotesk",sans-serif;
+      font-size:24px;
+    }
+
+    .empty-state p{
+      color:var(--muted);
+      margin-top:7px;
+    }
+
+
+    /* =========================================================
+       COLORFUL INFO STRIP
+    ========================================================== */
+
+    .benefits-section{
+      background:
+        linear-gradient(
+          135deg,
+          #07111f,
+          #0d1830 55%,
+          #15143a
+        );
+      color:#fff;
+      overflow:hidden;
+    }
+
+    .benefits-section::before{
+      content:"";
+      position:absolute;
+      width:600px;
+      height:600px;
+      border-radius:50%;
+      background:
+        radial-gradient(
+          circle,
+          rgba(37,99,235,.20),
+          transparent 68%
+        );
+      top:-350px;
+      right:-150px;
+    }
+
+    .benefits-header{
+      position:relative;
+      z-index:2;
+      max-width:700px;
+    }
+
+    .benefits-header .section-title{
+      color:#fff;
+    }
+
+    .benefits-header .section-subtitle{
+      color:rgba(255,255,255,.60);
+    }
+
+    .benefits-grid{
+      position:relative;
+      z-index:2;
+      margin-top:45px;
+      display:grid;
+      grid-template-columns:
+        repeat(4,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .benefit-card{
+      padding:26px;
+      border-radius:22px;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(14px);
+      transition:.3s ease;
+    }
+
+    .benefit-card:hover{
+      transform:translateY(-6px);
+      background:rgba(255,255,255,.08);
+      border-color:rgba(255,255,255,.15);
+    }
+
+    .benefit-icon{
+      width:48px;
+      height:48px;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      margin-bottom:19px;
+      color:#fff;
+      font-size:17px;
+    }
+
+    .benefit-card:nth-child(1) .benefit-icon{
+      background:linear-gradient(135deg,#2563eb,#06b6d4);
+    }
+
+    .benefit-card:nth-child(2) .benefit-icon{
+      background:linear-gradient(135deg,#7c3aed,#ec4899);
+    }
+
+    .benefit-card:nth-child(3) .benefit-icon{
+      background:linear-gradient(135deg,#f97316,#eab308);
+    }
+
+    .benefit-card:nth-child(4) .benefit-icon{
+      background:linear-gradient(135deg,#10b981,#06b6d4);
+    }
+
+    .benefit-card h3{
+      font-family:"Space Grotesk",sans-serif;
+      font-size:18px;
+    }
+
+    .benefit-card p{
+      color:rgba(255,255,255,.57);
+      margin-top:9px;
+      line-height:1.7;
+      font-size:13px;
+    }
+
+
+    /* =========================================================
+       CTA
+    ========================================================== */
+
+    .cta-section{
+      padding:80px 0;
+      background:#f7f9fc;
+    }
+
+    .cta-box{
+      position:relative;
+      overflow:hidden;
+      padding:65px;
+      border-radius:34px;
+      background:
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(167,139,250,.32),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 10% 100%,
+          rgba(6,182,212,.24),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          #111c35,
+          #15234b
+        );
+      color:#fff;
+      box-shadow:
+        0 30px 80px rgba(15,23,42,.18);
+    }
+
+    .cta-box::before{
+      content:"";
+      position:absolute;
+      width:350px;
+      height:350px;
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:50%;
+      right:-100px;
+      top:-180px;
+    }
+
+    .cta-content{
+      position:relative;
+      z-index:2;
+      max-width:760px;
+    }
+
+    .cta-title{
+      font-family:"Space Grotesk",sans-serif;
+      font-size:clamp(32px,4vw,52px);
+      letter-spacing:-.04em;
+      line-height:1.05;
+    }
+
+    .cta-text{
+      color:rgba(255,255,255,.65);
+      line-height:1.75;
+      margin-top:14px;
+      max-width:650px;
+    }
+
+    .cta-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:27px;
+    }
+
+
+    /* =========================================================
+       MODAL
+    ========================================================== */
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(3,8,18,.72);
+      backdrop-filter:blur(12px);
+    }
+
+    .modal.open{
+      display:flex;
+      animation:fadeIn .25s ease;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+      }
+      to{
+        opacity:1;
+      }
+    }
+
+    .modal-box{
+      width:min(920px,100%);
+      max-height:90vh;
+      overflow:auto;
+      border-radius:28px;
+      background:#fff;
+      box-shadow:
+        0 40px 100px rgba(0,0,0,.35);
+      animation:modalUp .3s ease;
+    }
+
+    @keyframes modalUp{
+      from{
+        opacity:0;
+        transform:translateY(25px) scale(.97);
+      }
+      to{
+        opacity:1;
+        transform:none;
+      }
+    }
+
+    .modal-top{
+      height:310px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .modal-top img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .modal-top::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(
+          180deg,
+          transparent 30%,
+          rgba(5,10,20,.75)
+        );
+    }
+
+    .modal-close{
+      position:absolute;
+      z-index:5;
+      top:16px;
+      right:16px;
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:rgba(7,17,31,.72);
+      border:1px solid rgba(255,255,255,.15);
+      color:#fff;
+      backdrop-filter:blur(10px);
+      transition:.25s ease;
+    }
+
+    .modal-close:hover{
+      background:#ef4444;
+      transform:rotate(90deg);
+    }
+
+    .modal-title-wrap{
+      position:absolute;
+      z-index:4;
+      left:28px;
+      right:28px;
+      bottom:25px;
+      color:#fff;
+    }
+
+    .modal-category{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-weight:900;
+      color:#8beaff;
+    }
+
+    .modal-title{
+      margin-top:7px;
+      font-family:"Space Grotesk",sans-serif;
+      font-size:clamp(28px,4vw,42px);
+      line-height:1.05;
+    }
+
+    .modal-body{
+      padding:30px;
+    }
+
+    .modal-description{
+      color:#64748b;
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    .modal-info-grid{
+      display:grid;
+      grid-template-columns:
+        repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin-top:25px;
+    }
+
+    .modal-info{
+      padding:17px;
+      border-radius:15px;
+      background:#f6f8fb;
+      border:1px solid #e9edf2;
+    }
+
+    .modal-info span{
+      display:block;
+      color:#94a3b8;
+      font-size:10px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+
+    .modal-info strong{
+      display:block;
+      margin-top:5px;
+      color:#172033;
+      font-size:14px;
+    }
+
+    .modal-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:25px;
+    }
+
+
+    /* =========================================================
+       REVEAL
+    ========================================================== */
+
+    .reveal{
+      opacity:0;
+      transform:translateY(25px);
+      transition:
+        opacity .7s ease,
+        transform .7s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:none;
+    }
+
+
+    /* =========================================================
+       SCROLLBAR
+    ========================================================== */
+
+    ::-webkit-scrollbar{
+      width:9px;
+    }
+
+    ::-webkit-scrollbar-track{
+      background:#eef2f7;
+    }
+
+    ::-webkit-scrollbar-thumb{
+      background:#b8c2d1;
+      border-radius:999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover{
+      background:#94a3b8;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================== */
+
+    @media(max-width:1100px){
+
+      .hero-grid{
+        grid-template-columns:1fr;
+        padding:90px 0 70px;
+      }
+
+      .hero-content{
+        max-width:800px;
+      }
+
+      .hero-visual{
+        min-height:430px;
+      }
+
+      .courses-grid{
+        grid-template-columns:
+          repeat(2,minmax(0,1fr));
+      }
+
+      .benefits-grid{
+        grid-template-columns:
+          repeat(2,minmax(0,1fr));
+      }
+
+    }
+
+
+    @media(max-width:800px){
+
+      .section{
+        padding:70px 0;
+      }
+
+      .container{
+        width:min(var(--container), calc(100% - 28px));
+      }
+
+      .courses-hero{
+        min-height:auto;
+      }
+
+      .hero-grid{
+        min-height:auto;
+        padding:80px 0 100px;
+        gap:50px;
+      }
+
+      .hero-title{
+        font-size:clamp(43px,12vw,65px);
+      }
+
+      .hero-description{
+        font-size:15px;
+      }
+
+      .hero-image-wrap{
+        height:350px;
+      }
+
+      .hero-floating.top{
+        left:0;
+      }
+
+      .hero-floating.bottom{
+        right:0;
+      }
+
+      .course-section{
+        margin-top:-35px;
+      }
+
+      .filter-top{
+        grid-template-columns:1fr;
+      }
+
+      .section-header{
+        align-items:flex-start;
+        flex-direction:column;
+        margin-bottom:25px;
+      }
+
+      .course-count{
+        align-self:flex-start;
+      }
+
+      .courses-grid{
+        grid-template-columns:1fr;
+      }
+
+      .course-image{
+        height:240px;
+      }
+
+      .cta-box{
+        padding:40px 25px;
+        border-radius:26px;
+      }
+
+      .modal-info-grid{
+        grid-template-columns:1fr;
+      }
+
+      .modal-top{
+        height:260px;
+      }
+
+    }
+
+
+    @media(max-width:520px){
+
+      .hero-grid{
+        padding:65px 0 85px;
+      }
+
+      .hero-actions{
+        flex-direction:column;
+      }
+
+      .hero-actions .btn{
+        width:100%;
+      }
+
+      .hero-visual{
+        min-height:350px;
+      }
+
+      .hero-image-wrap{
+        height:290px;
+        border-radius:24px;
+      }
+
+      .hero-floating{
+        padding:13px;
+      }
+
+      .hero-floating.top{
+        top:8px;
+      }
+
+      .hero-floating.bottom{
+        bottom:8px;
+      }
+
+      .floating-number{
+        font-size:19px;
+      }
+
+      .floating-text{
+        font-size:10px;
+      }
+
+      .floating-icon{
+        width:35px;
+        height:35px;
+        border-radius:10px;
+      }
+
+      .category-row{
+        overflow-x:auto;
+        flex-wrap:nowrap;
+        padding-bottom:4px;
+      }
+
+      .category-pill{
+        flex:none;
+      }
+
+      .course-content{
+        padding:19px;
+      }
+
+      .benefits-grid{
+        grid-template-columns:1fr;
+      }
+
+      .cta-actions{
+        flex-direction:column;
+      }
+
+      .cta-actions .btn{
+        width:100%;
+      }
+
+      .modal{
+        padding:10px;
+      }
+
+      .modal-box{
+        border-radius:22px;
+      }
+
+      .modal-body{
+        padding:22px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =========================================================
+       HERO
+  ========================================================== -->
+
+  <section class="courses-hero">
+
+    <div class="container hero-grid">
+
+      <div class="hero-content reveal">
+
+        <div class="eyebrow">
+          <i class="fa-solid fa-graduation-cap"></i>
+          Technical & Professional Training
+        </div>
+
+        <h1 class="hero-title">
+          Build Skills.
+          <br>
+          Build Your
+          <span class="gradient-text">Career.</span>
+        </h1>
+
+        <p class="hero-description">
+          Explore technical and professional training programs designed
+          to help you develop practical knowledge, industry-oriented
+          skills and a stronger foundation for your career.
+        </p>
+
+        <div class="hero-actions">
+
+          <a
+            href="#allCourses"
+            class="btn btn-primary"
+          >
+            <i class="fa-solid fa-layer-group"></i>
+            Explore Courses
+          </a>
+
+          <a
+            href="#courseBenefits"
+            class="btn btn-light"
+          >
+            <i class="fa-solid fa-arrow-down"></i>
+            Why Choose Us
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-visual reveal">
+
+        <div class="hero-floating top">
+
+          <div class="floating-icon">
+            <i class="fa-solid fa-book-open"></i>
+          </div>
+
+          <div class="floating-number">
+            18+
+          </div>
+
+          <div class="floating-text">
+            Training Programs
+          </div>
+
+        </div>
+
+
+        <div class="hero-image-wrap">
+
+          <img
+            src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=85"
+            alt="Technical training workshop"
+          >
+
+        </div>
+
+
+        <div class="hero-floating bottom">
+
+          <div class="floating-icon">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+          </div>
+
+          <div class="floating-number">
+            Practical
+          </div>
+
+          <div class="floating-text">
+            Skill-oriented learning
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       COURSE SECTION
+  ========================================================== -->
+
+  <section
+    class="section course-section"
+    id="allCourses"
+  >
+
+    <div class="container">
+
+
+      <!-- FILTER PANEL -->
+
+      <div class="filter-panel reveal">
+
+        <div class="filter-top">
+
+          <div class="input-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+              type="search"
+              id="courseSearch"
+              placeholder="Search courses..."
+              autocomplete="off"
+            >
+
+          </div>
+
+
+          <div class="select-box">
+
+            <i class="fa-solid fa-layer-group"></i>
+
+            <select id="categoryFilter">
+
+              <option value="all">
+                All Categories
+              </option>
+
+              <option value="safety">
+                Safety
+              </option>
+
+              <option value="electrical">
+                Electrical
+              </option>
+
+              <option value="mechanical">
+                Mechanical
+              </option>
+
+              <option value="hvac">
+                HVAC / AC
+              </option>
+
+              <option value="welding">
+                Welding
+              </option>
+
+              <option value="computer">
+                Computer
+              </option>
+
+              <option value="technical">
+                Technical
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="select-box">
+
+            <i class="fa-solid fa-signal"></i>
+
+            <select id="levelFilter">
+
+              <option value="all">
+                All Levels
+              </option>
+
+              <option value="basic">
+                Basic
+              </option>
+
+              <option value="diploma">
+                Diploma
+              </option>
+
+              <option value="advanced">
+                Advanced
+              </option>
+
+              <option value="professional">
+                Professional
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <div class="category-row">
+
+          <button
+            class="category-pill active"
+            data-category="all"
+          >
+            All Courses
+          </button>
+
+          <button
+            class="category-pill"
+            data-category="safety"
+          >
+            <i class="fa-solid fa-shield-halved"></i>
+            Safety
+          </button>
+
+          <button
+            class="category-pill"
+            data-category="electrical"
+          >
+            <i class="fa-solid fa-bolt"></i>
+            Electrical
+          </button>
+
+          <button
+            class="category-pill"
+            data-category="mechanical"
+          >
+            <i class="fa-solid fa-gears"></i>
+            Mechanical
+          </button>
+
+          <button
+            class="category-pill"
+            data-category="hvac"
+          >
+            <i class="fa-solid fa-snowflake"></i>
+            HVAC / AC
+          </button>
+
+          <button
+            class="category-pill"
+            data-category="welding"
+          >
+            <i class="fa-solid fa-fire"></i>
+            Welding
+          </button>
+
+          <button
+            class="category-pill"
+            data-category="computer"
+          >
+            <i class="fa-solid fa-laptop-code"></i>
+            Computer
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SECTION HEADING -->
+
+      <div class="section-header reveal">
+
+        <div>
+
+          <div class="eyebrow">
+            <i class="fa-solid fa-graduation-cap"></i>
+            Our Programs
+          </div>
+
+          <h2 class="section-title">
+            Explore <span>All Courses</span>
+          </h2>
+
+          <p class="section-subtitle">
+            Choose from a range of technical, safety and professional
+            training programs. Find the course that matches your
+            career goals and interests.
+          </p>
+
+        </div>
+
+
+        <div class="course-count">
+          <strong id="visibleCount">18</strong>
+          Courses Available
+        </div>
+
+      </div>
+
+
+
+      <!-- COURSE GRID -->
+
+      <div
+        class="courses-grid"
+        id="coursesGrid"
+      >
+
+
+        <!-- =====================================================
+             01
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="safety"
+          data-level="diploma"
+          data-title="Diploma in Industrial Safety"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1000&q=85"
+              alt="Industrial safety training"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Popular
+            </span>
+
+            <span class="course-level">
+              Diploma
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Safety
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Diploma in Industrial Safety
+            </h3>
+
+            <p class="course-description">
+              Build knowledge of workplace safety, hazard identification,
+              risk management and industrial safety practices.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-regular fa-clock"></i>
+                Professional
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-helmet-safety"></i>
+                Safety
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Diploma in Industrial Safety"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             02
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="safety"
+          data-level="advanced"
+          data-title="Advance Diploma in Industrial Safety"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1000&q=85"
+              alt="Advanced industrial safety"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Advanced
+            </span>
+
+            <span class="course-level">
+              Advanced
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Safety
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-user-shield"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Advance Diploma in Industrial Safety
+            </h3>
+
+            <p class="course-description">
+              Advanced learning focused on industrial hazards,
+              safety systems, compliance and workplace controls.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-chart-line"></i>
+                Advanced
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-shield"></i>
+                HSE
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Advance Diploma in Industrial Safety"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             03
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="safety"
+          data-level="diploma"
+          data-title="Diploma in Fire & Safety"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1529265895721-6597a3c7d4d1?auto=format&fit=crop&w=1000&q=85"
+              alt="Fire and safety training"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Safety
+            </span>
+
+            <span class="course-level">
+              Diploma
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Fire & Safety
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-fire-extinguisher"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Diploma in Fire & Safety
+            </h3>
+
+            <p class="course-description">
+              Learn fire prevention, emergency response, safety
+              procedures and basic fire protection practices.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-fire"></i>
+                Fire Safety
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-graduation-cap"></i>
+                Diploma
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Diploma in Fire & Safety"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             04
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="electrical"
+          data-level="basic"
+          data-title="Electrician"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1000&q=85"
+              alt="Electrician training"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Technical
+            </span>
+
+            <span class="course-level">
+              Basic
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Electrical
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-bolt"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Electrician
+            </h3>
+
+            <p class="course-description">
+              Develop practical understanding of electrical wiring,
+              tools, components and basic electrical systems.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-bolt"></i>
+                Electrical
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-screwdriver"></i>
+                Practical
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Electrician"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             05
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="electrical"
+          data-level="diploma"
+          data-title="Diploma in Electrical Safety"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1000&q=85"
+              alt="Electrical safety"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Safety
+            </span>
+
+            <span class="course-level">
+              Diploma
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Electrical
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-plug-circle-bolt"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Diploma in Electrical Safety
+            </h3>
+
+            <p class="course-description">
+              Understand electrical hazards, safe work practices,
+              protection systems and workplace electrical safety.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-shield"></i>
+                Safety
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-bolt"></i>
+                Electrical
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Diploma in Electrical Safety"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             06
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="mechanical"
+          data-level="basic"
+          data-title="Mechanical Fitter"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1000&q=85"
+              alt="Mechanical fitter training"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Practical
+            </span>
+
+            <span class="course-level">
+              Basic
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Mechanical
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-gears"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Mechanical Fitter
+            </h3>
+
+            <p class="course-description">
+              Learn fitting tools, machine components, assembly,
+              maintenance and basic mechanical workshop practices.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-gears"></i>
+                Mechanical
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-wrench"></i>
+                Practical
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Mechanical Fitter"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             07
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="mechanical"
+          data-level="professional"
+          data-title="Mechanical Engineering"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1000&q=85"
+              alt="Mechanical engineering"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Engineering
+            </span>
+
+            <span class="course-level">
+              Professional
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Mechanical
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-industry"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Mechanical Engineering
+            </h3>
+
+            <p class="course-description">
+              Develop a foundation in mechanical systems,
+              engineering concepts, machines and industrial practices.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-industry"></i>
+                Industrial
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-gears"></i>
+                Mechanical
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Mechanical Engineering"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             08
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="hvac"
+          data-level="professional"
+          data-title="HVAC Technician"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1631545806609-9c7e2e7c4d9f?auto=format&fit=crop&w=1000&q=85"
+              alt="HVAC technician"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Technical
+            </span>
+
+            <span class="course-level">
+              Professional
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                HVAC / AC
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-fan"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              HVAC Technician
+            </h3>
+
+            <p class="course-description">
+              Learn installation, maintenance and servicing concepts
+              related to heating, ventilation and air conditioning.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-fan"></i>
+                HVAC
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                Technical
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="HVAC Technician"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             09
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="hvac"
+          data-level="professional"
+          data-title="AC & Chiller"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1635274605638-d1f8f2d3c6d5?auto=format&fit=crop&w=1000&q=85"
+              alt="Air conditioning and chiller"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              HVAC
+            </span>
+
+            <span class="course-level">
+              Professional
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                HVAC / AC
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-snowflake"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              AC & Chiller
+            </h3>
+
+            <p class="course-description">
+              Explore air-conditioning systems, refrigeration concepts,
+              servicing practices and chiller fundamentals.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-snowflake"></i>
+                Cooling
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-tools"></i>
+                Practical
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="AC & Chiller"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             10
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="welding"
+          data-level="professional"
+          data-title="Arc Welding 6G"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1000&q=85"
+              alt="Arc welding"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Skill
+            </span>
+
+            <span class="course-level">
+              Professional
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Welding
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-fire-flame-curved"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Arc Welding 6G
+            </h3>
+
+            <p class="course-description">
+              Practical welding training covering arc welding techniques,
+              joints, tools, safety and 6G position fundamentals.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-fire"></i>
+                Welding
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-hard-hat"></i>
+                Practical
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Arc Welding 6G"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             11
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="welding"
+          data-level="professional"
+          data-title="Argon Welding 6G"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=1000&q=85"
+              alt="Argon welding"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Skill
+            </span>
+
+            <span class="course-level">
+              Professional
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Welding
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-fire"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Argon Welding 6G
+            </h3>
+
+            <p class="course-description">
+              Build practical skills in argon welding, equipment,
+              welding positions and safe workshop practices.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-fire"></i>
+                Welding
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-user-gear"></i>
+                Skill
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Argon Welding 6G"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             12
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="welding"
+          data-level="professional"
+          data-title="MIG Welding"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1609205807107-7d5f9f3e6b99?auto=format&fit=crop&w=1000&q=85"
+              alt="MIG welding"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Practical
+            </span>
+
+            <span class="course-level">
+              Professional
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Welding
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-bolt"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              MIG Welding
+            </h3>
+
+            <p class="course-description">
+              Learn MIG welding equipment, process fundamentals,
+              workplace safety and practical welding techniques.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-fire"></i>
+                Welding
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-wrench"></i>
+                Practical
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="MIG Welding"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             13
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="computer"
+          data-level="basic"
+          data-title="Basic Computer"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=85"
+              alt="Basic computer training"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Beginner
+            </span>
+
+            <span class="course-level">
+              Basic
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Computer
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-computer"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Basic Computer
+            </h3>
+
+            <p class="course-description">
+              Build essential computer skills including operating
+              systems, internet, documents and everyday digital tools.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-laptop"></i>
+                Computer
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-seedling"></i>
+                Beginner
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Basic Computer"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             14
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="computer"
+          data-level="basic"
+          data-title="Tally"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1000&q=85"
+              alt="Tally accounting training"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Career
+            </span>
+
+            <span class="course-level">
+              Basic
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Computer
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-calculator"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Tally
+            </h3>
+
+            <p class="course-description">
+              Learn practical accounting software concepts,
+              bookkeeping workflows and business data management.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-calculator"></i>
+                Accounting
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-laptop"></i>
+                Computer
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Tally"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             15
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="technical"
+          data-level="professional"
+          data-title="AutoCAD"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1000&q=85"
+              alt="AutoCAD design training"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Design
+            </span>
+
+            <span class="course-level">
+              Professional
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Technical
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-drafting-compass"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              AutoCAD
+            </h3>
+
+            <p class="course-description">
+              Develop CAD drawing and design skills for technical,
+              engineering and construction-oriented applications.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-pen-ruler"></i>
+                Design
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-laptop"></i>
+                CAD
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="AutoCAD"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             16
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="technical"
+          data-level="professional"
+          data-title="Instrumentation Technician"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1000&q=85"
+              alt="Instrumentation technician"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Technical
+            </span>
+
+            <span class="course-level">
+              Professional
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Instrumentation
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-microchip"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Instrumentation Technician
+            </h3>
+
+            <p class="course-description">
+              Understand industrial instruments, measurement concepts,
+              control systems and technical maintenance fundamentals.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-microchip"></i>
+                Instrument
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-industry"></i>
+                Industrial
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Instrumentation Technician"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             17
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="technical"
+          data-level="professional"
+          data-title="Land Surveyor"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85"
+              alt="Land surveying"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Field Skill
+            </span>
+
+            <span class="course-level">
+              Professional
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Technical
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-location-crosshairs"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Land Surveyor
+            </h3>
+
+            <p class="course-description">
+              Learn field surveying fundamentals, measurements,
+              instruments and basic land survey practices.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-location-dot"></i>
+                Field Work
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-ruler-combined"></i>
+                Survey
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Land Surveyor"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             18
+        ====================================================== -->
+
+        <article
+          class="course-card"
+          data-category="mechanical"
+          data-level="professional"
+          data-title="Pipe Fitter"
+        >
+
+          <div class="course-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1000&q=85"
+              alt="Pipe fitting training"
+              loading="lazy"
+            >
+
+            <span class="course-badge">
+              Industrial
+            </span>
+
+            <span class="course-level">
+              Professional
+            </span>
+
+            <div class="course-image-bottom">
+
+              <span class="course-category">
+                Mechanical
+              </span>
+
+              <span class="course-icon">
+                <i class="fa-solid fa-pipes"></i>
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-content">
+
+            <h3 class="course-title">
+              Pipe Fitter
+            </h3>
+
+            <p class="course-description">
+              Develop practical understanding of pipe fitting,
+              tools, measurements, joints and industrial piping work.
+            </p>
+
+            <div class="course-meta">
+
+              <span class="meta-item">
+                <i class="fa-solid fa-pipes"></i>
+                Piping
+              </span>
+
+              <span class="meta-item">
+                <i class="fa-solid fa-wrench"></i>
+                Practical
+              </span>
+
+            </div>
+
+            <div class="course-actions">
+
+              <button
+                class="details-btn"
+                data-course="Pipe Fitter"
+              >
+                View Details
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+              <button class="enquire-btn">
+                Enquire
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </div>
+
+
+
+      <!-- EMPTY -->
+
+      <div
+        class="empty-state"
+        id="emptyState"
+      >
+
+        <div class="empty-icon">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <h3>
+          No courses found
+        </h3>
+
+        <p>
+          Try another search keyword or select a different category.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       BENEFITS
+  ========================================================== -->
+
+  <section
+    class="section benefits-section"
+    id="courseBenefits"
+  >
+
+    <div class="container">
+
+      <div class="benefits-header reveal">
+
+        <div class="eyebrow">
+          <i class="fa-solid fa-sparkles"></i>
+          Learning Experience
+        </div>
+
+        <h2 class="section-title">
+          More Than Just a
+          <span>Course.</span>
+        </h2>
+
+        <p class="section-subtitle">
+          Our course structure is designed around practical knowledge,
+          technical understanding and career-focused skill development.
+        </p>
+
+      </div>
+
+
+      <div class="benefits-grid">
+
+        <div class="benefit-card reveal">
+
+          <div class="benefit-icon">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+          </div>
+
+          <h3>
+            Practical Skills
+          </h3>
+
+          <p>
+            Focus on useful technical concepts and practical
+            skill development.
+          </p>
+
+        </div>
+
+
+        <div class="benefit-card reveal">
+
+          <div class="benefit-icon">
+            <i class="fa-solid fa-user-graduate"></i>
+          </div>
+
+          <h3>
+            Career Focused
+          </h3>
+
+          <p>
+            Build a stronger foundation for technical and
+            professional career opportunities.
+          </p>
+
+        </div>
+
+
+        <div class="benefit-card reveal">
+
+          <div class="benefit-icon">
+            <i class="fa-solid fa-industry"></i>
+          </div>
+
+          <h3>
+            Industry Skills
+          </h3>
+
+          <p>
+            Learn concepts connected with real-world technical
+            and industrial environments.
+          </p>
+
+        </div>
+
+
+        <div class="benefit-card reveal">
+
+          <div class="benefit-icon">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+          </div>
+
+          <h3>
+            Grow Your Skills
+          </h3>
+
+          <p>
+            Keep developing your technical knowledge and
+            professional capabilities.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       CTA
+  ========================================================== -->
+
+  <section class="cta-section">
+
+    <div class="container">
+
+      <div class="cta-box reveal">
+
+        <div class="cta-content">
+
+          <h2 class="cta-title">
+            Ready to Choose
+            Your Course?
+          </h2>
+
+          <p class="cta-text">
+            Explore the available programs and connect with our
+            team to know more about course details, eligibility,
+            duration and admission process.
+          </p>
+
+          <div class="cta-actions">
+
+            <a
+              href="#allCourses"
+              class="btn btn-primary"
+            >
+              <i class="fa-solid fa-graduation-cap"></i>
+              Browse Courses
+            </a>
+
+            <!-- Replace the number with the actual academy number -->
+
+            <a
+              href="tel:+91XXXXXXXXXX"
+              class="btn btn-light"
+            >
+              <i class="fa-solid fa-phone"></i>
+              Contact Academy
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       COURSE DETAILS MODAL
+  ========================================================== -->
+
+  <div
+    class="modal"
+    id="courseModal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-box">
+
+      <div class="modal-top">
+
+        <img
+          id="modalImage"
+          src=""
+          alt="Course"
+        >
+
+        <button
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close course details"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="modal-title-wrap">
+
+          <div
+            class="modal-category"
+            id="modalCategory"
+          >
+            Technical Training
+          </div>
+
+          <h2
+            class="modal-title"
+            id="modalTitle"
+          >
+            Course Title
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-body">
+
+        <p
+          class="modal-description"
+          id="modalDescription"
+        >
+        </p>
+
+
+        <div class="modal-info-grid">
+
+          <div class="modal-info">
+
+            <span>
+              Course Level
+            </span>
+
+            <strong id="modalLevel">
+              Professional
+            </strong>
+
+          </div>
+
+
+          <div class="modal-info">
+
+            <span>
+              Learning Mode
+            </span>
+
+            <strong>
+              Theory + Practical
+            </strong>
+
+          </div>
+
+
+          <div class="modal-info">
+
+            <span>
+              Course Type
+            </span>
+
+            <strong id="modalType">
+              Technical Training
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+          <a
+            href="tel:+91XXXXXXXXXX"
+            class="btn btn-primary"
+          >
+            <i class="fa-solid fa-phone"></i>
+            Enquire Now
+          </a>
+
+          <button
+            class="btn"
+            id="modalDone"
+            style="
+              background:#f1f5f9;
+              color:#172033;
+            "
+          >
+            Close
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================== -->
+
+  <script>
+
+    /* =========================================================
+       COURSE DATA
+    ========================================================== */
+
+    const courseData = {
+
+      "Diploma in Industrial Safety": {
+        category: "Safety",
+        level: "Diploma",
+        type: "Industrial Safety",
+        image:
+          "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Build knowledge of workplace safety, hazard identification, risk management, industrial safety practices and safety awareness."
+      },
+
+      "Advance Diploma in Industrial Safety": {
+        category: "Safety",
+        level: "Advanced",
+        type: "HSE / Safety",
+        image:
+          "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Advanced learning focused on industrial hazards, safety systems, risk controls, compliance concepts and workplace safety management."
+      },
+
+      "Diploma in Fire & Safety": {
+        category: "Fire & Safety",
+        level: "Diploma",
+        type: "Fire Safety",
+        image:
+          "https://images.unsplash.com/photo-1529265895721-6597a3c7d4d1?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Learn fire prevention, emergency response, safety procedures and basic fire protection practices."
+      },
+
+      "Electrician": {
+        category: "Electrical",
+        level: "Basic",
+        type: "Electrical Training",
+        image:
+          "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Develop practical understanding of electrical wiring, tools, components and basic electrical systems."
+      },
+
+      "Diploma in Electrical Safety": {
+        category: "Electrical",
+        level: "Diploma",
+        type: "Electrical Safety",
+        image:
+          "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Understand electrical hazards, safe work practices, protection systems and workplace electrical safety."
+      },
+
+      "Mechanical Fitter": {
+        category: "Mechanical",
+        level: "Basic",
+        type: "Mechanical Training",
+        image:
+          "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Learn fitting tools, machine components, assembly, maintenance and basic mechanical workshop practices."
+      },
+
+      "Mechanical Engineering": {
+        category: "Mechanical",
+        level: "Professional",
+        type: "Engineering",
+        image:
+          "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Develop a foundation in mechanical systems, engineering concepts, machines and industrial practices."
+      },
+
+      "HVAC Technician": {
+        category: "HVAC / AC",
+        level: "Professional",
+        type: "HVAC",
+        image:
+          "https://images.unsplash.com/photo-1631545806609-9c7e2e7c4d9f?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Learn installation, maintenance and servicing concepts related to heating, ventilation and air conditioning."
+      },
+
+      "AC & Chiller": {
+        category: "HVAC / AC",
+        level: "Professional",
+        type: "Cooling Technology",
+        image:
+          "https://images.unsplash.com/photo-1635274605638-d1f8f2d3c6d5?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Explore air-conditioning systems, refrigeration concepts, servicing practices and chiller fundamentals."
+      },
+
+      "Arc Welding 6G": {
+        category: "Welding",
+        level: "Professional",
+        type: "Welding",
+        image:
+          "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Practical welding training covering arc welding techniques, joints, tools, safety and 6G position fundamentals."
+      },
+
+      "Argon Welding 6G": {
+        category: "Welding",
+        level: "Professional",
+        type: "Welding",
+        image:
+          "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Build practical skills in argon welding, equipment, welding positions and safe workshop practices."
+      },
+
+      "MIG Welding": {
+        category: "Welding",
+        level: "Professional",
+        type: "Welding",
+        image:
+          "https://images.unsplash.com/photo-1609205807107-7d5f9f3e6b99?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Learn MIG welding equipment, process fundamentals, workplace safety and practical welding techniques."
+      },
+
+      "Basic Computer": {
+        category: "Computer",
+        level: "Basic",
+        type: "Computer Training",
+        image:
+          "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Build essential computer skills including operating systems, internet, documents and everyday digital tools."
+      },
+
+      "Tally": {
+        category: "Computer",
+        level: "Basic",
+        type: "Accounting",
+        image:
+          "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Learn practical accounting software concepts, bookkeeping workflows and business data management."
+      },
+
+      "AutoCAD": {
+        category: "Technical",
+        level: "Professional",
+        type: "CAD / Design",
+        image:
+          "https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Develop CAD drawing and design skills for technical, engineering and construction-oriented applications."
+      },
+
+      "Instrumentation Technician": {
+        category: "Instrumentation",
+        level: "Professional",
+        type: "Industrial Instrumentation",
+        image:
+          "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Understand industrial instruments, measurement concepts, control systems and technical maintenance fundamentals."
+      },
+
+      "Land Surveyor": {
+        category: "Technical",
+        level: "Professional",
+        type: "Surveying",
+        image:
+          "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Learn field surveying fundamentals, measurements, instruments and basic land survey practices."
+      },
+
+      "Pipe Fitter": {
+        category: "Mechanical",
+        level: "Professional",
+        type: "Piping",
+        image:
+          "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1200&q=85",
+        description:
+          "Develop practical understanding of pipe fitting, tools, measurements, joints and industrial piping work."
+      }
+
+    };
+
+
+    /* =========================================================
+       ELEMENTS
+    ========================================================== */
+
+    const searchInput =
+      document.getElementById("courseSearch");
+
+    const categoryFilter =
+      document.getElementById("categoryFilter");
+
+    const levelFilter =
+      document.getElementById("levelFilter");
+
+    const courseCards =
+      [...document.querySelectorAll(".course-card")];
+
+    const categoryButtons =
+      [...document.querySelectorAll(".category-pill")];
+
+    const visibleCount =
+      document.getElementById("visibleCount");
+
+    const emptyState =
+      document.getElementById("emptyState");
+
+
+
+    /* =========================================================
+       FILTER
+    ========================================================== */
+
+    function filterCourses(){
+
+      const search =
+        searchInput.value
+          .trim()
+          .toLowerCase();
+
+      const category =
+        categoryFilter.value;
+
+      const level =
+        levelFilter.value;
+
+      let visible = 0;
+
+
+      courseCards.forEach(card => {
+
+        const title =
+          (card.dataset.title || "")
+            .toLowerCase();
+
+        const cardCategory =
+          card.dataset.category || "";
+
+        const cardLevel =
+          card.dataset.level || "";
+
+
+        const searchMatch =
+          !search ||
+          title.includes(search);
+
+
+        const categoryMatch =
+          category === "all" ||
+          cardCategory === category;
+
+
+        const levelMatch =
+          level === "all" ||
+          cardLevel === level;
+
+
+        const shouldShow =
+          searchMatch &&
+          categoryMatch &&
+          levelMatch;
+
+
+        if(shouldShow){
+
+          card.style.display = "";
+
+          visible++;
+
+          requestAnimationFrame(() => {
+            card.classList.add("show");
+          });
+
+        }else{
+
+          card.style.display = "none";
+
+          card.classList.remove("show");
+
+        }
+
+      });
+
+
+      visibleCount.textContent =
+        visible;
+
+
+      emptyState.classList.toggle(
+        "show",
+        visible === 0
+      );
+
+    }
+
+
+
+    /* =========================================================
+       SEARCH EVENTS
+    ========================================================== */
+
+    searchInput.addEventListener(
+      "input",
+      filterCourses
+    );
+
+    categoryFilter.addEventListener(
+      "change",
+      () => {
+
+        categoryButtons.forEach(button => {
+
+          button.classList.toggle(
+            "active",
+            button.dataset.category ===
+            categoryFilter.value
+          );
+
+        });
+
+        filterCourses();
+
+      }
+    );
+
+    levelFilter.addEventListener(
+      "change",
+      filterCourses
+    );
+
+
+
+    /* =========================================================
+       CATEGORY PILLS
+    ========================================================== */
+
+    categoryButtons.forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const category =
+            button.dataset.category;
+
+          categoryButtons.forEach(btn => {
+
+            btn.classList.remove(
+              "active"
+            );
+
+          });
+
+          button.classList.add(
+            "active"
+          );
+
+          categoryFilter.value =
+            category;
+
+          filterCourses();
+
+        }
+      );
+
+    });
+
+
+
+    /* =========================================================
+       MODAL
+    ========================================================== */
+
+    const modal =
+      document.getElementById("courseModal");
+
+    const modalClose =
+      document.getElementById("modalClose");
+
+    const modalDone =
+      document.getElementById("modalDone");
+
+    const modalImage =
+      document.getElementById("modalImage");
+
+    const modalTitle =
+      document.getElementById("modalTitle");
+
+    const modalCategory =
+      document.getElementById("modalCategory");
+
+    const modalDescription =
+      document.getElementById("modalDescription");
+
+    const modalLevel =
+      document.getElementById("modalLevel");
+
+    const modalType =
+      document.getElementById("modalType");
+
+
+
+    function openCourseModal(courseName){
+
+      const data =
+        courseData[courseName];
+
+      if(!data){
+        return;
+      }
+
+
+      modalImage.src =
+        data.image;
+
+      modalImage.alt =
+        courseName;
+
+      modalTitle.textContent =
+        courseName;
+
+      modalCategory.textContent =
+        data.category;
+
+      modalDescription.textContent =
+        data.description;
+
+      modalLevel.textContent =
+        data.level;
+
+      modalType.textContent =
+        data.type;
+
+
+      modal.classList.add(
+        "open"
+      );
+
+      modal.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+
+
+
+    function closeCourseModal(){
+
+      modal.classList.remove(
+        "open"
+      );
+
+      modal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      document.body.style.overflow =
+        "";
+
+    }
+
+
+
+    document
+      .querySelectorAll(".details-btn")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            openCourseModal(
+              button.dataset.course
+            );
+
+          }
+        );
+
+      });
+
+
+
+    document
+      .querySelectorAll(".enquire-btn")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const card =
+              button.closest(
+                ".course-card"
+              );
+
+            const course =
+              card?.dataset.title ||
+              "Course";
+
+            const message =
+              encodeURIComponent(
+                "Hello, I would like to enquire about " +
+                course +
+                "."
+              );
+
+            /*
+              Replace the WhatsApp number below
+              with the actual academy number.
+            */
+
+            window.open(
+              "https://wa.me/91XXXXXXXXXX?text=" +
+              message,
+              "_blank"
+            );
+
+          }
+        );
+
+      });
+
+
+
+    modalClose.addEventListener(
+      "click",
+      closeCourseModal
+    );
+
+    modalDone.addEventListener(
+      "click",
+      closeCourseModal
+    );
+
+
+    modal.addEventListener(
+      "click",
+      event => {
+
+        if(
+          event.target === modal
+        ){
+          closeCourseModal();
+        }
+
+      }
+    );
+
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if(
+          event.key === "Escape" &&
+          modal.classList.contains("open")
+        ){
+
+          closeCourseModal();
+
+        }
+
+      }
+    );
+
+
+
+    /* =========================================================
+       SCROLL REVEAL
+    ========================================================== */
+
+    const revealElements =
+      document.querySelectorAll(
+        ".reveal"
+      );
+
+
+    const revealObserver =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(
+            entry => {
+
+              if(
+                entry.isIntersecting
+              ){
+
+                entry.target.classList.add(
+                  "visible"
+                );
+
+                revealObserver.unobserve(
+                  entry.target
+                );
+
+              }
+
+            }
+          );
+
+        },
+        {
+          threshold:.12
+        }
+      );
+
+
+    revealElements.forEach(
+      element => {
+
+        revealObserver.observe(
+          element
+        );
+
+      }
+    );
+
+
+
+    /* =========================================================
+       INITIAL COURSE ANIMATION
+    ========================================================== */
+
+    window.addEventListener(
+      "load",
+      () => {
+
+        courseCards.forEach(
+          (card,index) => {
+
+            setTimeout(
+              () => {
+
+                card.classList.add(
+                  "show"
+                );
+
+              },
+              60 + index * 45
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       INITIAL FILTER COUNT
+    ========================================================== */
+
+    filterCourses();
+
+  </script>
+
+</body>
+</html>
