@@ -1,0 +1,4188 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Placement & Career Support | Arsh Technical Academy Pvt. Ltd.</title>
+
+  <meta
+    name="description"
+    content="Placement and career support page of Arsh Technical Academy Pvt. Ltd."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+  <style>
+    /* =========================================================
+       ROOT
+    ========================================================= */
+
+    :root{
+      --bg:#050914;
+      --bg2:#07111f;
+      --bg3:#0a1730;
+
+      --text:#f7faff;
+      --muted:#a9b5c8;
+
+      --blue:#2563eb;
+      --blue2:#3b82f6;
+      --cyan:#06b6d4;
+      --violet:#8b5cf6;
+      --pink:#ec4899;
+      --gold:#f4c542;
+      --orange:#f97316;
+
+      --glass:rgba(255,255,255,.055);
+      --glass2:rgba(255,255,255,.085);
+      --border:rgba(255,255,255,.11);
+
+      --shadow:
+        0 25px 80px rgba(0,0,0,.38);
+
+      --radius:26px;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"DM Sans",sans-serif;
+      background:
+        radial-gradient(circle at 5% 0%,rgba(37,99,235,.20),transparent 28%),
+        radial-gradient(circle at 95% 10%,rgba(139,92,246,.18),transparent 28%),
+        radial-gradient(circle at 50% 70%,rgba(6,182,212,.08),transparent 35%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      line-height:1.6;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+
+      background:
+        linear-gradient(
+          rgba(255,255,255,.018) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.018) 1px,
+          transparent 1px
+        );
+
+      background-size:60px 60px;
+      mask-image:linear-gradient(
+        to bottom,
+        black,
+        transparent 80%
+      );
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button{
+      font:inherit;
+    }
+
+    img{
+      display:block;
+      max-width:100%;
+    }
+
+    .container{
+      width:min(1240px,92%);
+      margin:auto;
+    }
+
+
+    /* =========================================================
+       LOADER
+    ========================================================= */
+
+    #pageLoader{
+      position:fixed;
+      inset:0;
+      z-index:99999;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      background:#040711;
+
+      transition:
+        opacity .5s ease,
+        visibility .5s ease;
+    }
+
+    #pageLoader.hide{
+      opacity:0;
+      visibility:hidden;
+    }
+
+    .loader-box{
+      text-align:center;
+    }
+
+    .loader-ring{
+      width:74px;
+      height:74px;
+      border-radius:50%;
+
+      border:3px solid rgba(255,255,255,.08);
+      border-top-color:var(--blue2);
+      border-right-color:var(--cyan);
+      border-bottom-color:var(--violet);
+
+      animation:
+        loaderSpin 1s linear infinite;
+
+      margin:auto;
+    }
+
+    .loader-title{
+      margin-top:20px;
+      font-family:"Manrope",sans-serif;
+      font-size:14px;
+      font-weight:800;
+      letter-spacing:1.5px;
+    }
+
+    .loader-sub{
+      margin-top:5px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    @keyframes loaderSpin{
+      to{
+        transform:rotate(360deg);
+      }
+    }
+
+
+    /* =========================================================
+       TOP BAR
+    ========================================================= */
+
+    .topbar{
+      min-height:38px;
+      background:#02040a;
+      border-bottom:1px solid rgba(255,255,255,.07);
+
+      display:flex;
+      align-items:center;
+    }
+
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+
+      width:min(1240px,92%);
+      margin:auto;
+
+      font-size:12px;
+      color:#b9c4d6;
+    }
+
+    .top-left,
+    .top-right{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .top-item{
+      display:flex;
+      align-items:center;
+      gap:7px;
+    }
+
+    .top-item i{
+      color:#4ea0ff;
+    }
+
+
+    /* =========================================================
+       MINI NAV
+    ========================================================= */
+
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:500;
+
+      background:rgba(4,8,18,.82);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .nav-inner{
+      min-height:72px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+
+      width:min(1240px,92%);
+      margin:auto;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:max-content;
+    }
+
+    .brand-logo{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      object-fit:cover;
+
+      border:1px solid rgba(255,255,255,.15);
+      box-shadow:
+        0 0 25px rgba(37,99,235,.25);
+    }
+
+    .brand-name{
+      font-family:"Manrope",sans-serif;
+      font-size:14px;
+      font-weight:800;
+      line-height:1.15;
+    }
+
+    .brand-name span{
+      display:block;
+      margin-top:3px;
+
+      color:#7e8ca2;
+      font-size:10px;
+      font-weight:600;
+      letter-spacing:.5px;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+
+    .nav-links a{
+      padding:10px 14px;
+      border-radius:12px;
+
+      color:#aebbd0;
+      font-size:13px;
+      font-weight:600;
+
+      transition:.3s ease;
+    }
+
+    .nav-links a:hover{
+      color:#fff;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(37,99,235,.25),
+          rgba(139,92,246,.18)
+        );
+
+      box-shadow:
+        0 8px 25px rgba(37,99,235,.12);
+    }
+
+    .nav-cta{
+      padding:11px 17px !important;
+      color:#fff !important;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #4f46e5
+        );
+
+      box-shadow:
+        0 10px 28px rgba(37,99,235,.25);
+    }
+
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .hero{
+      position:relative;
+      min-height:720px;
+
+      display:flex;
+      align-items:center;
+
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+
+      width:600px;
+      height:600px;
+
+      left:-260px;
+      top:80px;
+
+      border-radius:50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(37,99,235,.25),
+          transparent 68%
+        );
+
+      filter:blur(20px);
+      pointer-events:none;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+
+      width:500px;
+      height:500px;
+
+      right:-200px;
+      bottom:-100px;
+
+      border-radius:50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(139,92,246,.23),
+          transparent 68%
+        );
+
+      filter:blur(20px);
+      pointer-events:none;
+    }
+
+    .hero-grid{
+      position:relative;
+      z-index:2;
+
+      display:grid;
+      grid-template-columns:
+        minmax(0,1fr)
+        minmax(500px,1.05fr);
+
+      align-items:center;
+      gap:65px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+
+      padding:8px 13px;
+
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:999px;
+
+      background:rgba(255,255,255,.045);
+
+      color:#b8c6dc;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.5px;
+
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05);
+    }
+
+    .eyebrow-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+
+      background:var(--cyan);
+
+      box-shadow:
+        0 0 12px var(--cyan);
+
+      animation:dotPulse 1.8s infinite;
+    }
+
+    @keyframes dotPulse{
+      50%{
+        transform:scale(1.6);
+        opacity:.55;
+      }
+    }
+
+    .hero h1{
+      margin-top:24px;
+
+      font-family:"Manrope",sans-serif;
+      font-size:clamp(42px,5vw,72px);
+      line-height:1.03;
+      letter-spacing:-2.8px;
+      font-weight:800;
+    }
+
+    .gradient-text{
+      background:
+        linear-gradient(
+          100deg,
+          #fff 5%,
+          #7db8ff 32%,
+          #38d8ee 55%,
+          #a78bfa 78%,
+          #f0a2d0
+        );
+
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+
+      background-size:200% auto;
+
+      animation:
+        gradientMove 5s linear infinite;
+    }
+
+    @keyframes gradientMove{
+      to{
+        background-position:200% center;
+      }
+    }
+
+    .hero-description{
+      margin-top:24px;
+      max-width:620px;
+
+      color:#aebbd0;
+      font-size:17px;
+      line-height:1.8;
+    }
+
+    .hero-actions{
+      margin-top:34px;
+
+      display:flex;
+      align-items:center;
+      gap:13px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      position:relative;
+      overflow:hidden;
+
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+
+      padding:14px 20px;
+      border-radius:14px;
+
+      border:1px solid rgba(255,255,255,.10);
+
+      font-size:13px;
+      font-weight:800;
+
+      transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+    }
+
+    .btn::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-130%;
+
+      width:80%;
+      height:100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255,255,255,.3),
+          transparent
+        );
+
+      transform:skewX(-20deg);
+      transition:.7s;
+    }
+
+    .btn:hover::before{
+      left:150%;
+    }
+
+    .btn:hover{
+      transform:translateY(-3px);
+    }
+
+    .btn-primary{
+      color:#fff;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #4f46e5,
+          #7c3aed
+        );
+
+      box-shadow:
+        0 15px 35px rgba(37,99,235,.28);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.055);
+      color:#dbe6f7;
+    }
+
+    .hero-note{
+      margin-top:20px;
+
+      display:flex;
+      align-items:center;
+      gap:9px;
+
+      color:#78879d;
+      font-size:11px;
+    }
+
+    .hero-note i{
+      color:#4ade80;
+    }
+
+
+    /* =========================================================
+       HERO IMAGE SLIDER
+    ========================================================= */
+
+    .hero-gallery{
+      position:relative;
+      height:570px;
+    }
+
+    .hero-slide{
+      position:absolute;
+      inset:0;
+
+      border-radius:34px;
+      overflow:hidden;
+
+      opacity:0;
+      visibility:hidden;
+
+      transform:
+        translateX(35px)
+        scale(.96);
+
+      transition:
+        opacity .8s ease,
+        visibility .8s ease,
+        transform 1s ease;
+    }
+
+    .hero-slide.active{
+      opacity:1;
+      visibility:visible;
+
+      transform:
+        translateX(0)
+        scale(1);
+    }
+
+    .hero-slide img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+
+      filter:saturate(1.08);
+    }
+
+    .hero-slide::after{
+      content:"";
+      position:absolute;
+      inset:0;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(2,5,13,.02) 20%,
+          rgba(2,5,13,.85) 100%
+        );
+    }
+
+    .slide-content{
+      position:absolute;
+      z-index:3;
+
+      left:30px;
+      right:30px;
+      bottom:30px;
+    }
+
+    .slide-label{
+      display:inline-flex;
+
+      padding:7px 11px;
+
+      border-radius:999px;
+
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.16);
+
+      backdrop-filter:blur(12px);
+
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:1px;
+    }
+
+    .slide-content h3{
+      margin-top:10px;
+
+      font-family:"Manrope",sans-serif;
+      font-size:27px;
+      font-weight:800;
+    }
+
+    .slide-content p{
+      margin-top:5px;
+
+      color:#ccd6e7;
+      font-size:13px;
+    }
+
+    .hero-frame{
+      position:absolute;
+      inset:-12px;
+
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:42px;
+
+      pointer-events:none;
+
+      animation:
+        frameFloat 5s ease-in-out infinite;
+    }
+
+    @keyframes frameFloat{
+      50%{
+        transform:
+          translateY(-7px)
+          rotate(.2deg);
+      }
+    }
+
+    .hero-gallery::before{
+      content:"";
+      position:absolute;
+
+      width:150px;
+      height:150px;
+
+      top:-40px;
+      right:-40px;
+
+      border-radius:50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(6,182,212,.55),
+          transparent 70%
+        );
+
+      filter:blur(10px);
+
+      animation:
+        orbFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes orbFloat{
+      50%{
+        transform:translate(-20px,20px);
+      }
+    }
+
+    .hero-controls{
+      position:absolute;
+      z-index:10;
+
+      right:25px;
+      top:25px;
+
+      display:flex;
+      gap:8px;
+    }
+
+    .slider-btn{
+      width:40px;
+      height:40px;
+
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:12px;
+
+      background:rgba(3,7,16,.48);
+      color:#fff;
+
+      backdrop-filter:blur(12px);
+
+      cursor:pointer;
+
+      transition:.3s;
+    }
+
+    .slider-btn:hover{
+      background:rgba(37,99,235,.65);
+      transform:translateY(-2px);
+    }
+
+    .hero-dots{
+      position:absolute;
+      z-index:10;
+
+      left:30px;
+      top:30px;
+
+      display:flex;
+      gap:7px;
+    }
+
+    .hero-dot{
+      width:24px;
+      height:4px;
+
+      border-radius:10px;
+
+      background:rgba(255,255,255,.3);
+
+      cursor:pointer;
+
+      transition:.4s;
+    }
+
+    .hero-dot.active{
+      width:42px;
+      background:#fff;
+      box-shadow:
+        0 0 12px rgba(255,255,255,.35);
+    }
+
+
+    /* =========================================================
+       FLOATING STATS
+    ========================================================= */
+
+    .hero-floating{
+      position:absolute;
+      z-index:20;
+
+      bottom:32px;
+      left:-38px;
+
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+
+      width:290px;
+    }
+
+    .float-card{
+      padding:15px;
+
+      border-radius:17px;
+
+      background:
+        rgba(7,13,27,.80);
+
+      border:1px solid rgba(255,255,255,.10);
+
+      backdrop-filter:blur(20px);
+
+      box-shadow:
+        0 20px 45px rgba(0,0,0,.3);
+
+      animation:
+        cardFloat 4s ease-in-out infinite;
+    }
+
+    .float-card:nth-child(2){
+      animation-delay:-1s;
+    }
+
+    @keyframes cardFloat{
+      50%{
+        transform:translateY(-7px);
+      }
+    }
+
+    .float-icon{
+      width:34px;
+      height:34px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:11px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(37,99,235,.3),
+          rgba(139,92,246,.3)
+        );
+
+      color:#8fc4ff;
+    }
+
+    .float-card strong{
+      display:block;
+      margin-top:8px;
+
+      font-family:"Manrope",sans-serif;
+      font-size:12px;
+    }
+
+    .float-card span{
+      display:block;
+      margin-top:2px;
+
+      color:#8290a6;
+      font-size:10px;
+    }
+
+
+    /* =========================================================
+       SECTION COMMON
+    ========================================================= */
+
+    .section{
+      padding:105px 0;
+      position:relative;
+    }
+
+    .section-heading{
+      max-width:760px;
+      margin:0 auto 55px;
+      text-align:center;
+    }
+
+    .section-heading .eyebrow{
+      margin-bottom:18px;
+    }
+
+    .section-heading h2{
+      font-family:"Manrope",sans-serif;
+      font-size:clamp(32px,4vw,52px);
+      line-height:1.1;
+      letter-spacing:-1.8px;
+    }
+
+    .section-heading p{
+      margin-top:17px;
+
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.8;
+    }
+
+
+    /* =========================================================
+       GLOW CARDS
+    ========================================================= */
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:
+        repeat(4,1fr);
+      gap:17px;
+    }
+
+    .feature-card{
+      position:relative;
+      overflow:hidden;
+
+      padding:28px;
+
+      min-height:245px;
+
+      border-radius:24px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.075),
+          rgba(255,255,255,.025)
+        );
+
+      border:1px solid var(--border);
+
+      box-shadow:
+        0 25px 60px rgba(0,0,0,.18);
+
+      transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+    }
+
+    .feature-card::before{
+      content:"";
+      position:absolute;
+
+      width:160px;
+      height:160px;
+
+      right:-80px;
+      top:-80px;
+
+      border-radius:50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(37,99,235,.3),
+          transparent 68%
+        );
+
+      transition:.4s;
+    }
+
+    .feature-card:hover{
+      transform:translateY(-9px);
+
+      border-color:
+        rgba(96,165,250,.35);
+
+      box-shadow:
+        0 30px 70px rgba(0,0,0,.3),
+        0 0 35px rgba(37,99,235,.08);
+    }
+
+    .feature-card:hover::before{
+      transform:scale(1.5);
+    }
+
+    .feature-icon{
+      width:55px;
+      height:55px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:16px;
+
+      font-size:19px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(37,99,235,.25),
+          rgba(139,92,246,.22)
+        );
+
+      border:1px solid rgba(255,255,255,.09);
+
+      color:#8ec3ff;
+    }
+
+    .feature-card:nth-child(2) .feature-icon{
+      color:#53e0ee;
+    }
+
+    .feature-card:nth-child(3) .feature-icon{
+      color:#bd9bff;
+    }
+
+    .feature-card:nth-child(4) .feature-icon{
+      color:#ff9ecf;
+    }
+
+    .feature-card h3{
+      margin-top:20px;
+
+      font-family:"Manrope",sans-serif;
+      font-size:18px;
+    }
+
+    .feature-card p{
+      margin-top:9px;
+
+      color:#8f9db2;
+      font-size:13px;
+      line-height:1.7;
+    }
+
+
+    /* =========================================================
+       MARQUEE IMAGE STRIP
+    ========================================================= */
+
+    .marquee-section{
+      overflow:hidden;
+      padding:20px 0 100px;
+    }
+
+    .marquee{
+      overflow:hidden;
+      position:relative;
+
+      mask-image:
+        linear-gradient(
+          90deg,
+          transparent,
+          black 8%,
+          black 92%,
+          transparent
+        );
+    }
+
+    .marquee-track{
+      display:flex;
+      width:max-content;
+      gap:18px;
+
+      animation:
+        marquee 35s linear infinite;
+    }
+
+    .marquee:hover .marquee-track{
+      animation-play-state:paused;
+    }
+
+    .industry-card{
+      position:relative;
+
+      width:230px;
+      height:145px;
+
+      flex:none;
+
+      overflow:hidden;
+
+      border-radius:20px;
+
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    .industry-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+
+      transition:
+        transform .6s ease;
+    }
+
+    .industry-card:hover img{
+      transform:scale(1.1);
+    }
+
+    .industry-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+
+      background:
+        linear-gradient(
+          transparent 30%,
+          rgba(0,0,0,.85)
+        );
+    }
+
+    .industry-name{
+      position:absolute;
+      z-index:2;
+
+      left:16px;
+      bottom:13px;
+
+      font-family:"Manrope",sans-serif;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    @keyframes marquee{
+      to{
+        transform:translateX(-50%);
+      }
+    }
+
+
+    /* =========================================================
+       LARGE GALLERY
+    ========================================================= */
+
+    .gallery-section{
+      padding-top:30px;
+    }
+
+    .gallery-grid{
+      display:grid;
+      grid-template-columns:
+        1.3fr .7fr .7fr;
+
+      grid-template-rows:
+        250px 250px;
+
+      gap:16px;
+    }
+
+    .gallery-item{
+      position:relative;
+      overflow:hidden;
+
+      border-radius:25px;
+
+      border:1px solid rgba(255,255,255,.09);
+
+      box-shadow:
+        0 25px 55px rgba(0,0,0,.2);
+    }
+
+    .gallery-item.big{
+      grid-row:span 2;
+    }
+
+    .gallery-item img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+
+      transition:
+        transform .8s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .gallery-item:hover img{
+      transform:scale(1.09);
+    }
+
+    .gallery-overlay{
+      position:absolute;
+      inset:0;
+
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+
+      padding:25px;
+
+      background:
+        linear-gradient(
+          transparent 35%,
+          rgba(0,0,0,.88)
+        );
+    }
+
+    .gallery-overlay span{
+      color:#7fd9ff;
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:1.3px;
+    }
+
+    .gallery-overlay h3{
+      margin-top:5px;
+
+      font-family:"Manrope",sans-serif;
+      font-size:19px;
+    }
+
+
+    /* =========================================================
+       SPLIT SECTION
+    ========================================================= */
+
+    .split{
+      display:grid;
+      grid-template-columns:
+        .9fr 1.1fr;
+
+      gap:70px;
+      align-items:center;
+    }
+
+    .split-image{
+      position:relative;
+      height:590px;
+    }
+
+    .split-main-image{
+      width:85%;
+      height:100%;
+
+      border-radius:30px;
+
+      object-fit:cover;
+
+      border:1px solid rgba(255,255,255,.10);
+
+      box-shadow:
+        0 35px 90px rgba(0,0,0,.4);
+    }
+
+    .mini-slider{
+      position:absolute;
+
+      right:0;
+      bottom:35px;
+
+      width:270px;
+      height:185px;
+
+      border-radius:23px;
+
+      overflow:hidden;
+
+      border:5px solid #07101f;
+
+      box-shadow:
+        0 25px 60px rgba(0,0,0,.45);
+    }
+
+    .mini-slide{
+      position:absolute;
+      inset:0;
+
+      opacity:0;
+
+      transition:opacity .7s ease;
+    }
+
+    .mini-slide.active{
+      opacity:1;
+    }
+
+    .mini-slide img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .split-content h2{
+      font-family:"Manrope",sans-serif;
+      font-size:clamp(34px,4vw,53px);
+      line-height:1.08;
+      letter-spacing:-1.8px;
+    }
+
+    .split-content > p{
+      margin-top:20px;
+
+      color:#9eacc0;
+      font-size:15px;
+      line-height:1.9;
+    }
+
+    .check-list{
+      margin-top:28px;
+
+      display:grid;
+      gap:14px;
+    }
+
+    .check-item{
+      display:flex;
+      align-items:flex-start;
+      gap:13px;
+
+      padding:15px;
+
+      border-radius:17px;
+
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(255,255,255,.07);
+    }
+
+    .check-icon{
+      width:31px;
+      height:31px;
+
+      flex:none;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:10px;
+
+      background:
+        rgba(37,99,235,.18);
+
+      color:#65aaff;
+      font-size:12px;
+    }
+
+    .check-item strong{
+      display:block;
+      font-family:"Manrope",sans-serif;
+      font-size:13px;
+    }
+
+    .check-item span{
+      display:block;
+      margin-top:2px;
+
+      color:#7f8da2;
+      font-size:11px;
+    }
+
+
+    /* =========================================================
+       CAREER JOURNEY
+    ========================================================= */
+
+    .journey{
+      position:relative;
+
+      display:grid;
+      grid-template-columns:
+        repeat(5,1fr);
+
+      gap:14px;
+    }
+
+    .journey::before{
+      content:"";
+
+      position:absolute;
+
+      top:34px;
+      left:8%;
+      right:8%;
+
+      height:2px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #2563eb,
+          #06b6d4,
+          #8b5cf6,
+          #ec4899,
+          #f97316
+        );
+
+      opacity:.5;
+    }
+
+    .journey-card{
+      position:relative;
+      z-index:2;
+
+      text-align:center;
+    }
+
+    .journey-number{
+      width:68px;
+      height:68px;
+
+      margin:auto;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:50%;
+
+      background:#07101f;
+
+      border:1px solid rgba(255,255,255,.12);
+
+      box-shadow:
+        0 0 0 8px rgba(7,16,31,.8),
+        0 0 30px rgba(37,99,235,.13);
+
+      font-family:"Manrope",sans-serif;
+      font-size:16px;
+      font-weight:800;
+    }
+
+    .journey-card:nth-child(1) .journey-number{
+      color:#5ea2ff;
+    }
+
+    .journey-card:nth-child(2) .journey-number{
+      color:#35d8ed;
+    }
+
+    .journey-card:nth-child(3) .journey-number{
+      color:#aa85ff;
+    }
+
+    .journey-card:nth-child(4) .journey-number{
+      color:#f48bc5;
+    }
+
+    .journey-card:nth-child(5) .journey-number{
+      color:#ff9d58;
+    }
+
+    .journey-card h3{
+      margin-top:22px;
+
+      font-family:"Manrope",sans-serif;
+      font-size:15px;
+    }
+
+    .journey-card p{
+      margin-top:7px;
+
+      color:#7f8ca0;
+      font-size:11px;
+      line-height:1.65;
+    }
+
+
+    /* =========================================================
+       IMAGE CAROUSEL
+    ========================================================= */
+
+    .carousel-shell{
+      position:relative;
+
+      height:510px;
+
+      overflow:hidden;
+
+      border-radius:32px;
+
+      border:1px solid rgba(255,255,255,.09);
+
+      background:#07101f;
+
+      box-shadow:
+        0 35px 80px rgba(0,0,0,.3);
+    }
+
+    .carousel-track{
+      display:flex;
+      height:100%;
+
+      transition:
+        transform .8s cubic-bezier(.2,.75,.2,1);
+    }
+
+    .carousel-card{
+      position:relative;
+
+      min-width:100%;
+      height:100%;
+    }
+
+    .carousel-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .carousel-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(3,7,15,.9),
+          rgba(3,7,15,.2) 65%,
+          transparent
+        );
+    }
+
+    .carousel-content{
+      position:absolute;
+      z-index:3;
+
+      left:55px;
+      top:50%;
+
+      transform:translateY(-50%);
+
+      max-width:480px;
+    }
+
+    .carousel-content small{
+      color:#62c8ff;
+
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:1.5px;
+    }
+
+    .carousel-content h2{
+      margin-top:12px;
+
+      font-family:"Manrope",sans-serif;
+      font-size:clamp(30px,4vw,50px);
+      line-height:1.08;
+    }
+
+    .carousel-content p{
+      margin-top:14px;
+
+      color:#b5c1d2;
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    .carousel-controls{
+      position:absolute;
+      z-index:10;
+
+      right:25px;
+      bottom:25px;
+
+      display:flex;
+      gap:8px;
+    }
+
+    .carousel-dots{
+      position:absolute;
+      z-index:10;
+
+      left:55px;
+      bottom:30px;
+
+      display:flex;
+      gap:7px;
+    }
+
+    .carousel-dot{
+      width:28px;
+      height:4px;
+
+      border-radius:10px;
+
+      background:rgba(255,255,255,.25);
+
+      cursor:pointer;
+
+      transition:.3s;
+    }
+
+    .carousel-dot.active{
+      width:45px;
+      background:#fff;
+    }
+
+
+    /* =========================================================
+       CTA
+    ========================================================= */
+
+    .cta{
+      position:relative;
+
+      overflow:hidden;
+
+      margin-top:30px;
+
+      padding:75px 70px;
+
+      border-radius:34px;
+
+      background:
+        radial-gradient(
+          circle at 0% 50%,
+          rgba(37,99,235,.35),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 100% 0%,
+          rgba(139,92,246,.30),
+          transparent 32%
+        ),
+        linear-gradient(
+          135deg,
+          #071426,
+          #0a1124
+        );
+
+      border:1px solid rgba(255,255,255,.10);
+
+      box-shadow:
+        0 40px 90px rgba(0,0,0,.35);
+    }
+
+    .cta::before{
+      content:"";
+
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:3px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #2563eb,
+          #06b6d4,
+          #8b5cf6,
+          #ec4899,
+          #f97316
+        );
+    }
+
+    .cta-grid{
+      position:relative;
+      z-index:2;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:30px;
+    }
+
+    .cta h2{
+      font-family:"Manrope",sans-serif;
+      font-size:clamp(30px,4vw,47px);
+      line-height:1.1;
+    }
+
+    .cta p{
+      margin-top:12px;
+
+      color:#9dabc0;
+      font-size:14px;
+      max-width:650px;
+    }
+
+    .cta-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      flex:none;
+    }
+
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    .footer{
+      position:relative;
+
+      margin-top:100px;
+
+      padding:55px 0 25px;
+
+      background:
+        radial-gradient(
+          circle at 0% 0%,
+          rgba(37,99,235,.18),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 100% 20%,
+          rgba(168,85,247,.16),
+          transparent 30%
+        ),
+        #030711;
+
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+
+    .footer::before{
+      content:"";
+
+      position:absolute;
+
+      top:0;
+      left:0;
+      right:0;
+
+      height:3px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #2563eb,
+          #06b6d4,
+          #8b5cf6,
+          #ec4899,
+          #f97316
+        );
+    }
+
+    .footer-grid{
+      display:grid;
+
+      grid-template-columns:
+        1.4fr 1fr 1fr 1fr;
+
+      gap:45px;
+    }
+
+    .footer h3{
+      font-family:"Manrope",sans-serif;
+      font-size:14px;
+    }
+
+    .footer-brand p{
+      margin-top:13px;
+
+      color:#7d8a9f;
+      font-size:12px;
+      line-height:1.8;
+      max-width:360px;
+    }
+
+    .footer-links{
+      margin-top:14px;
+
+      display:grid;
+      gap:9px;
+    }
+
+    .footer-links a{
+      color:#7f8da3;
+      font-size:12px;
+
+      transition:.25s;
+    }
+
+    .footer-links a:hover{
+      color:#fff;
+      transform:translateX(3px);
+    }
+
+    .footer-bottom{
+      margin-top:45px;
+      padding-top:20px;
+
+      border-top:1px solid rgba(255,255,255,.07);
+
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+
+      color:#657286;
+      font-size:10px;
+    }
+
+
+    /* =========================================================
+       SCROLL REVEAL
+    ========================================================= */
+
+    .reveal{
+      opacity:0;
+      transform:translateY(35px);
+
+      transition:
+        opacity .8s ease,
+        transform .8s ease;
+    }
+
+    .reveal.show{
+      opacity:1;
+      transform:none;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media(max-width:1100px){
+
+      .hero-grid{
+        grid-template-columns:1fr;
+        gap:45px;
+      }
+
+      .hero{
+        padding:80px 0;
+      }
+
+      .hero-copy{
+        text-align:center;
+      }
+
+      .hero-description{
+        margin-left:auto;
+        margin-right:auto;
+      }
+
+      .hero-actions,
+      .hero-note{
+        justify-content:center;
+      }
+
+      .hero-gallery{
+        width:min(760px,100%);
+        margin:auto;
+      }
+
+      .feature-grid{
+        grid-template-columns:
+          repeat(2,1fr);
+      }
+
+      .split{
+        grid-template-columns:1fr;
+      }
+
+      .split-image{
+        max-width:700px;
+        width:100%;
+        margin:auto;
+      }
+
+      .journey{
+        grid-template-columns:
+          repeat(3,1fr);
+          gap:35px 15px;
+      }
+
+      .journey::before{
+        display:none;
+      }
+
+      .footer-grid{
+        grid-template-columns:
+          repeat(2,1fr);
+      }
+
+      .nav-links{
+        display:none;
+      }
+    }
+
+
+    @media(max-width:700px){
+
+      .topbar{
+        padding:8px 0;
+      }
+
+      .topbar-inner{
+        justify-content:center;
+      }
+
+      .top-left,
+      .top-right{
+        justify-content:center;
+        gap:10px;
+      }
+
+      .top-right{
+        display:none;
+      }
+
+      .nav-inner{
+        min-height:65px;
+      }
+
+      .brand-name{
+        font-size:12px;
+      }
+
+      .hero{
+        min-height:auto;
+        padding:65px 0 85px;
+      }
+
+      .hero h1{
+        font-size:42px;
+        letter-spacing:-1.8px;
+      }
+
+      .hero-description{
+        font-size:14px;
+      }
+
+      .hero-gallery{
+        height:470px;
+      }
+
+      .hero-floating{
+        left:12px;
+        bottom:-35px;
+        width:calc(100% - 24px);
+      }
+
+      .float-card{
+        padding:12px;
+      }
+
+      .section{
+        padding:75px 0;
+      }
+
+      .feature-grid{
+        grid-template-columns:1fr;
+      }
+
+      .gallery-grid{
+        grid-template-columns:1fr 1fr;
+        grid-template-rows:
+          230px 190px 190px;
+      }
+
+      .gallery-item.big{
+        grid-column:span 2;
+        grid-row:span 1;
+      }
+
+      .split-image{
+        height:450px;
+      }
+
+      .mini-slider{
+        width:210px;
+        height:145px;
+      }
+
+      .journey{
+        grid-template-columns:
+          1fr 1fr;
+      }
+
+      .carousel-shell{
+        height:530px;
+      }
+
+      .carousel-content{
+        left:28px;
+        right:28px;
+        top:auto;
+        bottom:75px;
+        transform:none;
+      }
+
+      .carousel-dots{
+        left:28px;
+      }
+
+      .cta{
+        padding:45px 28px;
+      }
+
+      .cta-grid{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .footer-grid{
+        grid-template-columns:1fr;
+        gap:30px;
+      }
+
+      .footer-bottom{
+        flex-direction:column;
+      }
+    }
+
+
+    @media(max-width:480px){
+
+      .hero-gallery{
+        height:420px;
+      }
+
+      .hero-slide{
+        border-radius:25px;
+      }
+
+      .slide-content{
+        left:20px;
+        right:20px;
+        bottom:22px;
+      }
+
+      .slide-content h3{
+        font-size:21px;
+      }
+
+      .hero-floating{
+        position:relative;
+        left:auto;
+        bottom:auto;
+        margin-top:15px;
+      }
+
+      .float-card{
+        background:rgba(7,13,27,.95);
+      }
+
+      .gallery-grid{
+        display:grid;
+        grid-template-columns:1fr;
+        grid-template-rows:
+          260px 210px 210px 210px;
+      }
+
+      .gallery-item.big{
+        grid-column:auto;
+      }
+
+      .journey{
+        grid-template-columns:1fr;
+      }
+
+      .split-image{
+        height:390px;
+      }
+
+      .mini-slider{
+        width:180px;
+        height:125px;
+      }
+
+      .carousel-shell{
+        height:570px;
+      }
+    }
+
+
+    /* =========================================================
+       REDUCED MOTION
+    ========================================================= */
+
+    @media(prefers-reduced-motion:reduce){
+
+      *,
+      *::before,
+      *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =======================================================
+       LOADER
+  ======================================================== -->
+
+  <div id="pageLoader" aria-label="Loading page">
+    <div class="loader-box">
+      <div class="loader-ring"></div>
+      <div class="loader-title">
+        ARSH TECHNICAL ACADEMY
+      </div>
+      <div class="loader-sub">
+        Preparing your career journey...
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =======================================================
+       TOP BAR
+  ======================================================== -->
+
+  <div class="topbar">
+
+    <div class="topbar-inner">
+
+      <div class="top-left">
+
+        <div class="top-item">
+          <i class="fa-solid fa-envelope"></i>
+          <span>Contact Us</span>
+        </div>
+
+        <div class="top-item">
+          <i class="fa-solid fa-phone"></i>
+          <span>Career Support</span>
+        </div>
+
+      </div>
+
+      <div class="top-right">
+
+        <div class="top-item">
+          <i class="fa-regular fa-calendar"></i>
+          <span id="currentDate"></span>
+        </div>
+
+        <div class="top-item">
+          <i class="fa-regular fa-clock"></i>
+          <span id="currentTime"></span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =======================================================
+       NAVIGATION
+  ======================================================== -->
+
+  <nav class="nav">
+
+    <div class="nav-inner">
+
+      <a href="index.html" class="brand">
+
+        <img
+          class="brand-logo"
+          src="assets/images/logo.jpeg"
+          alt="Arsh Technical Academy Logo"
+        >
+
+        <div class="brand-name">
+          ARSH TECHNICAL ACADEMY
+          <span>PVT. LTD.</span>
+        </div>
+
+      </a>
+
+
+      <div class="nav-links">
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="about.html">
+          About
+        </a>
+
+        <a href="all-courses.html">
+          Courses
+        </a>
+
+        <a href="placement.html">
+          Placement
+        </a>
+
+        <a href="verification.html">
+          Verification
+        </a>
+
+      </div>
+
+
+      <a
+        href="index.html#contact"
+        class="btn btn-primary nav-cta"
+      >
+        <i class="fa-solid fa-arrow-right"></i>
+        Contact Us
+      </a>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =======================================================
+       HERO
+  ======================================================== -->
+
+  <section class="hero">
+
+    <div class="container">
+
+      <div class="hero-grid">
+
+        <div class="hero-copy reveal">
+
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            PLACEMENT & CAREER SUPPORT
+          </div>
+
+          <h1>
+            Turn Your
+            <span class="gradient-text">
+              Skills Into
+            </span>
+            A Career.
+          </h1>
+
+          <p class="hero-description">
+            Build technical confidence, prepare for professional
+            opportunities and move from classroom learning toward
+            the workplace with a career-focused approach.
+          </p>
+
+          <div class="hero-actions">
+
+            <a
+              href="index.html#contact"
+              class="btn btn-primary"
+            >
+              <i class="fa-solid fa-paper-plane"></i>
+              Get Career Guidance
+            </a>
+
+            <a
+              href="all-courses.html"
+              class="btn btn-secondary"
+            >
+              <i class="fa-solid fa-book-open"></i>
+              Explore Courses
+            </a>
+
+          </div>
+
+          <div class="hero-note">
+            <i class="fa-solid fa-circle-check"></i>
+            Career-focused learning • Interview preparation • Skill development
+          </div>
+
+        </div>
+
+
+        <!-- HERO SLIDER -->
+
+        <div class="hero-gallery reveal">
+
+          <div class="hero-frame"></div>
+
+          <div class="hero-dots">
+
+            <span class="hero-dot active" data-slide="0"></span>
+            <span class="hero-dot" data-slide="1"></span>
+            <span class="hero-dot" data-slide="2"></span>
+            <span class="hero-dot" data-slide="3"></span>
+
+          </div>
+
+
+          <div class="hero-controls">
+
+            <button
+              class="slider-btn"
+              id="heroPrev"
+              aria-label="Previous image"
+            >
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <button
+              class="slider-btn"
+              id="heroNext"
+              aria-label="Next image"
+            >
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+          </div>
+
+
+          <!-- IMAGE 1 -->
+
+          <div class="hero-slide active">
+
+            <img
+              src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1400&q=85"
+              alt="Professional team discussion"
+            >
+
+            <div class="slide-content">
+
+              <span class="slide-label">
+                CAREER PREPARATION
+              </span>
+
+              <h3>
+                Prepare For The Professional World
+              </h3>
+
+              <p>
+                Develop confidence, communication and workplace readiness.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- IMAGE 2 -->
+
+          <div class="hero-slide">
+
+            <img
+              src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1400&q=85"
+              alt="Students learning together"
+            >
+
+            <div class="slide-content">
+
+              <span class="slide-label">
+                STUDENT DEVELOPMENT
+              </span>
+
+              <h3>
+                Learn. Practice. Grow.
+              </h3>
+
+              <p>
+                Turn technical learning into practical confidence.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- IMAGE 3 -->
+
+          <div class="hero-slide">
+
+            <img
+              src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1400&q=85"
+              alt="Business interview meeting"
+            >
+
+            <div class="slide-content">
+
+              <span class="slide-label">
+                INTERVIEW READINESS
+              </span>
+
+              <h3>
+                Walk Into Interviews With Confidence
+              </h3>
+
+              <p>
+                Improve your presentation and professional communication.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- IMAGE 4 -->
+
+          <div class="hero-slide">
+
+            <img
+              src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=85"
+              alt="Modern workplace"
+            >
+
+            <div class="slide-content">
+
+              <span class="slide-label">
+                WORKPLACE
+              </span>
+
+              <h3>
+                From Training To Workplace
+              </h3>
+
+              <p>
+                Build skills that can help you take the next professional step.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="hero-floating">
+
+            <div class="float-card">
+
+              <div class="float-icon">
+                <i class="fa-solid fa-user-tie"></i>
+              </div>
+
+              <strong>
+                Career Guidance
+              </strong>
+
+              <span>
+                Direction for your next step
+              </span>
+
+            </div>
+
+
+            <div class="float-card">
+
+              <div class="float-icon">
+                <i class="fa-solid fa-comments"></i>
+              </div>
+
+              <strong>
+                Interview Readiness
+              </strong>
+
+              <span>
+                Build professional confidence
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       FEATURES
+  ======================================================== -->
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="section-heading reveal">
+
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          CAREER SUPPORT
+        </div>
+
+        <h2>
+          More Than Training.
+          <span class="gradient-text">
+            Career Preparation.
+          </span>
+        </h2>
+
+        <p>
+          A strong technical foundation becomes more valuable when
+          students also develop communication, confidence and
+          workplace-oriented skills.
+        </p>
+
+      </div>
+
+
+      <div class="feature-grid">
+
+
+        <div class="feature-card reveal">
+
+          <div class="feature-icon">
+            <i class="fa-solid fa-compass"></i>
+          </div>
+
+          <h3>
+            Career Guidance
+          </h3>
+
+          <p>
+            Understand your technical field and identify the
+            professional direction that fits your skills and interests.
+          </p>
+
+        </div>
+
+
+        <div class="feature-card reveal">
+
+          <div class="feature-icon">
+            <i class="fa-solid fa-file-circle-check"></i>
+          </div>
+
+          <h3>
+            Resume Preparation
+          </h3>
+
+          <p>
+            Present your education, technical skills and practical
+            capabilities in a clear professional format.
+          </p>
+
+        </div>
+
+
+        <div class="feature-card reveal">
+
+          <div class="feature-icon">
+            <i class="fa-solid fa-microphone-lines"></i>
+          </div>
+
+          <h3>
+            Interview Preparation
+          </h3>
+
+          <p>
+            Improve communication, professional introduction,
+            confidence and interview-oriented presentation.
+          </p>
+
+        </div>
+
+
+        <div class="feature-card reveal">
+
+          <div class="feature-icon">
+            <i class="fa-solid fa-briefcase"></i>
+          </div>
+
+          <h3>
+            Workplace Readiness
+          </h3>
+
+          <p>
+            Develop professional habits and practical awareness
+            needed to transition from learning into employment.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       MOVING INDUSTRY IMAGE STRIP
+  ======================================================== -->
+
+  <section class="marquee-section">
+
+    <div class="section-heading reveal">
+
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        TECHNICAL DOMAINS
+      </div>
+
+      <h2>
+        Skills Across
+        <span class="gradient-text">
+          Multiple Industries
+        </span>
+      </h2>
+
+    </div>
+
+
+    <div class="marquee">
+
+      <div class="marquee-track">
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=700&q=80"
+            alt="Industrial safety"
+          >
+
+          <div class="industry-name">
+            Industrial Safety
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=700&q=80"
+            alt="Engineering"
+          >
+
+          <div class="industry-name">
+            Engineering
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=700&q=80"
+            alt="Electrical work"
+          >
+
+          <div class="industry-name">
+            Electrical
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=700&q=80"
+            alt="Construction and mechanical"
+          >
+
+          <div class="industry-name">
+            Mechanical
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=700&q=80"
+            alt="Warehouse industry"
+          >
+
+          <div class="industry-name">
+            Industrial Operations
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=700&q=80"
+            alt="Technical worker"
+          >
+
+          <div class="industry-name">
+            Technical Skills
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=700&q=80"
+            alt="Electrical industry"
+          >
+
+          <div class="industry-name">
+            Energy & Electrical
+          </div>
+
+        </div>
+
+
+        <!-- DUPLICATE FOR SEAMLESS LOOP -->
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=700&q=80"
+            alt="Industrial safety"
+          >
+
+          <div class="industry-name">
+            Industrial Safety
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=700&q=80"
+            alt="Engineering"
+          >
+
+          <div class="industry-name">
+            Engineering
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=700&q=80"
+            alt="Electrical work"
+          >
+
+          <div class="industry-name">
+            Electrical
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=700&q=80"
+            alt="Construction and mechanical"
+          >
+
+          <div class="industry-name">
+            Mechanical
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=700&q=80"
+            alt="Warehouse industry"
+          >
+
+          <div class="industry-name">
+            Industrial Operations
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=700&q=80"
+            alt="Technical worker"
+          >
+
+          <div class="industry-name">
+            Technical Skills
+          </div>
+
+        </div>
+
+
+        <div class="industry-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=700&q=80"
+            alt="Electrical industry"
+          >
+
+          <div class="industry-name">
+            Energy & Electrical
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       LARGE CAREER GALLERY
+  ======================================================== -->
+
+  <section class="section gallery-section">
+
+    <div class="container">
+
+      <div class="section-heading reveal">
+
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          CAREER GALLERY
+        </div>
+
+        <h2>
+          Visualizing The
+          <span class="gradient-text">
+            Professional Journey
+          </span>
+        </h2>
+
+        <p>
+          From technical learning and practical exposure to
+          interviews and professional environments.
+        </p>
+
+      </div>
+
+
+      <div class="gallery-grid">
+
+
+        <div class="gallery-item big reveal">
+
+          <img
+            src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=85"
+            alt="Professional team"
+          >
+
+          <div class="gallery-overlay">
+
+            <span>
+              PROFESSIONAL ENVIRONMENT
+            </span>
+
+            <h3>
+              Build Confidence For Your Career
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <div class="gallery-item reveal">
+
+          <img
+            src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=85"
+            alt="Students"
+          >
+
+          <div class="gallery-overlay">
+
+            <span>
+              LEARNING
+            </span>
+
+            <h3>
+              Learn Together
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <div class="gallery-item reveal">
+
+          <img
+            src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=85"
+            alt="Business meeting"
+          >
+
+          <div class="gallery-overlay">
+
+            <span>
+              TEAMWORK
+            </span>
+
+            <h3>
+              Professional Communication
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <div class="gallery-item reveal">
+
+          <img
+            src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=85"
+            alt="Interview"
+          >
+
+          <div class="gallery-overlay">
+
+            <span>
+              INTERVIEW
+            </span>
+
+            <h3>
+              Be Interview Ready
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <div class="gallery-item reveal">
+
+          <img
+            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=85"
+            alt="Modern office"
+          >
+
+          <div class="gallery-overlay">
+
+            <span>
+              WORKPLACE
+            </span>
+
+            <h3>
+              Step Into The Workplace
+            </h3>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       CAREER PREPARATION SPLIT
+  ======================================================== -->
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="split">
+
+
+        <div class="split-image reveal">
+
+          <img
+            class="split-main-image"
+            src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1100&q=85"
+            alt="Professional workplace"
+          >
+
+
+          <div class="mini-slider">
+
+            <div class="mini-slide active">
+
+              <img
+                src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80"
+                alt="Teamwork"
+              >
+
+            </div>
+
+            <div class="mini-slide">
+
+              <img
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=700&q=80"
+                alt="Team meeting"
+              >
+
+            </div>
+
+            <div class="mini-slide">
+
+              <img
+                src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=700&q=80"
+                alt="Interview"
+              >
+
+            </div>
+
+            <div class="mini-slide">
+
+              <img
+                src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=700&q=80"
+                alt="Office"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="split-content reveal">
+
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            CAREER READY
+          </div>
+
+          <h2>
+            Prepare Today.
+            <span class="gradient-text">
+              Perform Tomorrow.
+            </span>
+          </h2>
+
+          <p>
+            Technical education is only one part of becoming
+            workplace-ready. Professional communication,
+            confidence, presentation and practical awareness
+            can make the transition smoother.
+          </p>
+
+
+          <div class="check-list">
+
+
+            <div class="check-item">
+
+              <div class="check-icon">
+                <i class="fa-solid fa-check"></i>
+              </div>
+
+              <div>
+
+                <strong>
+                  Technical Skill Focus
+                </strong>
+
+                <span>
+                  Strengthen the skills connected with your chosen course.
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="check-item">
+
+              <div class="check-icon">
+                <i class="fa-solid fa-check"></i>
+              </div>
+
+              <div>
+
+                <strong>
+                  Professional Communication
+                </strong>
+
+                <span>
+                  Improve how you introduce and present yourself.
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="check-item">
+
+              <div class="check-icon">
+                <i class="fa-solid fa-check"></i>
+              </div>
+
+              <div>
+
+                <strong>
+                  Interview Confidence
+                </strong>
+
+                <span>
+                  Practice the fundamentals of professional interviews.
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="check-item">
+
+              <div class="check-icon">
+                <i class="fa-solid fa-check"></i>
+              </div>
+
+              <div>
+
+                <strong>
+                  Workplace Awareness
+                </strong>
+
+                <span>
+                  Understand professional expectations and work culture.
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       CAREER JOURNEY
+  ======================================================== -->
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="section-heading reveal">
+
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          YOUR JOURNEY
+        </div>
+
+        <h2>
+          From Classroom
+          <span class="gradient-text">
+            To Career
+          </span>
+        </h2>
+
+        <p>
+          A simple career-oriented journey designed around
+          learning, preparation and professional growth.
+        </p>
+
+      </div>
+
+
+      <div class="journey">
+
+
+        <div class="journey-card reveal">
+
+          <div class="journey-number">
+            01
+          </div>
+
+          <h3>
+            Choose Your Skill
+          </h3>
+
+          <p>
+            Select a technical course according to your
+            interests and career direction.
+          </p>
+
+        </div>
+
+
+        <div class="journey-card reveal">
+
+          <div class="journey-number">
+            02
+          </div>
+
+          <h3>
+            Learn & Practice
+          </h3>
+
+          <p>
+            Build technical understanding through structured
+            learning and practical development.
+          </p>
+
+        </div>
+
+
+        <div class="journey-card reveal">
+
+          <div class="journey-number">
+            03
+          </div>
+
+          <h3>
+            Prepare
+          </h3>
+
+          <p>
+            Work on your resume, communication and interview
+            confidence.
+          </p>
+
+        </div>
+
+
+        <div class="journey-card reveal">
+
+          <div class="journey-number">
+            04
+          </div>
+
+          <h3>
+            Explore Opportunities
+          </h3>
+
+          <p>
+            Stay aware of relevant professional opportunities
+            and career possibilities.
+          </p>
+
+        </div>
+
+
+        <div class="journey-card reveal">
+
+          <div class="journey-number">
+            05
+          </div>
+
+          <h3>
+            Move Forward
+          </h3>
+
+          <p>
+            Take your technical knowledge and professional
+            confidence into your next career step.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       FULL IMAGE SLIDER
+  ======================================================== -->
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="carousel-shell reveal">
+
+        <div class="carousel-track" id="careerTrack">
+
+
+          <div class="carousel-card">
+
+            <img
+              src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1600&q=85"
+              alt="Students working together"
+            >
+
+            <div class="carousel-content">
+
+              <small>
+                BUILD YOUR FOUNDATION
+              </small>
+
+              <h2>
+                Learn With Purpose.
+              </h2>
+
+              <p>
+                Develop technical knowledge with a clear
+                understanding of where your skills can take you.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="carousel-card">
+
+            <img
+              src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1600&q=85"
+              alt="Professional team"
+            >
+
+            <div class="carousel-content">
+
+              <small>
+                DEVELOP PROFESSIONAL SKILLS
+              </small>
+
+              <h2>
+                Confidence Matters.
+              </h2>
+
+              <p>
+                Strong communication and professional presentation
+                can help you make a better impression.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="carousel-card">
+
+            <img
+              src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1600&q=85"
+              alt="Job interview"
+            >
+
+            <div class="carousel-content">
+
+              <small>
+                INTERVIEW PREPARATION
+              </small>
+
+              <h2>
+                Be Ready For The Opportunity.
+              </h2>
+
+              <p>
+                Prepare your introduction, communication and
+                confidence before stepping into an interview.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="carousel-card">
+
+            <img
+              src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=85"
+              alt="Modern workplace"
+            >
+
+            <div class="carousel-content">
+
+              <small>
+                YOUR NEXT CHAPTER
+              </small>
+
+              <h2>
+                Step Into Your Future.
+              </h2>
+
+              <p>
+                Keep learning, keep improving and move confidently
+                toward your professional goals.
+              </p>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+        <div class="carousel-dots">
+
+          <span
+            class="carousel-dot active"
+            data-carousel="0"
+          ></span>
+
+          <span
+            class="carousel-dot"
+            data-carousel="1"
+          ></span>
+
+          <span
+            class="carousel-dot"
+            data-carousel="2"
+          ></span>
+
+          <span
+            class="carousel-dot"
+            data-carousel="3"
+          ></span>
+
+        </div>
+
+
+        <div class="carousel-controls">
+
+          <button
+            class="slider-btn"
+            id="careerPrev"
+            aria-label="Previous"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+
+          <button
+            class="slider-btn"
+            id="careerNext"
+            aria-label="Next"
+          >
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       CTA
+  ======================================================== -->
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="cta reveal">
+
+        <div class="cta-grid">
+
+          <div>
+
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              START YOUR JOURNEY
+            </div>
+
+            <h2>
+              Ready To Build Your
+              <span class="gradient-text">
+                Career Path?
+              </span>
+            </h2>
+
+            <p>
+              Explore our technical courses and take the next
+              step toward building practical and professional skills.
+            </p>
+
+          </div>
+
+
+          <div class="cta-actions">
+
+            <a
+              href="all-courses.html"
+              class="btn btn-primary"
+            >
+              <i class="fa-solid fa-graduation-cap"></i>
+              View Courses
+            </a>
+
+            <a
+              href="index.html#contact"
+              class="btn btn-secondary"
+            >
+              <i class="fa-solid fa-phone"></i>
+              Contact Academy
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       FOOTER
+  ======================================================== -->
+
+  <footer class="footer">
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+
+        <div class="footer-brand">
+
+          <div class="brand">
+
+            <img
+              class="brand-logo"
+              src="assets/images/logo.jpeg"
+              alt="Arsh Technical Academy"
+            >
+
+            <div class="brand-name">
+              ARSH TECHNICAL ACADEMY
+              <span>PVT. LTD.</span>
+            </div>
+
+          </div>
+
+          <p>
+            Technical education with a career-oriented approach,
+            helping learners build knowledge, confidence and
+            workplace readiness.
+          </p>
+
+        </div>
+
+
+        <div>
+
+          <h3>
+            Quick Links
+          </h3>
+
+          <div class="footer-links">
+
+            <a href="index.html">
+              Home
+            </a>
+
+            <a href="about.html">
+              About Us
+            </a>
+
+            <a href="all-courses.html">
+              All Courses
+            </a>
+
+            <a href="placement.html">
+              Placement
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <h3>
+            Career
+          </h3>
+
+          <div class="footer-links">
+
+            <a href="#career">
+              Career Support
+            </a>
+
+            <a href="#career">
+              Interview Preparation
+            </a>
+
+            <a href="#career">
+              Workplace Readiness
+            </a>
+
+            <a href="index.html#contact">
+              Contact Us
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <h3>
+            Academy
+          </h3>
+
+          <div class="footer-links">
+
+            <a href="all-courses.html">
+              Technical Courses
+            </a>
+
+            <a href="verification.html">
+              Certificate Verification
+            </a>
+
+            <a href="login.html">
+              Student Login
+            </a>
+
+            <a href="index.html#contact">
+              Enquiry
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="footer-bottom">
+
+        <span>
+          © <span id="footerYear"></span>
+          Arsh Technical Academy Pvt. Ltd.
+          All Rights Reserved.
+        </span>
+
+        <span>
+          Placement & Career Support
+        </span>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =======================================================
+       JAVASCRIPT
+  ======================================================== -->
+
+  <script>
+
+    /* =======================================================
+       PAGE LOADER
+    ======================================================== */
+
+    window.addEventListener("load", function(){
+
+      setTimeout(function(){
+
+        const loader =
+          document.getElementById("pageLoader");
+
+        if(loader){
+          loader.classList.add("hide");
+        }
+
+      }, 550);
+
+    });
+
+
+    /* =======================================================
+       DATE / TIME
+    ======================================================== */
+
+    function updateDateTime(){
+
+      const now = new Date();
+
+      const dateElement =
+        document.getElementById("currentDate");
+
+      const timeElement =
+        document.getElementById("currentTime");
+
+      if(dateElement){
+
+        dateElement.textContent =
+          now.toLocaleDateString(
+            "en-IN",
+            {
+              day:"2-digit",
+              month:"short",
+              year:"numeric"
+            }
+          );
+
+      }
+
+      if(timeElement){
+
+        timeElement.textContent =
+          now.toLocaleTimeString(
+            "en-IN",
+            {
+              hour:"2-digit",
+              minute:"2-digit",
+              second:"2-digit"
+            }
+          );
+
+      }
+
+    }
+
+    updateDateTime();
+
+    setInterval(
+      updateDateTime,
+      1000
+    );
+
+
+    /* =======================================================
+       HERO SLIDER
+    ======================================================== */
+
+    const heroSlides =
+      document.querySelectorAll(".hero-slide");
+
+    const heroDots =
+      document.querySelectorAll(".hero-dot");
+
+    let heroIndex = 0;
+
+    let heroTimer;
+
+
+    function showHeroSlide(index){
+
+      if(!heroSlides.length){
+        return;
+      }
+
+      heroIndex =
+        (index + heroSlides.length)
+        % heroSlides.length;
+
+
+      heroSlides.forEach(
+        (slide,i)=>{
+
+          slide.classList.toggle(
+            "active",
+            i === heroIndex
+          );
+
+        }
+      );
+
+
+      heroDots.forEach(
+        (dot,i)=>{
+
+          dot.classList.toggle(
+            "active",
+            i === heroIndex
+          );
+
+        }
+      );
+
+    }
+
+
+    function startHeroSlider(){
+
+      clearInterval(heroTimer);
+
+      heroTimer =
+        setInterval(
+          ()=>{
+            showHeroSlide(heroIndex + 1);
+          },
+          5000
+        );
+
+    }
+
+
+    const heroNext =
+      document.getElementById("heroNext");
+
+    const heroPrev =
+      document.getElementById("heroPrev");
+
+
+    if(heroNext){
+
+      heroNext.addEventListener(
+        "click",
+        ()=>{
+          showHeroSlide(heroIndex + 1);
+          startHeroSlider();
+        }
+      );
+
+    }
+
+
+    if(heroPrev){
+
+      heroPrev.addEventListener(
+        "click",
+        ()=>{
+          showHeroSlide(heroIndex - 1);
+          startHeroSlider();
+        }
+      );
+
+    }
+
+
+    heroDots.forEach(
+      (dot)=>{
+
+        dot.addEventListener(
+          "click",
+          ()=>{
+
+            const index =
+              Number(
+                dot.dataset.slide
+              );
+
+            showHeroSlide(index);
+            startHeroSlider();
+
+          }
+        );
+
+      }
+    );
+
+
+    if(heroSlides.length){
+
+      showHeroSlide(0);
+      startHeroSlider();
+
+    }
+
+
+    /* =======================================================
+       MINI IMAGE SLIDER
+    ======================================================== */
+
+    const miniSlides =
+      document.querySelectorAll(".mini-slide");
+
+    let miniIndex = 0;
+
+
+    function showMiniSlide(){
+
+      miniSlides.forEach(
+        (slide,i)=>{
+
+          slide.classList.toggle(
+            "active",
+            i === miniIndex
+          );
+
+        }
+      );
+
+    }
+
+
+    if(miniSlides.length){
+
+      setInterval(
+        ()=>{
+
+          miniIndex =
+            (miniIndex + 1)
+            % miniSlides.length;
+
+          showMiniSlide();
+
+        },
+        3200
+      );
+
+    }
+
+
+    /* =======================================================
+       LARGE CAREER CAROUSEL
+    ======================================================== */
+
+    const careerTrack =
+      document.getElementById(
+        "careerTrack"
+      );
+
+    const careerDots =
+      document.querySelectorAll(
+        ".carousel-dot"
+      );
+
+    const careerPrev =
+      document.getElementById(
+        "careerPrev"
+      );
+
+    const careerNext =
+      document.getElementById(
+        "careerNext"
+      );
+
+    let careerIndex = 0;
+    let careerTimer;
+
+
+    function showCareerSlide(index){
+
+      const total =
+        careerDots.length;
+
+      if(!total || !careerTrack){
+        return;
+      }
+
+      careerIndex =
+        (index + total)
+        % total;
+
+      careerTrack.style.transform =
+        "translateX(-" +
+        (careerIndex * 100) +
+        "%)";
+
+
+      careerDots.forEach(
+        (dot,i)=>{
+
+          dot.classList.toggle(
+            "active",
+            i === careerIndex
+          );
+
+        }
+      );
+
+    }
+
+
+    function startCareerSlider(){
+
+      clearInterval(careerTimer);
+
+      careerTimer =
+        setInterval(
+          ()=>{
+            showCareerSlide(
+              careerIndex + 1
+            );
+          },
+          5500
+        );
+
+    }
+
+
+    if(careerNext){
+
+      careerNext.addEventListener(
+        "click",
+        ()=>{
+
+          showCareerSlide(
+            careerIndex + 1
+          );
+
+          startCareerSlider();
+
+        }
+      );
+
+    }
+
+
+    if(careerPrev){
+
+      careerPrev.addEventListener(
+        "click",
+        ()=>{
+
+          showCareerSlide(
+            careerIndex - 1
+          );
+
+          startCareerSlider();
+
+        }
+      );
+
+    }
+
+
+    careerDots.forEach(
+      (dot)=>{
+
+        dot.addEventListener(
+          "click",
+          ()=>{
+
+            showCareerSlide(
+              Number(
+                dot.dataset.carousel
+              )
+            );
+
+            startCareerSlider();
+
+          }
+        );
+
+      }
+    );
+
+
+    showCareerSlide(0);
+    startCareerSlider();
+
+
+    /* =======================================================
+       SCROLL REVEAL
+    ======================================================== */
+
+    const revealElements =
+      document.querySelectorAll(
+        ".reveal"
+      );
+
+
+    const revealObserver =
+      new IntersectionObserver(
+        (entries)=>{
+
+          entries.forEach(
+            (entry)=>{
+
+              if(entry.isIntersecting){
+
+                entry.target.classList.add(
+                  "show"
+                );
+
+                revealObserver.unobserve(
+                  entry.target
+                );
+
+              }
+
+            }
+          );
+
+        },
+        {
+          threshold:.12
+        }
+      );
+
+
+    revealElements.forEach(
+      element=>{
+        revealObserver.observe(element);
+      }
+    );
+
+
+    /* =======================================================
+       FOOTER YEAR
+    ======================================================== */
+
+    const footerYear =
+      document.getElementById(
+        "footerYear"
+      );
+
+    if(footerYear){
+
+      footerYear.textContent =
+        new Date().getFullYear();
+
+    }
+
+
+    /* =======================================================
+       PAUSE HERO SLIDER WHILE HOVERING
+    ======================================================== */
+
+    const heroGallery =
+      document.querySelector(
+        ".hero-gallery"
+      );
+
+
+    if(heroGallery){
+
+      heroGallery.addEventListener(
+        "mouseenter",
+        ()=>{
+          clearInterval(heroTimer);
+        }
+      );
+
+
+      heroGallery.addEventListener(
+        "mouseleave",
+        ()=>{
+          startHeroSlider();
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       PAUSE CAREER SLIDER WHILE HOVERING
+    ======================================================== */
+
+    const carouselShell =
+      document.querySelector(
+        ".carousel-shell"
+      );
+
+
+    if(carouselShell){
+
+      carouselShell.addEventListener(
+        "mouseenter",
+        ()=>{
+          clearInterval(careerTimer);
+        }
+      );
+
+
+      carouselShell.addEventListener(
+        "mouseleave",
+        ()=>{
+          startCareerSlider();
+        }
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>
