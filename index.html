@@ -1795,6 +1795,9 @@ section:not(#home):not(#stats)::after{
 /* =========================================================
    15. ABOUT
    ========================================================= */
+/* =========================================================
+   ABOUT GRID
+   ========================================================= */
 
 .about-grid{
 
@@ -1809,11 +1812,17 @@ section:not(#home):not(#stats)::after{
 
 }
 
+
+/* =========================================================
+   ABOUT IMAGE WRAPPER
+   ========================================================= */
+
 .about-image-wrap{
 
   position:relative;
 
 }
+
 
 .about-image-wrap::before{
 
@@ -1836,21 +1845,37 @@ section:not(#home):not(#stats)::after{
   z-index:-1;
 
   animation:
-    floatShape 6s ease-in-out infinite;
+    floatShape
+    6s
+    ease-in-out
+    infinite;
 
 }
+
 
 @keyframes floatShape{
 
-  0%,100%{
-    transform:translateY(0);
+  0%,
+  100%{
+
+    transform:
+      translateY(0);
+
   }
 
   50%{
-    transform:translateY(12px);
+
+    transform:
+      translateY(12px);
+
   }
 
 }
+
+
+/* =========================================================
+   MAIN ABOUT IMAGE
+   ========================================================= */
 
 .about-image{
 
@@ -1860,19 +1885,22 @@ section:not(#home):not(#stats)::after{
 
   object-fit:cover;
 
+  display:block;
+
   border-radius:28px;
 
   box-shadow:
-
     0 30px 80px
     rgba(15,23,42,.16);
 
   background:#eef3fa;
 
   transition:
-    transform .7s cubic-bezier(.2,.8,.2,1);
+    transform .7s
+    cubic-bezier(.2,.8,.2,1);
 
 }
+
 
 .about-image-wrap:hover .about-image{
 
@@ -1882,18 +1910,25 @@ section:not(#home):not(#stats)::after{
 
 }
 
+
+/* =========================================================
+   ABOUT BADGE
+   ========================================================= */
+
 .about-badge{
 
   position:absolute;
 
   right:-15px;
+
   bottom:25px;
 
   background:
     rgba(255,255,255,.88);
 
   border:
-    1px solid rgba(37,99,235,.10);
+    1px solid
+    rgba(37,99,235,.10);
 
   border-radius:20px;
 
@@ -1910,7 +1945,11 @@ section:not(#home):not(#stats)::after{
   backdrop-filter:
     blur(14px);
 
+  -webkit-backdrop-filter:
+    blur(14px);
+
 }
+
 
 .about-badge strong{
 
@@ -1920,11 +1959,21 @@ section:not(#home):not(#stats)::after{
 
 }
 
+
+/* =========================================================
+   ABOUT TEXT
+   ========================================================= */
+
 .about-text{
 
   color:var(--muted);
 
 }
+
+
+/* =========================================================
+   ABOUT POINTS
+   ========================================================= */
 
 .about-points{
 
@@ -1936,6 +1985,7 @@ section:not(#home):not(#stats)::after{
 
 }
 
+
 .about-point{
 
   display:flex;
@@ -1946,9 +1996,11 @@ section:not(#home):not(#stats)::after{
 
 }
 
+
 .about-point-icon{
 
   width:34px;
+
   height:34px;
 
   border-radius:10px;
@@ -1971,6 +2023,644 @@ section:not(#home):not(#stats)::after{
 }
 
 
+/* =========================================================
+   ABOUT BOTTOM IMAGE SLIDER
+   =========================================================
+
+   IMPORTANT
+
+   JS automatically creates:
+
+   GROUP 1:
+   1 2 3 4 5 6 7 8 9 10
+
+   GROUP 2:
+   1 2 3 4 5 6 7 8 9 10
+
+   Then:
+
+   GROUP 1 -> GROUP 2
+
+   At the exact end of GROUP 1,
+   GROUP 2 is already in exactly the
+   same position as GROUP 1 was.
+
+   Therefore:
+
+   NO BLANK SPACE
+   NO VISIBLE JUMP
+   NO WRONG RESET
+
+   ========================================================= */
+
+.about-image-slider{
+
+  width:100%;
+
+  margin-top:55px;
+
+  padding:
+    8px
+    0
+    20px;
+
+  position:relative;
+
+  overflow:hidden;
+
+}
+
+
+/* =========================================================
+   SOFT EDGE FADE
+   ========================================================= */
+
+.about-image-slider::before,
+.about-image-slider::after{
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  bottom:0;
+
+  width:55px;
+
+  z-index:20;
+
+  pointer-events:none;
+
+}
+
+
+.about-image-slider::before{
+
+  left:0;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--bg,#fff),
+      transparent
+    );
+
+}
+
+
+.about-image-slider::after{
+
+  right:0;
+
+  background:
+    linear-gradient(
+      270deg,
+      var(--bg,#fff),
+      transparent
+    );
+
+}
+
+
+/* =========================================================
+   OUTER TRACK
+   ========================================================= */
+
+.about-slider-track{
+
+  display:flex !important;
+
+  flex-direction:row !important;
+
+  flex-wrap:nowrap !important;
+
+  align-items:center;
+
+  width:max-content !important;
+
+  max-width:none !important;
+
+  min-width:max-content !important;
+
+  margin:0 !important;
+
+  padding:0 !important;
+
+  gap:0 !important;
+
+  transform:
+    translate3d(
+      0,
+      0,
+      0
+    );
+
+  will-change:transform;
+
+}
+
+
+/* =========================================================
+   EACH 10-IMAGE GROUP
+   ========================================================= */
+
+.about-slider-group{
+
+  display:flex;
+
+  flex-direction:row;
+
+  flex-wrap:nowrap;
+
+  align-items:center;
+
+  gap:14px;
+
+  flex:0 0 auto;
+
+  width:max-content;
+
+  min-width:max-content;
+
+}
+
+
+/* =========================================================
+   IMAGE CARD
+   ========================================================= */
+
+.about-slide-image{
+
+  position:relative;
+
+  flex:
+    0 0
+    calc(
+      (100vw - 140px) / 10
+    );
+
+  width:
+    calc(
+      (100vw - 140px) / 10
+    );
+
+  max-width:145px;
+
+  aspect-ratio:1 / 1;
+
+  min-width:0;
+
+  overflow:hidden;
+
+  border-radius:18px;
+
+  background:#0b1730;
+
+  border:
+    1px solid
+    rgba(255,255,255,.80);
+
+  box-shadow:
+
+    0 12px 30px
+    rgba(15,23,42,.14),
+
+    0 0 0 1px
+    rgba(37,99,235,.06);
+
+  transition:
+    transform .45s
+    cubic-bezier(.2,.8,.2,1),
+
+    box-shadow .45s ease;
+
+}
+
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
+.about-slide-image img{
+
+  width:100%;
+
+  height:100%;
+
+  display:block;
+
+  object-fit:cover;
+
+  border-radius:inherit;
+
+  transition:
+    transform .65s
+    cubic-bezier(.2,.8,.2,1),
+
+    filter .4s ease;
+
+}
+
+
+/* =========================================================
+   GLOSS
+   ========================================================= */
+
+.about-slide-image::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  z-index:2;
+
+  pointer-events:none;
+
+  background:
+
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.28),
+      transparent 35%,
+      transparent 65%,
+      rgba(37,99,235,.20)
+    );
+
+}
+
+
+/* =========================================================
+   MOVING SHINE
+   ========================================================= */
+
+.about-slide-image::after{
+
+  content:"";
+
+  position:absolute;
+
+  top:-100%;
+
+  left:-150%;
+
+  width:55%;
+
+  height:300%;
+
+  transform:
+    rotate(25deg);
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.45),
+      transparent
+    );
+
+  z-index:3;
+
+  pointer-events:none;
+
+  animation:
+    aboutGalleryShine
+    5s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes aboutGalleryShine{
+
+  0%{
+
+    left:-150%;
+
+  }
+
+  45%,
+  100%{
+
+    left:160%;
+
+  }
+
+}
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.about-slide-image:hover{
+
+  transform:
+    translateY(-8px)
+    scale(1.06);
+
+  box-shadow:
+
+    0 22px 45px
+    rgba(37,99,235,.22),
+
+    0 0 30px
+    rgba(6,182,212,.15),
+
+    0 0 50px
+    rgba(139,92,246,.10);
+
+  z-index:30;
+
+}
+
+
+.about-slide-image:hover img{
+
+  transform:
+    scale(1.12);
+
+  filter:
+    saturate(1.08)
+    contrast(1.03);
+
+}
+
+
+/* =========================================================
+   TABLET
+   5 IMAGES VISIBLE
+   ========================================================= */
+
+@media(max-width:1100px){
+
+  .about-grid{
+
+    gap:40px;
+
+  }
+
+
+  .about-image{
+
+    height:430px;
+
+  }
+
+
+  .about-slider-group{
+
+    gap:10px;
+
+  }
+
+
+  .about-slide-image{
+
+    flex:
+      0 0
+      calc(
+        (100vw - 40px) / 5
+      );
+
+    width:
+      calc(
+        (100vw - 40px) / 5
+      );
+
+    max-width:none;
+
+    border-radius:14px;
+
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media(max-width:900px){
+
+  .about-grid{
+
+    grid-template-columns:
+      1fr;
+
+    gap:40px;
+
+  }
+
+
+  .about-image{
+
+    height:420px;
+
+  }
+
+
+  .about-image-slider{
+
+    margin-top:42px;
+
+  }
+
+
+  .about-slider-group{
+
+    gap:10px;
+
+  }
+
+
+  .about-slide-image{
+
+    flex:
+      0 0
+      calc(
+        (100vw - 40px) / 5
+      );
+
+    width:
+      calc(
+        (100vw - 40px) / 5
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   5 IMAGES VISIBLE
+   ========================================================= */
+
+@media(max-width:600px){
+
+  .about-grid{
+
+    gap:30px;
+
+  }
+
+
+  .about-image{
+
+    height:340px;
+
+    border-radius:22px;
+
+  }
+
+
+  .about-image-wrap::before{
+
+    width:100px;
+
+    height:100px;
+
+    left:-20px;
+
+    top:-20px;
+
+  }
+
+
+  .about-badge{
+
+    right:10px;
+
+    bottom:15px;
+
+    padding:
+      14px
+      16px;
+
+    border-radius:16px;
+
+  }
+
+
+  .about-badge strong{
+
+    font-size:22px;
+
+  }
+
+
+  .about-image-slider{
+
+    margin-top:35px;
+
+    padding:
+      6px
+      0
+      14px;
+
+  }
+
+
+  .about-slider-group{
+
+    gap:10px;
+
+  }
+
+
+  .about-slide-image{
+
+    flex:
+      0 0
+      calc(
+        (100vw - 40px) / 5
+      );
+
+    width:
+      calc(
+        (100vw - 40px) / 5
+      );
+
+    border-radius:12px;
+
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media(max-width:380px){
+
+  .about-slider-group{
+
+    gap:7px;
+
+  }
+
+
+  .about-slide-image{
+
+    flex:
+      0 0
+      calc(
+        (100vw - 28px) / 5
+      );
+
+    width:
+      calc(
+        (100vw - 28px) / 5
+      );
+
+    border-radius:10px;
+
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  .about-slider-track{
+
+    transform:none !important;
+
+  }
+
+
+  .about-slide-image::after{
+
+    animation:none !important;
+
+  }
+
+
+  .about-image-wrap::before{
+
+    animation:none;
+
+  }
+
+
+  .about-image,
+  .about-slide-image,
+  .about-slide-image img{
+
+    transition:none;
+
+  }
+
+}
 /* =========================================================
    16. COMMON CARD SYSTEM
    ========================================================= */
@@ -5562,6 +6252,7 @@ html.fast-first-loaded .preloader{
 }
 
 
+
 /* =========================================================
    END PREMIUM CSS
    ========================================================= */
@@ -5569,8 +6260,7 @@ html.fast-first-loaded .preloader{
 </style>
 
 
-<script>(function(){function hide(){document.documentElement.classList.add("fast-first-loaded");["#pageLoader","#preloader",".page-loader",".preloader"].forEach(function(s){document.querySelectorAll(s).forEach(function(e){e.style.display="none";e.style.opacity="0";e.style.visibility="hidden";e.style.pointerEvents="none";e.setAttribute("aria-hidden","true")})})}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",hide,{once:true});else hide();window.addEventListener("load",hide,{once:true})})();</script>
-</head>
+
 <body class="loading">
   <div id="scrollProgress"></div>
   <div id="preloader"><div class="loader-inner"><img id="loaderLogo" class="loader-logo" alt="Loading" src="assets/images/logo.jpeg" fetchpriority="high" decoding="sync"><div class="loader-ring"></div><div style="margin-top:14px;font-weight:700;letter-spacing:.02em">Preparing your experience…</div></div></div><div id="cacheStatus" class="cache-status">Live data</div>
@@ -5611,7 +6301,104 @@ html.fast-first-loaded .preloader{
 
     <section id="stats"><div id="statsWrapper" class="stats-grid container"></div></section>
 
-    <section id="about"><div class="container"><div id="aboutContent" class="about-grid"></div></div></section>
+   <section id="about">
+  <div class="container">
+
+    <div id="aboutContent" class="about-grid"></div>
+
+    <!-- =====================================================
+         ABOUT IMAGE GALLERY
+         ===================================================== -->
+    <div class="about-image-slider">
+
+      <div class="about-slider-track">
+
+        <!-- Image 01 -->
+        <div class="about-slide-image">
+          <img
+            src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=85"
+            alt="Students"
+            loading="lazy">
+        </div>
+
+        <!-- Image 02 -->
+        <div class="about-slide-image">
+          <img
+            src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=600&q=85"
+            alt="Education"
+            loading="lazy">
+        </div>
+
+        <!-- Image 03 -->
+        <div class="about-slide-image">
+          <img
+            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=85"
+            alt="Computer Training"
+            loading="lazy">
+        </div>
+
+        <!-- Image 04 -->
+        <div class="about-slide-image">
+          <img
+            src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=85"
+            alt="Training"
+            loading="lazy">
+        </div>
+
+        <!-- Image 05 -->
+        <div class="about-slide-image">
+          <img
+            src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=85"
+            alt="Institute"
+            loading="lazy">
+        </div>
+
+        <!-- Image 06 -->
+        <div class="about-slide-image">
+          <img
+            src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=85"
+            alt="Classroom"
+            loading="lazy">
+        </div>
+
+        <!-- Image 07 -->
+        <div class="about-slide-image">
+          <img
+            src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=600&q=85"
+            alt="Students Training"
+            loading="lazy">
+        </div>
+
+        <!-- Image 08 -->
+        <div class="about-slide-image">
+          <img
+            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=85"
+            alt="Team Training"
+            loading="lazy">
+        </div>
+
+        <!-- Image 09 -->
+        <div class="about-slide-image">
+          <img
+            src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=600&q=85"
+            alt="Learning"
+            loading="lazy">
+        </div>
+
+        <!-- Image 10 -->
+        <div class="about-slide-image">
+          <img
+            src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=600&q=85"
+            alt="Campus"
+            loading="lazy">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
     <section id="features"><div class="container"><div id="featuresHeading" class="section-heading"></div><div id="featuresGrid" class="feature-grid"></div></div></section>
 
@@ -5824,7 +6611,7 @@ html.fast-first-loaded .preloader{
           </li>
 
           <li>
-            <a href="#about">
+            <a href="#aboutContent">
               <span>→</span>
               About Us
             </a>
@@ -7244,6 +8031,1140 @@ html.fast-first-loaded .preloader{
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+
+  <script>
+/* =========================================================
+   ABOUT IMAGE - PERFECT INFINITE SLIDER
+   ---------------------------------------------------------
+   Desktop  : 10 images visible
+   Tablet   : 5 images visible
+   Mobile   : 5 images visible
+   Infinite : YES
+   Blank    : NO
+   Jump     : NO
+   Auto     : YES
+   ========================================================= */
+
+(function () {
+
+  "use strict";
+
+  const SLIDER_SELECTOR = ".about-image-slider";
+  const TRACK_SELECTOR  = ".about-slider-track";
+  const ITEM_SELECTOR   = ".about-slide-image";
+
+  const TOTAL_IMAGES = 10;
+
+  /*
+   * Breakpoint
+   * Above 1100px  = 10 visible
+   * 1100px or less = 5 visible
+   */
+  const DESKTOP_BREAKPOINT = 1100;
+
+  /*
+   * Slider speed in pixels per second.
+   * Higher = faster
+   */
+  const DESKTOP_SPEED = 42;
+  const MOBILE_SPEED  = 34;
+
+  let resizeTimer = null;
+  let currentAnimationStyle = null;
+
+
+  /* =========================================================
+     INITIALIZE
+     ========================================================= */
+
+  function initAboutInfiniteSlider() {
+
+    const slider =
+      document.querySelector(SLIDER_SELECTOR);
+
+    const track =
+      document.querySelector(TRACK_SELECTOR);
+
+    if (!slider || !track) {
+
+      console.warn(
+        "About infinite slider: slider/track not found."
+      );
+
+      return;
+    }
+
+
+    /*
+     * Remove any existing inline animation
+     * which may conflict with this system.
+     */
+    track.style.animation = "none";
+    track.style.transform = "translate3d(0,0,0)";
+    track.style.animationPlayState = "paused";
+
+
+    /*
+     * Collect only the actual image cards.
+     *
+     * This also handles the case where the HTML
+     * already contains 20 images.
+     */
+    let sourceItems =
+      Array.from(
+        track.querySelectorAll(ITEM_SELECTOR)
+      );
+
+
+    if (sourceItems.length < TOTAL_IMAGES) {
+
+      console.warn(
+        "About infinite slider requires at least " +
+        TOTAL_IMAGES +
+        " images."
+      );
+
+      return;
+    }
+
+
+    /*
+     * Always use the first 10 as the master set.
+     */
+    sourceItems =
+      sourceItems.slice(
+        0,
+        TOTAL_IMAGES
+      );
+
+
+    /*
+     * Completely rebuild the track.
+     *
+     * This removes old duplicate images,
+     * old wrappers and accidental markup.
+     */
+
+    track.innerHTML = "";
+
+
+    /* =======================================================
+       GROUP 1
+       ======================================================= */
+
+    const group1 =
+      document.createElement("div");
+
+    group1.className =
+      "about-slider-group";
+
+
+    sourceItems.forEach(
+      function (item) {
+
+        group1.appendChild(item);
+
+      }
+    );
+
+
+    /* =======================================================
+       GROUP 2
+       Exact duplicate of Group 1
+       ======================================================= */
+
+    const group2 =
+      document.createElement("div");
+
+    group2.className =
+      "about-slider-group";
+
+
+    sourceItems.forEach(
+      function (item) {
+
+        const clone =
+          item.cloneNode(true);
+
+        /*
+         * Prevent duplicate IDs from causing
+         * unexpected DOM conflicts.
+         */
+        clone.removeAttribute("id");
+
+        const clonedImages =
+          clone.querySelectorAll
+            ? clone.querySelectorAll("[id]")
+            : [];
+
+        clonedImages.forEach(
+          function (element) {
+
+            element.removeAttribute("id");
+
+          }
+        );
+
+        group2.appendChild(clone);
+
+      }
+    );
+
+
+    track.appendChild(group1);
+    track.appendChild(group2);
+
+
+    /*
+     * Wait for images before calculating
+     * exact dimensions.
+     */
+    waitForImages(
+      track,
+      function () {
+
+        requestAnimationFrame(
+          function () {
+
+            requestAnimationFrame(
+              function () {
+
+                setupSlider();
+
+              }
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =======================================================
+       RESIZE
+       ======================================================= */
+
+    window.addEventListener(
+      "resize",
+      function () {
+
+        clearTimeout(resizeTimer);
+
+        resizeTimer =
+          setTimeout(
+            function () {
+
+              setupSlider();
+
+            },
+            200
+          );
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    /* =======================================================
+       ORIENTATION CHANGE
+       ======================================================= */
+
+    window.addEventListener(
+      "orientationchange",
+      function () {
+
+        setTimeout(
+          function () {
+
+            setupSlider();
+
+          },
+          400
+        );
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    /* =======================================================
+       SETUP SLIDER
+       ======================================================= */
+
+    function setupSlider() {
+
+      /*
+       * Temporarily stop animation.
+       */
+      track.style.animation = "none";
+      track.style.animationPlayState = "paused";
+      track.style.transform =
+        "translate3d(0,0,0)";
+
+
+      /*
+       * Determine visible item count.
+       */
+
+      const visibleCount =
+        window.innerWidth >
+        DESKTOP_BREAKPOINT
+          ? 10
+          : 5;
+
+
+      /*
+       * Read actual slider width.
+       */
+      const sliderWidth =
+        slider.clientWidth;
+
+
+      if (!sliderWidth) {
+
+        return;
+
+      }
+
+
+      /*
+       * Gap.
+       *
+       * Keep the same gap on both groups.
+       */
+      const gap =
+        window.innerWidth >
+        DESKTOP_BREAKPOINT
+          ? 14
+          : 10;
+
+
+      /*
+       * Calculate exact image width.
+       *
+       * Example:
+       *
+       * Desktop:
+       * (container width - 9 gaps) / 10
+       *
+       * Mobile:
+       * (container width - 4 gaps) / 5
+       */
+      const itemWidth =
+        (
+          sliderWidth -
+          (
+            gap *
+            (visibleCount - 1)
+          )
+        ) /
+        visibleCount;
+
+
+      if (
+        !isFinite(itemWidth) ||
+        itemWidth <= 0
+      ) {
+
+        return;
+
+      }
+
+
+      /*
+       * Apply exact dimensions to
+       * BOTH groups.
+       */
+
+      const groups =
+        track.querySelectorAll(
+          ".about-slider-group"
+        );
+
+
+      groups.forEach(
+        function (group) {
+
+          group.style.display =
+            "flex";
+
+          group.style.flexDirection =
+            "row";
+
+          group.style.flexWrap =
+            "nowrap";
+
+          group.style.gap =
+            gap + "px";
+
+          group.style.width =
+            "max-content";
+
+          group.style.minWidth =
+            "max-content";
+
+          group.style.margin =
+            "0";
+
+          group.style.padding =
+            "0";
+
+
+          const items =
+            group.querySelectorAll(
+              ITEM_SELECTOR
+            );
+
+
+          items.forEach(
+            function (item) {
+
+              item.style.flex =
+                "0 0 " +
+                itemWidth +
+                "px";
+
+              item.style.width =
+                itemWidth +
+                "px";
+
+              item.style.minWidth =
+                itemWidth +
+                "px";
+
+              item.style.maxWidth =
+                itemWidth +
+                "px";
+
+              item.style.boxSizing =
+                "border-box";
+
+            }
+          );
+
+        }
+      );
+
+
+      /*
+       * Make sure track itself is correct.
+       */
+
+      track.style.display =
+        "flex";
+
+      track.style.flexDirection =
+        "row";
+
+      track.style.flexWrap =
+        "nowrap";
+
+      track.style.width =
+        "max-content";
+
+      track.style.minWidth =
+        "max-content";
+
+      track.style.gap =
+        "0";
+
+      track.style.margin =
+        "0";
+
+      track.style.padding =
+        "0";
+
+
+      /*
+       * Force browser to calculate
+       * new dimensions.
+       */
+      void track.offsetWidth;
+
+
+      /*
+       * Measure EXACT width of Group 1.
+       *
+       * This includes:
+       *
+       * 10 cards
+       * +
+       * 9 gaps
+       */
+      const groupWidth =
+        group1.getBoundingClientRect().width;
+
+
+      if (
+        !isFinite(groupWidth) ||
+        groupWidth <= 0
+      ) {
+
+        return;
+
+      }
+
+
+      /*
+       * Select speed.
+       */
+      const speed =
+        window.innerWidth >
+        DESKTOP_BREAKPOINT
+          ? DESKTOP_SPEED
+          : MOBILE_SPEED;
+
+
+      /*
+       * Calculate duration from
+       * actual distance.
+       *
+       * Therefore speed remains constant
+       * on every screen size.
+       */
+      const duration =
+        groupWidth / speed;
+
+
+      /*
+       * Remove previous generated
+       * animation style.
+       */
+      if (currentAnimationStyle) {
+
+        currentAnimationStyle.remove();
+
+        currentAnimationStyle =
+          null;
+
+      }
+
+
+      /*
+       * Create a fresh style element.
+       */
+      currentAnimationStyle =
+        document.createElement("style");
+
+
+      currentAnimationStyle.id =
+        "aboutPerfectInfiniteSliderAnimation";
+
+
+      currentAnimationStyle.textContent = `
+
+        @keyframes aboutPerfectInfiniteSliderAnimation {
+
+          0% {
+
+            transform:
+              translate3d(
+                0,
+                0,
+                0
+              );
+
+          }
+
+          100% {
+
+            transform:
+              translate3d(
+                -${groupWidth}px,
+                0,
+                0
+              );
+
+          }
+
+        }
+
+        .about-slider-track {
+
+          animation:
+            aboutPerfectInfiniteSliderAnimation
+            ${duration}s
+            linear
+            infinite !important;
+
+          animation-play-state:
+            running !important;
+
+          will-change:
+            transform;
+
+        }
+
+      `;
+
+
+      document.head.appendChild(
+        currentAnimationStyle
+      );
+
+
+      /*
+       * Force animation restart.
+       */
+      track.style.animation =
+        "none";
+
+      track.style.transform =
+        "translate3d(0,0,0)";
+
+
+      void track.offsetWidth;
+
+
+      /*
+       * Start.
+       */
+      track.style.animation =
+        "";
+
+
+      track.style.animationPlayState =
+        "running";
+
+    }
+
+  }
+
+
+  /* =========================================================
+     WAIT FOR ALL IMAGES
+     ========================================================= */
+
+  function waitForImages(
+    container,
+    callback
+  ) {
+
+    const images =
+      container.querySelectorAll("img");
+
+
+    if (!images.length) {
+
+      callback();
+
+      return;
+
+    }
+
+
+    let completed = 0;
+
+
+    function done() {
+
+      completed++;
+
+
+      if (
+        completed >=
+        images.length
+      ) {
+
+        callback();
+
+      }
+
+    }
+
+
+    images.forEach(
+      function (img) {
+
+        /*
+         * Already loaded.
+         */
+        if (img.complete) {
+
+          done();
+
+        }
+        else {
+
+          img.addEventListener(
+            "load",
+            done,
+            {
+              once: true
+            }
+          );
+
+
+          img.addEventListener(
+            "error",
+            done,
+            {
+              once: true
+            }
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     DOM READY
+     ========================================================= */
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      initAboutInfiniteSlider,
+      {
+        once: true
+      }
+    );
+
+  }
+  else {
+
+    initAboutInfiniteSlider();
+
+  }
+
+})();
+</script>
+<script>
+(function(){
+
+  function initAboutInfiniteSlider(){
+
+    const track =
+      document.querySelector(
+        ".about-slider-track"
+      );
+
+    if(!track){
+      return;
+    }
+
+
+    const items =
+      Array.from(
+        track.querySelectorAll(
+          ".about-slide-image"
+        )
+      );
+
+
+    /*
+      Required:
+
+      10 original
+      +
+      10 duplicate
+
+      Total = 20
+    */
+
+    if(items.length < 20){
+
+      console.warn(
+        "About slider requires 20 images."
+      );
+
+      return;
+
+    }
+
+
+    /*
+      -------------------------------------------------------
+      IMPORTANT
+      -------------------------------------------------------
+
+      First 10 images:
+
+      1 2 3 4 5 6 7 8 9 10
+
+      Next 10 images must be:
+
+      1 2 3 4 5 6 7 8 9 10
+
+      We move exactly from the beginning of
+      image 1 to the beginning of duplicate image 1.
+
+      Therefore when animation restarts,
+      visually exactly the same image is already
+      in the same position.
+
+      Result:
+
+      1 2 3 ... 10 | 1 2 3 ... 10
+                         ↓
+      2 3 4 ... 10 | 1 2 3 ...
+                         ↓
+      ...
+      10 | 1 2 3 ...
+         ↓
+      1 2 3 ...
+      
+      No blank space.
+      No visible jump.
+    */
+
+
+    const firstTen =
+      items.slice(0,10);
+
+
+    function getSliderDistance(){
+
+      if(!firstTen.length){
+        return 0;
+      }
+
+
+      let distance = 0;
+
+
+      /*
+        Width of first 10 images
+      */
+
+      firstTen.forEach(
+        function(item){
+
+          distance +=
+            item.getBoundingClientRect().width;
+
+        }
+      );
+
+
+      /*
+        Gap between:
+
+        1 → 2
+        2 → 3
+        ...
+        10 → duplicate 1
+
+        Total = 10 gaps
+      */
+
+      const styles =
+        window.getComputedStyle(
+          track
+        );
+
+
+      const gap =
+        parseFloat(
+          styles.columnGap ||
+          styles.gap ||
+          0
+        );
+
+
+      distance +=
+        gap * 10;
+
+
+      return distance;
+
+    }
+
+
+    function createAnimation(){
+
+      const distance =
+        getSliderDistance();
+
+
+      if(
+        !distance ||
+        !isFinite(distance)
+      ){
+
+        return;
+
+      }
+
+
+      /*
+        Remove previous generated style
+      */
+
+      const oldStyle =
+        document.getElementById(
+          "aboutInfiniteSliderStyle"
+        );
+
+
+      if(oldStyle){
+
+        oldStyle.remove();
+
+      }
+
+
+      const style =
+        document.createElement(
+          "style"
+        );
+
+
+      style.id =
+        "aboutInfiniteSliderStyle";
+
+
+      /*
+        Speed control
+
+        Bigger number = faster
+        Smaller number = slower
+      */
+
+      let speed = 45;
+
+
+      if(
+        window.innerWidth <= 600
+      ){
+
+        speed = 38;
+
+      }
+
+
+      const duration =
+        Math.max(
+          18,
+          distance / speed
+        );
+
+
+      style.textContent = `
+
+        @keyframes aboutPerfectInfiniteSlider{
+
+          from{
+
+            transform:
+              translate3d(
+                0,
+                0,
+                0
+              );
+
+          }
+
+          to{
+
+            transform:
+              translate3d(
+                -${distance}px,
+                0,
+                0
+              );
+
+          }
+
+        }
+
+
+        .about-slider-track{
+
+          animation:
+            aboutPerfectInfiniteSlider
+            ${duration}s
+            linear
+            infinite !important;
+
+          animation-play-state:
+            running !important;
+
+        }
+
+      `;
+
+
+      document.head.appendChild(
+        style
+      );
+
+    }
+
+
+    /*
+      -------------------------------------------------------
+      WAIT FOR IMAGES
+      -------------------------------------------------------
+    */
+
+    const images =
+      track.querySelectorAll(
+        "img"
+      );
+
+
+    let loaded =
+      0;
+
+
+    function ready(){
+
+      loaded++;
+
+
+      if(
+        loaded >= images.length
+      ){
+
+        /*
+          Browser ko final dimensions
+          calculate karne ka time dete hain.
+        */
+
+        requestAnimationFrame(
+          function(){
+
+            requestAnimationFrame(
+              function(){
+
+                createAnimation();
+
+              }
+
+            );
+
+          }
+
+        );
+
+      }
+
+    }
+
+
+    images.forEach(
+      function(img){
+
+        if(img.complete){
+
+          ready();
+
+        }else{
+
+          img.addEventListener(
+            "load",
+            ready,
+            {once:true}
+          );
+
+
+          img.addEventListener(
+            "error",
+            ready,
+            {once:true}
+          );
+
+        }
+
+      }
+    );
+
+
+    /*
+      -------------------------------------------------------
+      RESIZE
+      -------------------------------------------------------
+    */
+
+    let resizeTimer;
+
+
+    window.addEventListener(
+      "resize",
+      function(){
+
+        clearTimeout(
+          resizeTimer
+        );
+
+
+        resizeTimer =
+          setTimeout(
+            function(){
+
+              createAnimation();
+
+            },
+            200
+          );
+
+      }
+    );
+
+
+    /*
+      -------------------------------------------------------
+      ORIENTATION CHANGE
+      -------------------------------------------------------
+    */
+
+    window.addEventListener(
+      "orientationchange",
+      function(){
+
+        setTimeout(
+          function(){
+
+            createAnimation();
+
+          },
+          300
+        );
+
+      }
+    );
+
+  }
+
+
+  /*
+    ---------------------------------------------------------
+    START
+    ---------------------------------------------------------
+  */
+
+  if(
+    document.readyState ===
+    "loading"
+  ){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      initAboutInfiniteSlider
+    );
+
+  }else{
+
+    initAboutInfiniteSlider();
+
+  }
+
+})();
+</script>
   <script>
 
     /* =====================================================
@@ -8558,20 +10479,19 @@ html.fast-first-loaded .preloader{
        */
 const mainMenu = [
   { Label: "Home", Target: "#home", Icon: "fa-solid fa-house" },
-  { Label: "About", Target: "#about", Icon: "fa-solid fa-circle-info" },
+  { Label: "About", Target: "#aboutContent", Icon: "fa-solid fa-circle-info" },
   { Label: "Courses", Target: "#courses", Icon: "fa-solid fa-book-open" },
   { Label: "Features", Target: "#features", Icon: "fa-solid fa-star" },
   { Label: "Gallery", Target: "#gallery", Icon: "fa-solid fa-images" },
   { Label: "Faculty", Target: "#faculty", Icon: "fa-solid fa-chalkboard-user" },
   /* No separate placement section currently exists; keep it tied to the existing faculty/career area. */
-  { Label: "Placement", Target: "/placement", Icon: "fa-solid fa-briefcase" },
+  { Label: "Placement", Target: "/faculty", Icon: "fa-solid fa-briefcase" },
   { Label: "Franchise", Target: "/franchise", Icon: "fa-solid fa-building" },
   { Label: "Testmonials", Target: "#testimonials", Icon: "fa-solid fa-comment-dots" },
   { Label: "Contact", Target: "#contact", Icon: "fa-solid fa-phone" },
   { Label: "Student Login", Target: "/login", Icon: "fa-solid fa-user-graduate" },
   { Label: "Certificate Verification", Target: "/verify", Icon: "fa-solid fa-certificate" }
 ];
-
       desktop.innerHTML = "";
       mobile.innerHTML = "";
 
