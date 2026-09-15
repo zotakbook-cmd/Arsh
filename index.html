@@ -6260,7 +6260,444 @@ html.fast-first-loaded .preloader{
 </style>
 
 
+<script>(function(){function hide(){document.documentElement.classList.add("fast-first-loaded");["#pageLoader","#preloader",".page-loader",".preloader"].forEach(function(s){document.querySelectorAll(s).forEach(function(e){e.style.display="none";e.style.opacity="0";e.style.visibility="hidden";e.style.pointerEvents="none";e.setAttribute("aria-hidden","true")})})}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",hide,{once:true});else hide();window.addEventListener("load",hide,{once:true})})();</script>
 
+<script>
+(function(){
+
+  function initAboutInfiniteSlider(){
+
+    const slider =
+      document.querySelector(
+        ".about-image-slider"
+      );
+
+    const track =
+      document.querySelector(
+        ".about-slider-track"
+      );
+
+    if(!slider || !track){
+      return;
+    }
+
+
+    /* =====================================================
+       GET EXISTING IMAGES
+       ===================================================== */
+
+    const allItems =
+      Array.from(
+        track.querySelectorAll(
+          ":scope > .about-slide-image"
+        )
+      );
+
+
+    /*
+      We only need the FIRST 10 images.
+
+      Even if HTML already contains 20 images,
+      JS will rebuild the structure correctly.
+    */
+
+    if(allItems.length < 10){
+
+      console.warn(
+        "About slider requires at least 10 images."
+      );
+
+      return;
+
+    }
+
+
+    const originalItems =
+      allItems.slice(0,10);
+
+
+    /* =====================================================
+       CREATE GROUP 1
+       ===================================================== */
+
+    const group1 =
+      document.createElement(
+        "div"
+      );
+
+    group1.className =
+      "about-slider-group";
+
+
+    originalItems.forEach(
+      function(item){
+
+        group1.appendChild(
+          item
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       CREATE GROUP 2
+       =====================================================
+
+       Exact duplicate of first 10.
+    */
+
+    const group2 =
+      document.createElement(
+        "div"
+      );
+
+    group2.className =
+      "about-slider-group";
+
+
+    originalItems.forEach(
+      function(item){
+
+        const clone =
+          item.cloneNode(true);
+
+        group2.appendChild(
+          clone
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       REBUILD TRACK
+       ===================================================== */
+
+    track.innerHTML = "";
+
+
+    track.appendChild(
+      group1
+    );
+
+
+    track.appendChild(
+      group2
+    );
+
+
+    /* =====================================================
+       ANIMATION STYLE
+       ===================================================== */
+
+    let animationStyle =
+      document.getElementById(
+        "aboutPerfectInfiniteSliderStyle"
+      );
+
+
+    if(animationStyle){
+
+      animationStyle.remove();
+
+    }
+
+
+    animationStyle =
+      document.createElement(
+        "style"
+      );
+
+
+    animationStyle.id =
+      "aboutPerfectInfiniteSliderStyle";
+
+
+    document.head.appendChild(
+      animationStyle
+    );
+
+
+    /* =====================================================
+       CALCULATE EXACT GROUP WIDTH
+       ===================================================== */
+
+    function startSlider(){
+
+      const distance =
+        group1.getBoundingClientRect()
+          .width;
+
+
+      if(
+        !distance ||
+        !isFinite(distance)
+      ){
+
+        return;
+
+      }
+
+
+      /*
+        Speed in pixels per second.
+      */
+
+      let speed = 42;
+
+
+      if(
+        window.innerWidth <= 600
+      ){
+
+        speed = 34;
+
+      }
+
+
+      const duration =
+        Math.max(
+          16,
+          distance / speed
+        );
+
+
+      /*
+        Exact animation:
+
+        GROUP 1
+        ↓
+        GROUP 2
+
+        At the end, GROUP 2 occupies
+        exactly the same position GROUP 1
+        occupied at the beginning.
+
+        Browser then restarts at 0,
+        but visually nothing changes.
+      */
+
+      animationStyle.textContent = `
+
+        @keyframes aboutPerfectInfiniteSlider{
+
+          from{
+
+            transform:
+              translate3d(
+                0,
+                0,
+                0
+              );
+
+          }
+
+          to{
+
+            transform:
+              translate3d(
+                -${distance}px,
+                0,
+                0
+              );
+
+          }
+
+        }
+
+
+        .about-slider-track{
+
+          animation:
+            aboutPerfectInfiniteSlider
+            ${duration}s
+            linear
+            infinite !important;
+
+          animation-play-state:
+            running !important;
+
+        }
+
+      `;
+
+
+      /*
+        Force browser to restart
+        animation cleanly.
+      */
+
+      track.style.animation =
+        "none";
+
+
+      void track.offsetWidth;
+
+
+      track.style.animation =
+        "";
+
+
+      track.style.animationPlayState =
+        "running";
+
+    }
+
+
+    /* =====================================================
+       WAIT FOR IMAGES
+       ===================================================== */
+
+    const images =
+      track.querySelectorAll(
+        "img"
+      );
+
+
+    let ready =
+      0;
+
+
+    function imageReady(){
+
+      ready++;
+
+
+      if(
+        ready >= images.length
+      ){
+
+        requestAnimationFrame(
+          function(){
+
+            requestAnimationFrame(
+              function(){
+
+                startSlider();
+
+              }
+
+            );
+
+          }
+
+        );
+
+      }
+
+    }
+
+
+    images.forEach(
+      function(img){
+
+        if(img.complete){
+
+          imageReady();
+
+        }else{
+
+          img.addEventListener(
+            "load",
+            imageReady,
+            {
+              once:true
+            }
+          );
+
+
+          img.addEventListener(
+            "error",
+            imageReady,
+            {
+              once:true
+            }
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       RESIZE
+       ===================================================== */
+
+    let resizeTimer;
+
+
+    window.addEventListener(
+      "resize",
+      function(){
+
+        clearTimeout(
+          resizeTimer
+        );
+
+
+        resizeTimer =
+          setTimeout(
+            function(){
+
+              startSlider();
+
+            },
+            200
+          );
+
+      }
+    );
+
+
+    /* =====================================================
+       ORIENTATION CHANGE
+       ===================================================== */
+
+    window.addEventListener(
+      "orientationchange",
+      function(){
+
+        setTimeout(
+          function(){
+
+            startSlider();
+
+          },
+          300
+        );
+
+      }
+    );
+
+  }
+
+
+  /* =======================================================
+     INITIALIZE
+     ======================================================= */
+
+  if(
+    document.readyState ===
+    "loading"
+  ){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      initAboutInfiniteSlider
+    );
+
+  }else{
+
+    initAboutInfiniteSlider();
+
+  }
+
+})();
+</script>
+
+</head>
 <body class="loading">
   <div id="scrollProgress"></div>
   <div id="preloader"><div class="loader-inner"><img id="loaderLogo" class="loader-logo" alt="Loading" src="assets/images/logo.jpeg" fetchpriority="high" decoding="sync"><div class="loader-ring"></div><div style="margin-top:14px;font-weight:700;letter-spacing:.02em">Preparing your experience…</div></div></div><div id="cacheStatus" class="cache-status">Live data</div>
@@ -8030,718 +8467,6 @@ html.fast-first-loaded .preloader{
   <div id="lightbox"><button id="lightboxClose" type="button"><i class="fa-solid fa-xmark"></i></button><img id="lightboxImage" alt=""></div>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-
-  <script>
-/* =========================================================
-   ABOUT IMAGE - PERFECT INFINITE SLIDER
-   ---------------------------------------------------------
-   Desktop  : 10 images visible
-   Tablet   : 5 images visible
-   Mobile   : 5 images visible
-   Infinite : YES
-   Blank    : NO
-   Jump     : NO
-   Auto     : YES
-   ========================================================= */
-
-(function () {
-
-  "use strict";
-
-  const SLIDER_SELECTOR = ".about-image-slider";
-  const TRACK_SELECTOR  = ".about-slider-track";
-  const ITEM_SELECTOR   = ".about-slide-image";
-
-  const TOTAL_IMAGES = 10;
-
-  /*
-   * Breakpoint
-   * Above 1100px  = 10 visible
-   * 1100px or less = 5 visible
-   */
-  const DESKTOP_BREAKPOINT = 1100;
-
-  /*
-   * Slider speed in pixels per second.
-   * Higher = faster
-   */
-  const DESKTOP_SPEED = 42;
-  const MOBILE_SPEED  = 34;
-
-  let resizeTimer = null;
-  let currentAnimationStyle = null;
-
-
-  /* =========================================================
-     INITIALIZE
-     ========================================================= */
-
-  function initAboutInfiniteSlider() {
-
-    const slider =
-      document.querySelector(SLIDER_SELECTOR);
-
-    const track =
-      document.querySelector(TRACK_SELECTOR);
-
-    if (!slider || !track) {
-
-      console.warn(
-        "About infinite slider: slider/track not found."
-      );
-
-      return;
-    }
-
-
-    /*
-     * Remove any existing inline animation
-     * which may conflict with this system.
-     */
-    track.style.animation = "none";
-    track.style.transform = "translate3d(0,0,0)";
-    track.style.animationPlayState = "paused";
-
-
-    /*
-     * Collect only the actual image cards.
-     *
-     * This also handles the case where the HTML
-     * already contains 20 images.
-     */
-    let sourceItems =
-      Array.from(
-        track.querySelectorAll(ITEM_SELECTOR)
-      );
-
-
-    if (sourceItems.length < TOTAL_IMAGES) {
-
-      console.warn(
-        "About infinite slider requires at least " +
-        TOTAL_IMAGES +
-        " images."
-      );
-
-      return;
-    }
-
-
-    /*
-     * Always use the first 10 as the master set.
-     */
-    sourceItems =
-      sourceItems.slice(
-        0,
-        TOTAL_IMAGES
-      );
-
-
-    /*
-     * Completely rebuild the track.
-     *
-     * This removes old duplicate images,
-     * old wrappers and accidental markup.
-     */
-
-    track.innerHTML = "";
-
-
-    /* =======================================================
-       GROUP 1
-       ======================================================= */
-
-    const group1 =
-      document.createElement("div");
-
-    group1.className =
-      "about-slider-group";
-
-
-    sourceItems.forEach(
-      function (item) {
-
-        group1.appendChild(item);
-
-      }
-    );
-
-
-    /* =======================================================
-       GROUP 2
-       Exact duplicate of Group 1
-       ======================================================= */
-
-    const group2 =
-      document.createElement("div");
-
-    group2.className =
-      "about-slider-group";
-
-
-    sourceItems.forEach(
-      function (item) {
-
-        const clone =
-          item.cloneNode(true);
-
-        /*
-         * Prevent duplicate IDs from causing
-         * unexpected DOM conflicts.
-         */
-        clone.removeAttribute("id");
-
-        const clonedImages =
-          clone.querySelectorAll
-            ? clone.querySelectorAll("[id]")
-            : [];
-
-        clonedImages.forEach(
-          function (element) {
-
-            element.removeAttribute("id");
-
-          }
-        );
-
-        group2.appendChild(clone);
-
-      }
-    );
-
-
-    track.appendChild(group1);
-    track.appendChild(group2);
-
-
-    /*
-     * Wait for images before calculating
-     * exact dimensions.
-     */
-    waitForImages(
-      track,
-      function () {
-
-        requestAnimationFrame(
-          function () {
-
-            requestAnimationFrame(
-              function () {
-
-                setupSlider();
-
-              }
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-    /* =======================================================
-       RESIZE
-       ======================================================= */
-
-    window.addEventListener(
-      "resize",
-      function () {
-
-        clearTimeout(resizeTimer);
-
-        resizeTimer =
-          setTimeout(
-            function () {
-
-              setupSlider();
-
-            },
-            200
-          );
-
-      },
-      {
-        passive: true
-      }
-    );
-
-
-    /* =======================================================
-       ORIENTATION CHANGE
-       ======================================================= */
-
-    window.addEventListener(
-      "orientationchange",
-      function () {
-
-        setTimeout(
-          function () {
-
-            setupSlider();
-
-          },
-          400
-        );
-
-      },
-      {
-        passive: true
-      }
-    );
-
-
-    /* =======================================================
-       SETUP SLIDER
-       ======================================================= */
-
-    function setupSlider() {
-
-      /*
-       * Temporarily stop animation.
-       */
-      track.style.animation = "none";
-      track.style.animationPlayState = "paused";
-      track.style.transform =
-        "translate3d(0,0,0)";
-
-
-      /*
-       * Determine visible item count.
-       */
-
-      const visibleCount =
-        window.innerWidth >
-        DESKTOP_BREAKPOINT
-          ? 10
-          : 5;
-
-
-      /*
-       * Read actual slider width.
-       */
-      const sliderWidth =
-        slider.clientWidth;
-
-
-      if (!sliderWidth) {
-
-        return;
-
-      }
-
-
-      /*
-       * Gap.
-       *
-       * Keep the same gap on both groups.
-       */
-      const gap =
-        window.innerWidth >
-        DESKTOP_BREAKPOINT
-          ? 14
-          : 10;
-
-
-      /*
-       * Calculate exact image width.
-       *
-       * Example:
-       *
-       * Desktop:
-       * (container width - 9 gaps) / 10
-       *
-       * Mobile:
-       * (container width - 4 gaps) / 5
-       */
-      const itemWidth =
-        (
-          sliderWidth -
-          (
-            gap *
-            (visibleCount - 1)
-          )
-        ) /
-        visibleCount;
-
-
-      if (
-        !isFinite(itemWidth) ||
-        itemWidth <= 0
-      ) {
-
-        return;
-
-      }
-
-
-      /*
-       * Apply exact dimensions to
-       * BOTH groups.
-       */
-
-      const groups =
-        track.querySelectorAll(
-          ".about-slider-group"
-        );
-
-
-      groups.forEach(
-        function (group) {
-
-          group.style.display =
-            "flex";
-
-          group.style.flexDirection =
-            "row";
-
-          group.style.flexWrap =
-            "nowrap";
-
-          group.style.gap =
-            gap + "px";
-
-          group.style.width =
-            "max-content";
-
-          group.style.minWidth =
-            "max-content";
-
-          group.style.margin =
-            "0";
-
-          group.style.padding =
-            "0";
-
-
-          const items =
-            group.querySelectorAll(
-              ITEM_SELECTOR
-            );
-
-
-          items.forEach(
-            function (item) {
-
-              item.style.flex =
-                "0 0 " +
-                itemWidth +
-                "px";
-
-              item.style.width =
-                itemWidth +
-                "px";
-
-              item.style.minWidth =
-                itemWidth +
-                "px";
-
-              item.style.maxWidth =
-                itemWidth +
-                "px";
-
-              item.style.boxSizing =
-                "border-box";
-
-            }
-          );
-
-        }
-      );
-
-
-      /*
-       * Make sure track itself is correct.
-       */
-
-      track.style.display =
-        "flex";
-
-      track.style.flexDirection =
-        "row";
-
-      track.style.flexWrap =
-        "nowrap";
-
-      track.style.width =
-        "max-content";
-
-      track.style.minWidth =
-        "max-content";
-
-      track.style.gap =
-        "0";
-
-      track.style.margin =
-        "0";
-
-      track.style.padding =
-        "0";
-
-
-      /*
-       * Force browser to calculate
-       * new dimensions.
-       */
-      void track.offsetWidth;
-
-
-      /*
-       * Measure EXACT width of Group 1.
-       *
-       * This includes:
-       *
-       * 10 cards
-       * +
-       * 9 gaps
-       */
-      const groupWidth =
-        group1.getBoundingClientRect().width;
-
-
-      if (
-        !isFinite(groupWidth) ||
-        groupWidth <= 0
-      ) {
-
-        return;
-
-      }
-
-
-      /*
-       * Select speed.
-       */
-      const speed =
-        window.innerWidth >
-        DESKTOP_BREAKPOINT
-          ? DESKTOP_SPEED
-          : MOBILE_SPEED;
-
-
-      /*
-       * Calculate duration from
-       * actual distance.
-       *
-       * Therefore speed remains constant
-       * on every screen size.
-       */
-      const duration =
-        groupWidth / speed;
-
-
-      /*
-       * Remove previous generated
-       * animation style.
-       */
-      if (currentAnimationStyle) {
-
-        currentAnimationStyle.remove();
-
-        currentAnimationStyle =
-          null;
-
-      }
-
-
-      /*
-       * Create a fresh style element.
-       */
-      currentAnimationStyle =
-        document.createElement("style");
-
-
-      currentAnimationStyle.id =
-        "aboutPerfectInfiniteSliderAnimation";
-
-
-      currentAnimationStyle.textContent = `
-
-        @keyframes aboutPerfectInfiniteSliderAnimation {
-
-          0% {
-
-            transform:
-              translate3d(
-                0,
-                0,
-                0
-              );
-
-          }
-
-          100% {
-
-            transform:
-              translate3d(
-                -${groupWidth}px,
-                0,
-                0
-              );
-
-          }
-
-        }
-
-        .about-slider-track {
-
-          animation:
-            aboutPerfectInfiniteSliderAnimation
-            ${duration}s
-            linear
-            infinite !important;
-
-          animation-play-state:
-            running !important;
-
-          will-change:
-            transform;
-
-        }
-
-      `;
-
-
-      document.head.appendChild(
-        currentAnimationStyle
-      );
-
-
-      /*
-       * Force animation restart.
-       */
-      track.style.animation =
-        "none";
-
-      track.style.transform =
-        "translate3d(0,0,0)";
-
-
-      void track.offsetWidth;
-
-
-      /*
-       * Start.
-       */
-      track.style.animation =
-        "";
-
-
-      track.style.animationPlayState =
-        "running";
-
-    }
-
-  }
-
-
-  /* =========================================================
-     WAIT FOR ALL IMAGES
-     ========================================================= */
-
-  function waitForImages(
-    container,
-    callback
-  ) {
-
-    const images =
-      container.querySelectorAll("img");
-
-
-    if (!images.length) {
-
-      callback();
-
-      return;
-
-    }
-
-
-    let completed = 0;
-
-
-    function done() {
-
-      completed++;
-
-
-      if (
-        completed >=
-        images.length
-      ) {
-
-        callback();
-
-      }
-
-    }
-
-
-    images.forEach(
-      function (img) {
-
-        /*
-         * Already loaded.
-         */
-        if (img.complete) {
-
-          done();
-
-        }
-        else {
-
-          img.addEventListener(
-            "load",
-            done,
-            {
-              once: true
-            }
-          );
-
-
-          img.addEventListener(
-            "error",
-            done,
-            {
-              once: true
-            }
-          );
-
-        }
-
-      }
-    );
-
-  }
-
-
-  /* =========================================================
-     DOM READY
-     ========================================================= */
-
-  if (
-    document.readyState ===
-    "loading"
-  ) {
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      initAboutInfiniteSlider,
-      {
-        once: true
-      }
-    );
-
-  }
-  else {
-
-    initAboutInfiniteSlider();
-
-  }
-
-})();
-</script>
 <script>
 (function(){
 
