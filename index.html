@@ -11651,46 +11651,38 @@ const mainMenu = [
     warmStaffImageCache(getStaffData());
 
     /* =====================================================
-       GALLERY
-    ====================================================== */
-
-   /* =====================================================
    GALLERY
    -----------------------------------------------------
-   Priority:
-   1. Google Sheet gallery data
-   2. Frontend fallback images
+   GOOGLE SHEET + FRONTEND FALLBACK
    -----------------------------------------------------
-   Gallery section will NOT disappear when Sheet
-   gallery data is empty.
+   Features:
+   - All filter
+   - Dynamic category filters
+   - Frontend fallback categories
+   - Image fallback
+   - Lightbox
+   - Smooth filtering
+   - Gallery never disappears
 ===================================================== */
 
 function renderGallery() {
 
   const section =
-    document.getElementById(
-      "gallery"
-    );
+    document.getElementById("gallery");
 
   const grid =
-    document.getElementById(
-      "galleryGrid"
-    );
+    document.getElementById("galleryGrid");
 
   const filters =
-    document.getElementById(
-      "galleryFilters"
-    );
+    document.getElementById("galleryFilters");
 
   const heading =
-    document.getElementById(
-      "galleryHeading"
-    );
+    document.getElementById("galleryHeading");
 
 
-  /*
-   * Safety check
-   */
+  /* =====================================================
+     SAFETY
+  ====================================================== */
 
   if (
     !section ||
@@ -11707,112 +11699,108 @@ function renderGallery() {
   }
 
 
-  /*
-   * Clear old content
-   */
+  /* =====================================================
+     CLEAR OLD CONTENT
+  ====================================================== */
 
-  grid.innerHTML =
-    "";
-
-  filters.innerHTML =
-    "";
+  grid.innerHTML = "";
+  filters.innerHTML = "";
 
 
-  /*
-   * NEVER hide gallery section.
-   */
+  /* =====================================================
+     NEVER HIDE GALLERY
+  ====================================================== */
 
-  section.classList.remove(
-    "hidden"
-  );
+  section.classList.remove("hidden");
 
 
-  /*
-   * Render heading
-   */
+  /* =====================================================
+     HEADING
+  ====================================================== */
 
   if (heading) {
 
     renderHeading(
       heading,
-      findSection(
-        "gallery"
-      )
+      findSection("gallery")
     );
 
   }
 
 
   /* =====================================================
-     PREPARE GALLERY DATA
+     GALLERY DATA
   ====================================================== */
 
   let galleryData = [];
 
 
-  /*
-   * Use Google Sheet data when available.
-   */
+  /* =====================================================
+     GOOGLE SHEET DATA
+  ====================================================== */
 
   if (
-    Array.isArray(
-      SITE_DATA.gallery
-    ) &&
+    Array.isArray(SITE_DATA.gallery) &&
     SITE_DATA.gallery.length
   ) {
 
     galleryData =
-      SITE_DATA.gallery.map(
-        function(item, index) {
+      SITE_DATA.gallery
+        .map(
+          function(item, index) {
 
-          return {
+            if (
+              !item ||
+              typeof item !== "object"
+            ) {
 
-            category:
-              item &&
-              item["Category"]
-                ? String(
-                    item["Category"]
-                  )
-                : "Gallery",
+              return null;
 
-            title:
-              item &&
-              item["Title"]
-                ? String(
-                    item["Title"]
-                  )
-                : "",
+            }
 
-            image:
+
+            const image =
               frontendImage(
                 "gallery",
                 index
-              )
+              );
 
-          };
 
-        }
-      )
-      .filter(
-        function(item) {
+            if (!image) {
 
-          return !!item.image;
+              return null;
 
-        }
-      );
+            }
+
+
+            return {
+
+              image: image,
+
+              title:
+                item["Title"] ||
+                item["title"] ||
+                "",
+
+              category:
+                item["Category"] ||
+                item["category"] ||
+                "Gallery"
+
+            };
+
+          }
+        )
+        .filter(Boolean);
 
   }
 
 
-  /*
-   * =====================================================
-     FALLBACK
-     =====================================================
-     If Google Sheet gallery is empty OR
-     all Sheet rows have invalid images,
-     use FRONTEND_IMAGES.gallery.
-  ======================================================
-  */
+  /* =====================================================
+     FRONTEND FALLBACK
+     -----------------------------------------------------
+     Used when Google Sheet gallery is empty.
+  ====================================================== */
 
   if (
     !galleryData.length
@@ -11826,83 +11814,140 @@ function renderGallery() {
         : [];
 
 
+    /*
+     * Predefined categories
+     *
+     * These will repeat automatically
+     * if there are more images later.
+     */
+
+    const fallbackCategories = [
+
+      "Campus",
+
+      "Training",
+
+      "Students",
+
+      "Workshop",
+
+      "Activities",
+
+      "Infrastructure",
+
+      "Events",
+
+      "Learning"
+
+    ];
+
+
     galleryData =
       fallbackImages
         .map(
           function(url, index) {
 
+            const image =
+              normalizeImageURL(
+                url
+              );
+
+
+            if (!image) {
+
+              return null;
+
+            }
+
+
             return {
 
-              category:
-                "Gallery",
+              image: image,
 
               title:
                 "Institute Gallery " +
                 (index + 1),
 
-              image:
-                normalizeImageURL(
-                  url
-                )
+              category:
+                fallbackCategories[
+                  index %
+                  fallbackCategories.length
+                ]
 
             };
 
           }
         )
-        .filter(
-          function(item) {
-
-            return !!item.image;
-
-          }
-        );
+        .filter(Boolean);
 
   }
 
 
-  /*
-   * =====================================================
-     FINAL SAFETY
-  ======================================================
-  */
+  /* =====================================================
+     NO IMAGES
+  ====================================================== */
 
   if (
     !galleryData.length
   ) {
 
     grid.innerHTML = `
+
       <div
         style="
           grid-column:1/-1;
-          padding:50px 20px;
+          padding:55px 20px;
           text-align:center;
-          color:var(--muted);
-          background:#fff;
           border:1px solid var(--border);
-          border-radius:22px;
+          border-radius:24px;
+          background:#fff;
         "
       >
 
-        <i
-          class="fa-solid fa-images"
-          style="
-            font-size:38px;
-            color:var(--primary);
-            margin-bottom:14px;
-          "
-        ></i>
-
         <div
           style="
-            font-weight:800;
+            width:64px;
+            height:64px;
+            margin:0 auto 16px;
+            border-radius:18px;
+            display:grid;
+            place-items:center;
+            background:#e9f7f0;
+            color:var(--primary);
+            font-size:28px;
+          "
+        >
+
+          <i
+            class="fa-solid fa-images"
+          ></i>
+
+        </div>
+
+
+        <strong
+          style="
+            display:block;
             color:var(--secondary);
-            font-size:18px;
+            font-size:19px;
+            margin-bottom:6px;
           "
         >
           Gallery images coming soon
-        </div>
+        </strong>
+
+
+        <span
+          style="
+            color:var(--muted);
+            font-size:14px;
+          "
+        >
+          Institute gallery will be updated here.
+        </span>
 
       </div>
+
     `;
 
     return;
@@ -11911,81 +11956,91 @@ function renderGallery() {
 
 
   /* =====================================================
-     UNIQUE CATEGORIES
+     GET UNIQUE CATEGORIES
   ====================================================== */
 
-  const categories =
-    [
-      ...new Set(
-        galleryData
-          .map(
-            function(item) {
+  const categories = [
 
-              return item.category;
+    ...new Set(
 
-            }
-          )
-          .filter(Boolean)
-      )
-    ];
+      galleryData
+        .map(
+          function(item) {
+
+            return String(
+              item.category ||
+              ""
+            ).trim();
+
+          }
+        )
+        .filter(Boolean)
+
+    )
+
+  ];
 
 
   /* =====================================================
-     ALL BUTTON
+     ALL FILTER
   ====================================================== */
 
   filters.insertAdjacentHTML(
     "beforeend",
     `
+
       <button
         type="button"
         class="gallery-filter active"
         data-filter="all"
       >
+
+        <i
+          class="fa-solid fa-grid-2"
+        ></i>
+
         All
+
       </button>
+
     `
   );
 
 
   /* =====================================================
-     CATEGORY BUTTONS
+     CATEGORY FILTERS
   ====================================================== */
 
-  categories
-    .filter(
-      function(category) {
+  categories.forEach(
+    function(category) {
 
-        return category !== "Gallery";
+      filters.insertAdjacentHTML(
+        "beforeend",
+        `
 
-      }
-    )
-    .forEach(
-      function(category) {
+          <button
+            type="button"
+            class="gallery-filter"
+            data-filter="${escapeHTML(
+              category
+            )}"
+          >
 
-        filters.insertAdjacentHTML(
-          "beforeend",
-          `
-            <button
-              type="button"
-              class="gallery-filter"
-              data-filter="${escapeHTML(
-                category
-              )}"
-            >
-              ${escapeHTML(
-                category
-              )}
-            </button>
-          `
-        );
+            ${escapeHTML(
+              category
+            )}
 
-      }
-    );
+          </button>
+
+        `
+      );
+
+    }
+  );
 
 
   /* =====================================================
-     RENDER IMAGES
+     RENDER GALLERY ITEMS
   ====================================================== */
 
   galleryData.forEach(
@@ -12007,6 +12062,7 @@ function renderGallery() {
       grid.insertAdjacentHTML(
         "beforeend",
         `
+
           <div
             class="gallery-item"
             data-category="${escapeHTML(
@@ -12028,13 +12084,14 @@ function renderGallery() {
                 item.title ||
                 "Institute Gallery"
               )}"
-              loading="${index < 4 ? "eager" : "lazy"}"
+              loading="${
+                index < 4
+                  ? "eager"
+                  : "lazy"
+              }"
               decoding="async"
-              onerror="
-                this.closest('.gallery-item')
-                  .classList.add('image-load-error');
-              "
             >
+
 
             <div
               class="gallery-overlay"
@@ -12043,6 +12100,22 @@ function renderGallery() {
               <div
                 class="gallery-overlay-content"
               >
+
+                <span
+                  style="
+                    display:block;
+                    font-size:11px;
+                    text-transform:uppercase;
+                    letter-spacing:.08em;
+                    opacity:.8;
+                    margin-bottom:5px;
+                  "
+                >
+                  ${escapeHTML(
+                    item.category
+                  )}
+                </span>
+
 
                 ${
                   item.title
@@ -12061,6 +12134,7 @@ function renderGallery() {
             </div>
 
           </div>
+
         `
       );
 
@@ -12069,8 +12143,16 @@ function renderGallery() {
 
 
   /* =====================================================
-     FILTER BUTTONS
+     FILTER FUNCTION
   ====================================================== */
+
+  const galleryItems =
+    Array.from(
+      grid.querySelectorAll(
+        ".gallery-item"
+      )
+    );
+
 
   filters
     .querySelectorAll(
@@ -12083,9 +12165,9 @@ function renderGallery() {
           "click",
           function() {
 
-            /*
-             * Active state
-             */
+            /* -------------------------------------------
+               ACTIVE BUTTON
+            ------------------------------------------- */
 
             filters
               .querySelectorAll(
@@ -12107,82 +12189,83 @@ function renderGallery() {
             );
 
 
-            /*
-             * Selected filter
-             */
+            /* -------------------------------------------
+               SELECTED CATEGORY
+            ------------------------------------------- */
 
-            const filter =
-              button.dataset.filter;
-
-
-            /*
-             * Filter gallery
-             */
-
-            grid
-              .querySelectorAll(
-                ".gallery-item"
-              )
-              .forEach(
-                function(item) {
-
-                  const match =
-                    filter === "all" ||
-                    item.dataset.category ===
-                      filter;
+            const selected =
+              button.dataset.filter ||
+              "all";
 
 
-                  if (match) {
+            /* -------------------------------------------
+               FILTER ITEMS
+            ------------------------------------------- */
 
-                    item.style.display =
-                      "";
+            galleryItems.forEach(
+              function(item) {
+
+                const itemCategory =
+                  item.dataset.category ||
+                  "";
 
 
-                    /*
-                     * GSAP available
-                     */
+                const show =
+                  selected === "all" ||
+                  itemCategory === selected;
 
-                    if (
-                      typeof gsap !==
-                      "undefined"
-                    ) {
 
-                      gsap.fromTo(
-                        item,
-                        {
-                          opacity:0,
-                          scale:.94
-                        },
-                        {
-                          opacity:1,
-                          scale:1,
-                          duration:.4,
-                          ease:"power2.out",
-                          overwrite:true
-                        }
-                      );
+                if (show) {
 
-                    }
-                    else {
+                  item.style.display =
+                    "";
 
-                      item.style.opacity =
-                        "1";
 
-                      item.style.transform =
-                        "scale(1)";
+                  /*
+                   * Smooth animation
+                   */
 
-                    }
+                  if (
+                    typeof gsap !==
+                    "undefined"
+                  ) {
+
+                    gsap.fromTo(
+                      item,
+                      {
+                        opacity:0,
+                        scale:.94
+                      },
+                      {
+                        opacity:1,
+                        scale:1,
+                        duration:.38,
+                        ease:"power2.out",
+                        overwrite:true
+                      }
+                    );
 
                   }
                   else {
 
-                    item.style.display =
-                      "none";
+                    item.style.opacity =
+                      "1";
+
+                    item.style.transform =
+                      "scale(1)";
 
                   }
 
                 }
-              );
+                else {
+
+                  item.style.display =
+                    "none";
+
+                }
+
+              }
+            );
 
           }
         );
@@ -12195,64 +12278,66 @@ function renderGallery() {
      LIGHTBOX
   ====================================================== */
 
-  grid
-    .querySelectorAll(
-      ".gallery-item"
-    )
-    .forEach(
-      function(item) {
+  galleryItems.forEach(
+    function(item) {
 
-        item.addEventListener(
-          "click",
-          function() {
+      item.addEventListener(
+        "click",
+        function() {
 
-            const image =
-              item.dataset.image;
+          const image =
+            item.dataset.image;
 
+          if (!image) {
 
-            const lightbox =
-              document.getElementById(
-                "lightbox"
-              );
-
-            const lightboxImage =
-              document.getElementById(
-                "lightboxImage"
-              );
-
-
-            if (
-              !lightbox ||
-              !lightboxImage ||
-              !image
-            ) {
-
-              return;
-
-            }
-
-
-            lightboxImage.src =
-              image;
-
-
-            lightboxImage.alt =
-              item.dataset.title ||
-              "Gallery Image";
-
-
-            lightbox.classList.add(
-              "active"
-            );
-
-            document.body.style.overflow =
-              "hidden";
+            return;
 
           }
-        );
 
-      }
-    );
+
+          const lightbox =
+            document.getElementById(
+              "lightbox"
+            );
+
+          const lightboxImage =
+            document.getElementById(
+              "lightboxImage"
+            );
+
+
+          if (
+            !lightbox ||
+            !lightboxImage
+          ) {
+
+            return;
+
+          }
+
+
+          lightboxImage.src =
+            image;
+
+
+          lightboxImage.alt =
+            item.dataset.title ||
+            "Institute Gallery";
+
+
+          lightbox.classList.add(
+            "active"
+          );
+
+
+          document.body.style.overflow =
+            "hidden";
+
+        }
+      );
+
+    }
+  );
 
 }
 
