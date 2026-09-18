@@ -11654,290 +11654,607 @@ const mainMenu = [
        GALLERY
     ====================================================== */
 
-    function renderGallery() {
+   /* =====================================================
+   GALLERY
+   -----------------------------------------------------
+   Priority:
+   1. Google Sheet gallery data
+   2. Frontend fallback images
+   -----------------------------------------------------
+   Gallery section will NOT disappear when Sheet
+   gallery data is empty.
+===================================================== */
 
-      const section =
-        document.getElementById(
-          "gallery"
+function renderGallery() {
+
+  const section =
+    document.getElementById(
+      "gallery"
+    );
+
+  const grid =
+    document.getElementById(
+      "galleryGrid"
+    );
+
+  const filters =
+    document.getElementById(
+      "galleryFilters"
+    );
+
+  const heading =
+    document.getElementById(
+      "galleryHeading"
+    );
+
+
+  /*
+   * Safety check
+   */
+
+  if (
+    !section ||
+    !grid ||
+    !filters
+  ) {
+
+    console.warn(
+      "Gallery elements not found."
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Clear old content
+   */
+
+  grid.innerHTML =
+    "";
+
+  filters.innerHTML =
+    "";
+
+
+  /*
+   * NEVER hide gallery section.
+   */
+
+  section.classList.remove(
+    "hidden"
+  );
+
+
+  /*
+   * Render heading
+   */
+
+  if (heading) {
+
+    renderHeading(
+      heading,
+      findSection(
+        "gallery"
+      )
+    );
+
+  }
+
+
+  /* =====================================================
+     PREPARE GALLERY DATA
+  ====================================================== */
+
+  let galleryData = [];
+
+
+  /*
+   * Use Google Sheet data when available.
+   */
+
+  if (
+    Array.isArray(
+      SITE_DATA.gallery
+    ) &&
+    SITE_DATA.gallery.length
+  ) {
+
+    galleryData =
+      SITE_DATA.gallery.map(
+        function(item, index) {
+
+          return {
+
+            category:
+              item &&
+              item["Category"]
+                ? String(
+                    item["Category"]
+                  )
+                : "Gallery",
+
+            title:
+              item &&
+              item["Title"]
+                ? String(
+                    item["Title"]
+                  )
+                : "",
+
+            image:
+              frontendImage(
+                "gallery",
+                index
+              )
+
+          };
+
+        }
+      )
+      .filter(
+        function(item) {
+
+          return !!item.image;
+
+        }
+      );
+
+  }
+
+
+  /*
+   * =====================================================
+     FALLBACK
+     =====================================================
+     If Google Sheet gallery is empty OR
+     all Sheet rows have invalid images,
+     use FRONTEND_IMAGES.gallery.
+  ======================================================
+  */
+
+  if (
+    !galleryData.length
+  ) {
+
+    const fallbackImages =
+      Array.isArray(
+        FRONTEND_IMAGES.gallery
+      )
+        ? FRONTEND_IMAGES.gallery
+        : [];
+
+
+    galleryData =
+      fallbackImages
+        .map(
+          function(url, index) {
+
+            return {
+
+              category:
+                "Gallery",
+
+              title:
+                "Institute Gallery " +
+                (index + 1),
+
+              image:
+                normalizeImageURL(
+                  url
+                )
+
+            };
+
+          }
+        )
+        .filter(
+          function(item) {
+
+            return !!item.image;
+
+          }
+        );
+
+  }
+
+
+  /*
+   * =====================================================
+     FINAL SAFETY
+  ======================================================
+  */
+
+  if (
+    !galleryData.length
+  ) {
+
+    grid.innerHTML = `
+      <div
+        style="
+          grid-column:1/-1;
+          padding:50px 20px;
+          text-align:center;
+          color:var(--muted);
+          background:#fff;
+          border:1px solid var(--border);
+          border-radius:22px;
+        "
+      >
+
+        <i
+          class="fa-solid fa-images"
+          style="
+            font-size:38px;
+            color:var(--primary);
+            margin-bottom:14px;
+          "
+        ></i>
+
+        <div
+          style="
+            font-weight:800;
+            color:var(--secondary);
+            font-size:18px;
+          "
+        >
+          Gallery images coming soon
+        </div>
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  /* =====================================================
+     UNIQUE CATEGORIES
+  ====================================================== */
+
+  const categories =
+    [
+      ...new Set(
+        galleryData
+          .map(
+            function(item) {
+
+              return item.category;
+
+            }
+          )
+          .filter(Boolean)
+      )
+    ];
+
+
+  /* =====================================================
+     ALL BUTTON
+  ====================================================== */
+
+  filters.insertAdjacentHTML(
+    "beforeend",
+    `
+      <button
+        type="button"
+        class="gallery-filter active"
+        data-filter="all"
+      >
+        All
+      </button>
+    `
+  );
+
+
+  /* =====================================================
+     CATEGORY BUTTONS
+  ====================================================== */
+
+  categories
+    .filter(
+      function(category) {
+
+        return category !== "Gallery";
+
+      }
+    )
+    .forEach(
+      function(category) {
+
+        filters.insertAdjacentHTML(
+          "beforeend",
+          `
+            <button
+              type="button"
+              class="gallery-filter"
+              data-filter="${escapeHTML(
+                category
+              )}"
+            >
+              ${escapeHTML(
+                category
+              )}
+            </button>
+          `
+        );
+
+      }
+    );
+
+
+  /* =====================================================
+     RENDER IMAGES
+  ====================================================== */
+
+  galleryData.forEach(
+    function(item, index) {
+
+      const image =
+        normalizeImageURL(
+          item.image
         );
 
 
-      const grid =
-        document.getElementById(
-          "galleryGrid"
-        );
-
-
-      const filters =
-        document.getElementById(
-          "galleryFilters"
-        );
-
-
-      grid.innerHTML =
-        "";
-
-      filters.innerHTML =
-        "";
-
-
-      if (
-        !SITE_DATA.gallery.length
-      ) {
-
-        section.classList.add(
-          "hidden"
-        );
+      if (!image) {
 
         return;
 
       }
 
 
-      section.classList.remove(
-        "hidden"
-      );
-
-
-      renderHeading(
-        document.getElementById(
-          "galleryHeading"
-        ),
-        findSection(
-          "gallery"
-        )
-      );
-
-
-      const categories =
-        [
-          ...new Set(
-            SITE_DATA.gallery
-              .map(
-                item =>
-                  item["Category"]
-              )
-              .filter(Boolean)
-          )
-        ];
-
-
-      filters.insertAdjacentHTML(
+      grid.insertAdjacentHTML(
         "beforeend",
         `
-          <button
-            class="gallery-filter active"
-            data-filter="all"
+          <div
+            class="gallery-item"
+            data-category="${escapeHTML(
+              item.category
+            )}"
+            data-image="${escapeHTML(
+              image
+            )}"
+            data-title="${escapeHTML(
+              item.title
+            )}"
           >
-            All
-          </button>
+
+            <img
+              src="${escapeHTML(
+                image
+              )}"
+              alt="${escapeHTML(
+                item.title ||
+                "Institute Gallery"
+              )}"
+              loading="${index < 4 ? "eager" : "lazy"}"
+              decoding="async"
+              onerror="
+                this.closest('.gallery-item')
+                  .classList.add('image-load-error');
+              "
+            >
+
+            <div
+              class="gallery-overlay"
+            >
+
+              <div
+                class="gallery-overlay-content"
+              >
+
+                ${
+                  item.title
+                    ? `
+                      <strong>
+                        ${escapeHTML(
+                          item.title
+                        )}
+                      </strong>
+                    `
+                    : ""
+                }
+
+              </div>
+
+            </div>
+
+          </div>
         `
       );
 
-
-      categories.forEach(
-        function(category) {
-
-          filters.insertAdjacentHTML(
-            "beforeend",
-            `
-              <button
-                class="gallery-filter"
-                data-filter="${escapeHTML(
-                  category
-                )}"
-              >
-                ${escapeHTML(category)}
-              </button>
-            `
-          );
-
-        }
-      );
+    }
+  );
 
 
-      SITE_DATA.gallery
-        .forEach(
-          function(item) {
+  /* =====================================================
+     FILTER BUTTONS
+  ====================================================== */
 
-            const image =
-              frontendImage("gallery",
-                SITE_DATA.gallery.indexOf(item)
+  filters
+    .querySelectorAll(
+      ".gallery-filter"
+    )
+    .forEach(
+      function(button) {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+            /*
+             * Active state
+             */
+
+            filters
+              .querySelectorAll(
+                ".gallery-filter"
+              )
+              .forEach(
+                function(btn) {
+
+                  btn.classList.remove(
+                    "active"
+                  );
+
+                }
               );
 
 
-            if (!image) {
+            button.classList.add(
+              "active"
+            );
+
+
+            /*
+             * Selected filter
+             */
+
+            const filter =
+              button.dataset.filter;
+
+
+            /*
+             * Filter gallery
+             */
+
+            grid
+              .querySelectorAll(
+                ".gallery-item"
+              )
+              .forEach(
+                function(item) {
+
+                  const match =
+                    filter === "all" ||
+                    item.dataset.category ===
+                      filter;
+
+
+                  if (match) {
+
+                    item.style.display =
+                      "";
+
+
+                    /*
+                     * GSAP available
+                     */
+
+                    if (
+                      typeof gsap !==
+                      "undefined"
+                    ) {
+
+                      gsap.fromTo(
+                        item,
+                        {
+                          opacity:0,
+                          scale:.94
+                        },
+                        {
+                          opacity:1,
+                          scale:1,
+                          duration:.4,
+                          ease:"power2.out",
+                          overwrite:true
+                        }
+                      );
+
+                    }
+                    else {
+
+                      item.style.opacity =
+                        "1";
+
+                      item.style.transform =
+                        "scale(1)";
+
+                    }
+
+                  }
+                  else {
+
+                    item.style.display =
+                      "none";
+
+                  }
+
+                }
+              );
+
+          }
+        );
+
+      }
+    );
+
+
+  /* =====================================================
+     LIGHTBOX
+  ====================================================== */
+
+  grid
+    .querySelectorAll(
+      ".gallery-item"
+    )
+    .forEach(
+      function(item) {
+
+        item.addEventListener(
+          "click",
+          function() {
+
+            const image =
+              item.dataset.image;
+
+
+            const lightbox =
+              document.getElementById(
+                "lightbox"
+              );
+
+            const lightboxImage =
+              document.getElementById(
+                "lightboxImage"
+              );
+
+
+            if (
+              !lightbox ||
+              !lightboxImage ||
+              !image
+            ) {
 
               return;
 
             }
 
 
-            grid.insertAdjacentHTML(
-              "beforeend",
-              `
-
-                <div
-                  class="gallery-item"
-                  data-category="${escapeHTML(
-                    item["Category"] || ""
-                  )}"
-                  data-image="${escapeHTML(image)}"
-                  data-title="${escapeHTML(
-                    item["Title"] || ""
-                  )}"
-                >
-
-                  <img
-                    src="${escapeHTML(image)}"
-                    alt="${escapeHTML(
-                      item["Title"] || ""
-                    )}"
-                    loading="lazy"
-                  >
+            lightboxImage.src =
+              image;
 
 
-                  <div class="gallery-overlay">
+            lightboxImage.alt =
+              item.dataset.title ||
+              "Gallery Image";
 
-                    <div class="gallery-overlay-content">
 
-                      ${
-                        item["Title"]
-                          ? `
-                            <strong>
-                              ${escapeHTML(
-                                item["Title"]
-                              )}
-                            </strong>
-                          `
-                          : ""
-                      }
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              `
+            lightbox.classList.add(
+              "active"
             );
+
+            document.body.style.overflow =
+              "hidden";
 
           }
         );
 
+      }
+    );
 
-      filters
-        .querySelectorAll(
-          ".gallery-filter"
-        )
-        .forEach(
-          function(button) {
-
-            button.addEventListener(
-              "click",
-              function() {
-
-                filters
-                  .querySelectorAll(
-                    ".gallery-filter"
-                  )
-                  .forEach(
-                    btn =>
-                      btn.classList.remove(
-                        "active"
-                      )
-                  );
-
-
-                button.classList.add(
-                  "active"
-                );
-
-
-                const filter =
-                  button.dataset.filter;
-
-
-                grid
-                  .querySelectorAll(
-                    ".gallery-item"
-                  )
-                  .forEach(
-                    function(item) {
-
-                      const match =
-                        filter === "all" ||
-                        item.dataset.category ===
-                        filter;
-
-
-                      if (match) {
-
-                        item.style.display =
-                          "";
-
-                        gsap.fromTo(
-                          item,
-                          {
-                            opacity:
-                              0,
-
-                            scale:
-                              .92
-                          },
-                          {
-                            opacity:
-                              1,
-
-                            scale:
-                              1,
-
-                            duration:
-                              .4
-                          }
-                        );
-
-                      } else {
-
-                        item.style.display =
-                          "none";
-
-                      }
-
-                    }
-                  );
-
-              }
-            );
-
-          }
-        );
-
-
-      grid
-        .querySelectorAll(
-          ".gallery-item"
-        )
-        .forEach(
-          function(item) {
-
-            item.addEventListener(
-              "click",
-              function() {
-
-                openLightbox(
-                  item.dataset.image,
-                  item.dataset.title
-                );
-
-              }
-            );
-
-          }
-        );
-
-    }
-
+}
 
     /* =====================================================
        TESTIMONIALS
