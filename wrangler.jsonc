@@ -1,7 +1,10 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "arsh",
+
+  "name": "my-first",
+
   "main": "worker.js",
+
   "compatibility_date": "2026-09-11",
 
   "assets": {
@@ -15,13 +18,5 @@
     "GITHUB_OWNER": "zotakbook-cmd",
     "GITHUB_REPO": "Arsh",
     "GITHUB_BRANCH": "main"
-  },
-
-  "secrets": {
-    "required": [
-      "ADMIN_PASSWORD",
-      "GITHUB_TOKEN",
-      "SESSION_SECRET"
-    ]
   }
 }
