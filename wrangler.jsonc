@@ -15,5 +15,13 @@
     "GITHUB_OWNER": "zotakbook-cmd",
     "GITHUB_REPO": "Arsh",
     "GITHUB_BRANCH": "main"
+  },
+
+  "secrets": {
+    "required": [
+      "ADMIN_PASSWORD",
+      "GITHUB_TOKEN",
+      "SESSION_SECRET"
+    ]
   }
 }
