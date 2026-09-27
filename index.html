@@ -482,37 +482,58 @@ section:not(#home):not(#stats)::after{
    EXISTING BANNER IMAGE/LAYOUT PRESERVED
    ========================================================= */
 
+/* =========================================================
+   RESPONSIVE SITE BANNER
+   ========================================================= */
+
 .site-banner{
 
-  height:180px;
-
   width:100%;
+  height:180px;
 
   overflow:hidden;
 
-  background:
-    #050914;
+  background:#050914;
 
   position:relative;
 
 }
 
+
+/* =========================================================
+   PICTURE
+   ========================================================= */
+
+.site-banner picture{
+
+  display:block;
+
+  width:100%;
+  height:100%;
+
+}
+
+
+/* =========================================================
+   BANNER IMAGE
+   ========================================================= */
+
 .site-banner img{
 
   width:100%;
-
   height:180px;
 
   display:block;
 
   object-fit:cover;
-
   object-position:center;
 
 }
 
 
-/* Existing banner overlay kept extremely subtle */
+/* =========================================================
+   SUBTLE OVERLAY
+   ========================================================= */
 
 .site-banner::after{
 
@@ -534,17 +555,69 @@ section:not(#home):not(#stats)::after{
 }
 
 
-/* Alternate ID compatibility */
+/* =========================================================
+   MOBILE / PHONE
+   ========================================================= */
+
+@media (max-width:767px){
+
+  .site-banner{
+
+    height:180px;
+
+  }
+
+  .site-banner img{
+
+    height:180px;
+
+    object-fit:cover;
+
+    object-position:center;
+
+  }
+
+}
+
+
+/* =========================================================
+   DESKTOP / PC
+   ========================================================= */
+
+@media (min-width:768px){
+
+  .site-banner{
+
+    height:180px;
+
+  }
+
+  .site-banner img{
+
+    height:180px;
+
+    object-fit:cover;
+
+    object-position:center;
+
+  }
+
+}
+
+
+/* =========================================================
+   ALTERNATE ID COMPATIBILITY
+   ========================================================= */
 
 #siteBanner{
 
-  height:180px!important;
+  height:180px !important;
 
-  min-height:180px!important;
+  min-height:180px !important;
 
-  margin:0!important;
+  margin:0 !important;
 
-  padding:0!important;
+  padding:0 !important;
 
   overflow:hidden;
 
@@ -553,6 +626,7 @@ section:not(#home):not(#stats)::after{
   background:#050914;
 
 }
+
 
 #siteBanner img{
 
@@ -6706,23 +6780,36 @@ html.fast-first-loaded .preloader{
   <div id="siteTopbar" class="site-topbar">
     <div class="container site-topbar-inner">
       <div class="topbar-left" aria-label="Institute contact information">
-        <a id="topbarEmail" href="mailto:info@example.com"><i class="fa-solid fa-envelope"></i><span>info@example.com</span></a>
-        <a id="topbarMobile" href="tel:+910000000000"><i class="fa-solid fa-phone"></i><span>+91 00000 00000</span></a>
+        <a id="topbarEmail" href="/"><i class="fa-solid fa-envelope"></i><span></span></a>
+        <a id="topbarMobile" href="/"><i class="fa-solid fa-phone"></i><span></span></a>
       </div>
       <div class="topbar-date"><i class="fa-regular fa-calendar"></i><span id="currentDate"></span> <span id="currentTime" aria-label="Current time"></span></div>
     </div>
   </div>
 
-  <!-- ===== 180px BANNER IMAGE ===== -->
-  <div class="site-banner" aria-label="Institute banner">
+<!-- ===== RESPONSIVE BANNER ===== -->
+<div class="site-banner" aria-label="Institute banner">
+
+  <picture>
+
+    <!-- Mobile / Phone Banner -->
+    <source
+      media="(max-width: 767px)"
+      srcset="assets/images/banner-mobile.webp"
+    >
+
+    <!-- PC / Desktop Banner -->
     <img
       id="siteBannerImage"
-      src="assets/images/banner.webp"
+      src="assets/images/banner-pc.webp"
       alt="Arsh Technical Academy"
       loading="eager"
       decoding="async"
     >
-  </div>
+
+  </picture>
+
+</div>
 
   <!-- ===== MAIN MENU ONLY ===== -->
   <header id="siteHeader"><div class="navbar container">
