@@ -1,29 +1,58 @@
-
 <!doctype html>
 <html lang="en">
+
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
-<meta name="theme-color" content="#050914">
-<meta name="description" content="Certificate Verification | Arsh Technical Academy">
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,viewport-fit=cover"
+>
 
-<title>Certificate Verification | Arsh Technical Academy</title>
+<meta
+  name="theme-color"
+  content="#050914"
+>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta
+  name="description"
+  content="Certificate Verification | Arsh Technical Academy"
+>
 
-<link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap">
+<title>
+  Certificate Verification | Arsh Technical Academy
+</title>
 
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link
+  rel="preconnect"
+  href="https://fonts.googleapis.com"
+>
+
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin
+>
+
+
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap"
+>
+
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
 
 <style>
 
 /* =========================================================
-   PREMIUM ARSH TECHNICAL ACADEMY
-   CERTIFICATE VERIFICATION PAGE
+   ROOT
 ========================================================= */
 
 :root{
@@ -32,32 +61,22 @@
   --primary-dark:#1d4ed8;
 
   --cyan:#06b6d4;
-  --violet:#8b5cf6;
-  --pink:#ec4899;
+  --violet:#7c3aed;
 
-  --accent:#f4c542;
+  --green:#059669;
+  --green-dark:#047857;
 
-  --ink:#050914;
-  --navy:#07111f;
-  --navy-2:#0b1730;
-
+  --ink:#07111f;
   --text:#172033;
-  --muted:#6d7788;
-
-  --light:#f4f7fb;
-  --light-2:#eef3fa;
+  --muted:#687386;
 
   --white:#ffffff;
+  --light:#f5f8fc;
 
-  --border:rgba(37,99,235,.13);
+  --border:#dce4ef;
 
-  --shadow:
-    0 30px 90px rgba(0,0,0,.22);
+  --radius:26px;
 
-  --blue-shadow:
-    0 18px 45px rgba(37,99,235,.24);
-
-  --radius:30px;
 }
 
 
@@ -69,9 +88,11 @@
   box-sizing:border-box;
 }
 
+
 html{
   scroll-behavior:smooth;
 }
+
 
 body{
 
@@ -88,28 +109,22 @@ body{
   background:
 
     radial-gradient(
-      circle at 8% 12%,
-      rgba(37,99,235,.25),
+      circle at 10% 10%,
+      rgba(37,99,235,.28),
       transparent 25%
     ),
 
     radial-gradient(
-      circle at 90% 8%,
-      rgba(139,92,246,.22),
+      circle at 90% 10%,
+      rgba(124,58,237,.24),
       transparent 27%
-    ),
-
-    radial-gradient(
-      circle at 50% 100%,
-      rgba(6,182,212,.14),
-      transparent 32%
     ),
 
     linear-gradient(
       135deg,
-      #030712 0%,
-      #07111f 48%,
-      #0a1730 100%
+      #030712,
+      #07111f 50%,
+      #0b1730
     );
 
   display:grid;
@@ -118,108 +133,11 @@ body{
 
   padding:28px;
 
-  overflow-x:hidden;
-
-  position:relative;
 }
 
 
 /* =========================================================
-   AMBIENT BACKGROUND
-========================================================= */
-
-body::before{
-
-  content:"";
-
-  position:fixed;
-
-  width:420px;
-  height:420px;
-
-  left:-180px;
-  top:35%;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(37,99,235,.16),
-      transparent 68%
-    );
-
-  filter:blur(35px);
-
-  pointer-events:none;
-
-  animation:
-    ambientMove 10s ease-in-out infinite alternate;
-
-  z-index:0;
-}
-
-
-body::after{
-
-  content:"";
-
-  position:fixed;
-
-  width:420px;
-  height:420px;
-
-  right:-180px;
-  bottom:-160px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(139,92,246,.18),
-      transparent 68%
-    );
-
-  filter:blur(40px);
-
-  pointer-events:none;
-
-  animation:
-    ambientMove2 12s ease-in-out infinite alternate;
-
-  z-index:0;
-}
-
-
-@keyframes ambientMove{
-
-  from{
-    transform:translate3d(0,-25px,0) scale(1);
-  }
-
-  to{
-    transform:translate3d(30px,25px,0) scale(1.08);
-  }
-
-}
-
-
-@keyframes ambientMove2{
-
-  from{
-    transform:translate3d(0,20px,0) scale(1);
-  }
-
-  to{
-    transform:translate3d(-25px,-25px,0) scale(1.1);
-  }
-
-}
-
-
-/* =========================================================
-   MAIN PAGE
+   MAIN
 ========================================================= */
 
 .page{
@@ -229,204 +147,79 @@ body::after{
   display:grid;
 
   grid-template-columns:
-    minmax(0,1fr)
-    minmax(0,1fr);
-
-  background:
-    rgba(255,255,255,.94);
-
-  border:
-
-    1px solid
-    rgba(255,255,255,.22);
-
-  border-radius:var(--radius);
+    1fr
+    1fr;
 
   overflow:hidden;
 
+  border-radius:
+    var(--radius);
+
+  background:#fff;
+
   box-shadow:
+    0 35px 110px
+    rgba(0,0,0,.35);
 
-    0 40px 120px rgba(0,0,0,.32),
-
-    0 10px 35px rgba(37,99,235,.10);
-
-  position:relative;
-
-  z-index:1;
-
-  isolation:isolate;
 }
 
 
 /* =========================================================
-   TOP GLOSSY LINE
-========================================================= */
-
-.page::before{
-
-  content:"";
-
-  position:absolute;
-
-  left:0;
-  right:0;
-  top:0;
-
-  height:3px;
-
-  background:
-    linear-gradient(
-      90deg,
-      var(--primary),
-      var(--cyan),
-      var(--violet),
-      var(--pink),
-      var(--accent)
-    );
-
-  z-index:10;
-}
-
-
-/* =========================================================
-   LEFT INTRO
+   INTRO
 ========================================================= */
 
 .intro{
 
-  padding:58px;
+  min-height:650px;
+
+  padding:56px;
 
   color:#fff;
-
-  position:relative;
-
-  overflow:hidden;
 
   background:
 
     radial-gradient(
       circle at 15% 10%,
-      rgba(37,99,235,.28),
+      rgba(37,99,235,.30),
       transparent 30%
     ),
 
     radial-gradient(
-      circle at 90% 85%,
-      rgba(139,92,246,.24),
-      transparent 34%
-    ),
-
-    radial-gradient(
-      circle at 55% 100%,
-      rgba(6,182,212,.12),
-      transparent 32%
+      circle at 90% 90%,
+      rgba(124,58,237,.25),
+      transparent 35%
     ),
 
     linear-gradient(
       145deg,
       #030712,
-      #07111f 52%,
+      #07111f 55%,
       #0b1730
     );
 
-  min-height:650px;
 }
 
-
-/* Intro decorative glow */
-
-.intro::before{
-
-  content:"";
-
-  position:absolute;
-
-  width:360px;
-  height:360px;
-
-  right:-170px;
-  top:-170px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(37,99,235,.20),
-      transparent 68%
-    );
-
-  filter:blur(5px);
-
-  pointer-events:none;
-}
-
-
-.intro::after{
-
-  content:"";
-
-  position:absolute;
-
-  width:340px;
-  height:340px;
-
-  right:-160px;
-  bottom:-170px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(139,92,246,.18),
-      transparent 68%
-    );
-
-  filter:blur(8px);
-
-  pointer-events:none;
-}
-
-
-/* =========================================================
-   LOGO
-========================================================= */
 
 .logo{
 
   width:76px;
+
   height:76px;
-
-  display:block;
-
-  border-radius:22px;
 
   object-fit:cover;
 
-  background:#fff;
+  border-radius:20px;
 
-  border:
-    1px solid
-    rgba(255,255,255,.30);
+  background:#fff;
 
   padding:3px;
 
   box-shadow:
+    0 15px 35px
+    rgba(0,0,0,.25);
 
-    0 18px 45px rgba(0,0,0,.28),
-
-    0 0 35px rgba(37,99,235,.18);
-
-  position:relative;
-
-  z-index:2;
 }
 
-
-/* =========================================================
-   EYEBROW
-========================================================= */
 
 .eyebrow{
 
@@ -442,81 +235,54 @@ body::after{
 
   border-radius:999px;
 
+  color:#bfdbfe;
+
   background:
-    linear-gradient(
-      135deg,
-      rgba(37,99,235,.16),
-      rgba(139,92,246,.14)
-    );
+    rgba(37,99,235,.14);
 
   border:
     1px solid
     rgba(96,165,250,.25);
 
-  color:#b9d5ff;
-
   font-size:11px;
 
   font-weight:800;
 
-  letter-spacing:.10em;
+  letter-spacing:.1em;
 
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08);
-
-  position:relative;
-
-  z-index:2;
 }
 
-
-.eyebrow i{
-
-  color:#60a5fa;
-
-  filter:
-    drop-shadow(
-      0 0 8px
-      rgba(96,165,250,.55)
-    );
-}
-
-
-/* =========================================================
-   INTRO TYPOGRAPHY
-========================================================= */
 
 .intro h1{
 
+  margin:
+    22px 0 18px;
+
+  max-width:540px;
+
   font:
     800
-    clamp(36px,4.2vw,58px)
+    clamp(36px,4vw,58px)
     /1.02
     Manrope,
     sans-serif;
 
-  letter-spacing:-.055em;
-
-  margin:20px 0 18px;
-
-  max-width:560px;
-
-  position:relative;
-
-  z-index:2;
+  letter-spacing:-.05em;
 
   background:
     linear-gradient(
       135deg,
-      #ffffff 5%,
-      #dbeafe 50%,
-      #c4b5fd 100%
+      #fff,
+      #dbeafe,
+      #c4b5fd
     );
 
   -webkit-background-clip:text;
+
   background-clip:text;
 
   color:transparent;
+
 }
 
 
@@ -524,24 +290,17 @@ body::after{
 
   max-width:500px;
 
-  color:
-    rgba(255,255,255,.70);
+  margin:0;
 
-  line-height:1.85;
+  color:
+    rgba(255,255,255,.72);
+
+  line-height:1.8;
 
   font-size:15px;
 
-  margin:0;
-
-  position:relative;
-
-  z-index:2;
 }
 
-
-/* =========================================================
-   TRUST POINTS
-========================================================= */
 
 .trust{
 
@@ -551,9 +310,6 @@ body::after{
 
   margin-top:32px;
 
-  position:relative;
-
-  z-index:2;
 }
 
 
@@ -561,16 +317,11 @@ body::after{
 
   display:flex;
 
-  gap:11px;
-
   align-items:center;
 
-  font-size:13px;
+  gap:11px;
 
-  color:
-    rgba(255,255,255,.86);
-
-  padding:10px 13px;
+  padding:11px 13px;
 
   border-radius:12px;
 
@@ -579,133 +330,53 @@ body::after{
 
   border:
     1px solid
-    rgba(255,255,255,.06);
+    rgba(255,255,255,.07);
 
-  transition:
-    transform .25s ease,
-    background .25s ease,
-    border-color .25s ease;
-}
+  font-size:13px;
 
+  color:
+    rgba(255,255,255,.85);
 
-.trust div:hover{
-
-  transform:translateX(5px);
-
-  background:
-    rgba(37,99,235,.10);
-
-  border-color:
-    rgba(96,165,250,.16);
 }
 
 
 .trust i{
 
-  width:20px;
-
   color:#60a5fa;
 
-  filter:
-    drop-shadow(
-      0 0 8px
-      rgba(96,165,250,.40)
-    );
+  width:20px;
+
 }
 
 
 /* =========================================================
-   RIGHT PANEL
+   PANEL
 ========================================================= */
 
 .panel{
-
-  padding:54px;
 
   display:flex;
 
   align-items:center;
 
-  position:relative;
+  padding:52px;
 
   background:
 
     radial-gradient(
-      circle at 100% 0%,
+      circle at 100% 0,
       rgba(6,182,212,.09),
       transparent 30%
     ),
 
-    radial-gradient(
-      circle at 0% 100%,
-      rgba(139,92,246,.07),
-      transparent 32%
-    ),
-
     linear-gradient(
       145deg,
-      #ffffff,
-      #f7f9fd 55%,
-      #eef3fa
-    );
-}
-
-
-.panel::before{
-
-  content:"";
-
-  position:absolute;
-
-  width:260px;
-  height:260px;
-
-  right:-150px;
-  top:-130px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(37,99,235,.10),
-      transparent 68%
+      #fff,
+      #f5f8fc
     );
 
-  filter:blur(5px);
-
-  pointer-events:none;
 }
 
-
-.panel::after{
-
-  content:"";
-
-  position:absolute;
-
-  width:240px;
-  height:240px;
-
-  left:-150px;
-  bottom:-130px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(139,92,246,.08),
-      transparent 68%
-    );
-
-  pointer-events:none;
-}
-
-
-/* =========================================================
-   CARD
-========================================================= */
 
 .card{
 
@@ -715,9 +386,6 @@ body::after{
 
   margin:auto;
 
-  position:relative;
-
-  z-index:2;
 }
 
 
@@ -728,79 +396,31 @@ body::after{
 .icon{
 
   width:62px;
-  height:62px;
 
-  border-radius:19px;
+  height:62px;
 
   display:grid;
 
   place-items:center;
 
-  background:
-
-    linear-gradient(
-      135deg,
-      var(--primary),
-      #4f46e5 52%,
-      var(--violet)
-    );
+  border-radius:18px;
 
   color:#fff;
 
   font-size:23px;
 
-  box-shadow:
-
-    0 16px 34px
-    rgba(37,99,235,.25),
-
-    0 0 30px
-    rgba(139,92,246,.12);
-
-  position:relative;
-
-  overflow:hidden;
-}
-
-
-.icon::after{
-
-  content:"";
-
-  position:absolute;
-
-  width:100px;
-  height:20px;
-
   background:
-    rgba(255,255,255,.28);
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #4f46e5,
+      #7c3aed
+    );
 
-  transform:
-    rotate(-35deg)
-    translateX(-90px);
+  box-shadow:
+    0 15px 35px
+    rgba(37,99,235,.25);
 
-  filter:blur(5px);
-
-  animation:
-    iconShine 4s ease-in-out infinite;
-}
-
-
-@keyframes iconShine{
-
-  0%,
-  55%{
-    transform:
-      rotate(-35deg)
-      translateX(-110px);
-  }
-
-  80%,
-  100%{
-    transform:
-      rotate(-35deg)
-      translateX(110px);
-  }
 }
 
 
@@ -810,39 +430,44 @@ body::after{
 
 h2{
 
+  margin:
+    20px 0 8px;
+
   font:
     800
     34px/1.1
     Manrope,
     sans-serif;
 
-  letter-spacing:-.045em;
+  letter-spacing:-.04em;
 
   color:var(--ink);
 
-  margin:20px 0 8px;
 }
 
 
 .sub{
 
+  margin:
+    0 0 26px;
+
   color:var(--muted);
 
-  margin:0 0 27px;
-
-  line-height:1.72;
-
   font-size:14px;
+
+  line-height:1.7;
+
 }
 
 
 /* =========================================================
-   FORM FIELD
+   FIELD
 ========================================================= */
 
 .field{
 
   margin-bottom:16px;
+
 }
 
 
@@ -850,21 +475,21 @@ h2{
 
   display:block;
 
+  margin-bottom:8px;
+
   font-size:11px;
 
   font-weight:800;
 
-  letter-spacing:.04em;
-
   color:#354052;
 
-  margin-bottom:8px;
 }
 
 
 .input-wrap{
 
   position:relative;
+
 }
 
 
@@ -873,6 +498,7 @@ h2{
   position:absolute;
 
   left:15px;
+
   top:50%;
 
   transform:
@@ -880,13 +506,8 @@ h2{
 
   color:var(--primary);
 
-  font-size:14px;
-
   z-index:2;
 
-  transition:
-    color .2s ease,
-    filter .2s ease;
 }
 
 
@@ -898,46 +519,27 @@ input{
 
   border:
     1px solid
-    #dce3ee;
+    var(--border);
 
   border-radius:14px;
 
-  background:
-    rgba(255,255,255,.82);
+  outline:none;
 
   padding:
     0 14px 0 44px;
 
-  outline:none;
+  background:#fff;
+
+  color:var(--text);
 
   font:
     500 14px
     "DM Sans",
     sans-serif;
 
-  color:var(--text);
-
-  box-shadow:
-    inset 0 1px 2px rgba(15,23,42,.025);
-
   transition:
-    border-color .22s ease,
-    box-shadow .22s ease,
-    background .22s ease,
-    transform .22s ease;
-}
+    .2s ease;
 
-
-input::placeholder{
-
-  color:#9aa5b5;
-}
-
-
-input:hover{
-
-  border-color:
-    rgba(37,99,235,.28);
 }
 
 
@@ -946,32 +548,15 @@ input:focus{
   border-color:
     var(--primary);
 
-  background:#fff;
-
   box-shadow:
-
     0 0 0 4px
-    rgba(37,99,235,.08),
+    rgba(37,99,235,.08);
 
-    0 8px 25px
-    rgba(37,99,235,.07);
-}
-
-
-.input-wrap:focus-within i{
-
-  color:var(--primary);
-
-  filter:
-    drop-shadow(
-      0 0 7px
-      rgba(37,99,235,.35)
-    );
 }
 
 
 /* =========================================================
-   VERIFY BUTTON
+   BUTTON
 ========================================================= */
 
 .submit{
@@ -980,18 +565,13 @@ input:focus{
 
   height:54px;
 
+  margin-top:3px;
+
   border:0;
 
   border-radius:15px;
 
-  background:
-
-    linear-gradient(
-      135deg,
-      #2563eb 0%,
-      #4f46e5 50%,
-      #7c3aed 100%
-    );
+  cursor:pointer;
 
   color:#fff;
 
@@ -1000,55 +580,21 @@ input:focus{
     "DM Sans",
     sans-serif;
 
-  letter-spacing:.01em;
-
-  cursor:pointer;
-
-  position:relative;
-
-  overflow:hidden;
-
-  box-shadow:
-
-    0 15px 32px
-    rgba(37,99,235,.23),
-
-    0 5px 15px
-    rgba(124,58,237,.12);
-
-  transition:
-    transform .22s ease,
-    box-shadow .22s ease,
-    filter .22s ease;
-}
-
-
-.submit::before{
-
-  content:"";
-
-  position:absolute;
-
-  top:-40%;
-
-  left:-35%;
-
-  width:35%;
-
-  height:180%;
-
   background:
     linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.40),
-      transparent
+      135deg,
+      #2563eb,
+      #4f46e5,
+      #7c3aed
     );
 
-  transform:rotate(20deg);
+  box-shadow:
+    0 15px 32px
+    rgba(37,99,235,.23);
 
   transition:
-    left .6s ease;
+    .2s ease;
+
 }
 
 
@@ -1057,29 +603,6 @@ input:focus{
   transform:
     translateY(-2px);
 
-  box-shadow:
-
-    0 20px 42px
-    rgba(37,99,235,.30),
-
-    0 8px 22px
-    rgba(124,58,237,.18);
-
-  filter:
-    saturate(1.08);
-}
-
-
-.submit:hover::before{
-
-  left:120%;
-}
-
-
-.submit:active{
-
-  transform:
-    translateY(0);
 }
 
 
@@ -1091,9 +614,6 @@ input:focus{
 
   transform:none;
 
-  box-shadow:
-    0 8px 20px
-    rgba(37,99,235,.12);
 }
 
 
@@ -1103,48 +623,49 @@ input:focus{
 
 .status{
 
-  text-align:center;
-
   min-height:20px;
-
-  font-size:12px;
 
   margin:13px 0;
 
+  text-align:center;
+
+  font-size:12px;
+
   font-weight:600;
+
 }
 
 
 .status.error{
 
-  color:#b42318;
-
-  padding:
-    8px 10px;
+  padding:8px 10px;
 
   border-radius:10px;
 
+  color:#b42318;
+
   background:
-    rgba(220,38,38,.05);
+    rgba(220,38,38,.06);
+
 }
 
 
 .status.success{
 
-  color:#087443;
-
-  padding:
-    8px 10px;
+  padding:8px 10px;
 
   border-radius:10px;
 
+  color:#087443;
+
   background:
     rgba(16,185,129,.07);
+
 }
 
 
 /* =========================================================
-   RESULT CARD
+   RESULT
 ========================================================= */
 
 .result{
@@ -1159,49 +680,14 @@ input:focus{
     1px solid
     rgba(37,99,235,.12);
 
-  border-radius:22px;
+  border-radius:21px;
 
-  background:
-
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.95),
-      rgba(241,246,253,.90)
-    );
+  background:#fff;
 
   box-shadow:
-
     0 20px 50px
-    rgba(15,23,42,.08),
+    rgba(15,23,42,.08);
 
-    inset 0 1px 0
-    rgba(255,255,255,.9);
-
-  position:relative;
-
-  overflow:hidden;
-}
-
-
-.result::before{
-
-  content:"";
-
-  position:absolute;
-
-  left:0;
-  top:0;
-  right:0;
-
-  height:3px;
-
-  background:
-    linear-gradient(
-      90deg,
-      var(--primary),
-      var(--cyan),
-      var(--violet)
-    );
 }
 
 
@@ -1210,7 +696,8 @@ input:focus{
   display:block;
 
   animation:
-    resultIn .4s ease both;
+    resultIn .35s ease both;
+
 }
 
 
@@ -1221,8 +708,7 @@ input:focus{
     opacity:0;
 
     transform:
-      translateY(10px)
-      scale(.985);
+      translateY(10px);
 
   }
 
@@ -1231,8 +717,7 @@ input:focus{
     opacity:1;
 
     transform:
-      translateY(0)
-      scale(1);
+      translateY(0);
 
   }
 
@@ -1240,27 +725,23 @@ input:focus{
 
 
 /* =========================================================
-   VERIFIED STAMP
+   STAMP
 ========================================================= */
 
 .stamp-wrap{
 
   text-align:center;
 
-  margin-bottom:18px;
+  margin-bottom:17px;
+
 }
 
 
 .stamp{
 
-  width:126px;
-  height:126px;
+  width:118px;
 
-  border:
-    4px solid
-    #16a36a;
-
-  border-radius:50%;
+  height:118px;
 
   display:inline-flex;
 
@@ -1268,36 +749,28 @@ input:focus{
 
   justify-content:center;
 
+  text-align:center;
+
+  border:
+    4px solid
+    #16a36a;
+
+  border-radius:50%;
+
   color:#078552;
 
-  font-weight:1000;
+  font-size:15px;
 
-  font-size:16px;
+  font-weight:900;
 
-  line-height:1.08;
-
-  letter-spacing:1px;
+  line-height:1.1;
 
   transform:
-    rotate(-8deg);
+    rotate(-7deg);
 
   background:
-    radial-gradient(
-      circle,
-      rgba(16,185,129,.07),
-      rgba(255,255,255,.65)
-    );
+    rgba(16,185,129,.04);
 
-  box-shadow:
-
-    inset 0 0 0 3px
-    rgba(16,163,106,.10),
-
-    inset 0 0 20px
-    rgba(16,185,129,.06),
-
-    0 12px 30px
-    rgba(16,163,106,.12);
 }
 
 
@@ -1311,16 +784,17 @@ input:focus{
 
   color:#087c50;
 
-  font-weight:900;
-
   font-size:17px;
 
-  margin:0 0 18px;
+  font-weight:900;
+
+  margin-bottom:17px;
+
 }
 
 
 /* =========================================================
-   RESULT TABLE
+   TABLE
 ========================================================= */
 
 .table{
@@ -1330,6 +804,7 @@ input:focus{
   border-collapse:collapse;
 
   font-size:12.5px;
+
 }
 
 
@@ -1344,12 +819,14 @@ input:focus{
   vertical-align:top;
 
   line-height:1.5;
+
 }
 
 
 .table tr:last-child td{
 
   border-bottom:0;
+
 }
 
 
@@ -1360,6 +837,7 @@ input:focus{
   font-weight:800;
 
   color:#4d5b6d;
+
 }
 
 
@@ -1370,6 +848,7 @@ input:focus{
   font-weight:600;
 
   word-break:break-word;
+
 }
 
 
@@ -1383,18 +862,14 @@ input:focus{
 
   padding:10px;
 
-  background:
-    rgba(255,255,255,.85);
-
   border:
     1px solid
     rgba(37,99,235,.12);
 
   border-radius:17px;
 
-  box-shadow:
-    0 12px 30px
-    rgba(15,23,42,.06);
+  background:#fff;
+
 }
 
 
@@ -1411,10 +886,14 @@ input:focus{
   border-radius:11px;
 
   background:#f3f6fa;
+
 }
 
 
 .image-note{
+
+  margin:
+    9px 0 0;
 
   text-align:center;
 
@@ -1422,7 +901,6 @@ input:focus{
 
   font-size:10px;
 
-  margin:9px 0 0;
 }
 
 
@@ -1442,7 +920,6 @@ input:focus{
 
   margin-top:21px;
 
-  font-size:12px;
 }
 
 
@@ -1450,239 +927,24 @@ input:focus{
 
   color:var(--primary);
 
-  font-weight:800;
-
   text-decoration:none;
 
-  padding:7px 9px;
+  font-size:12px;
 
-  border-radius:9px;
+  font-weight:800;
 
-  transition:
-    background .2s ease,
-    color .2s ease,
-    transform .2s ease;
 }
 
-
-.links a:hover{
-
-  color:#1d4ed8;
-
-  background:
-    rgba(37,99,235,.07);
-
-  transform:
-    translateY(-1px);
-}
-
-
-.links a i{
-
-  margin-right:4px;
-}
-
-
-/* =========================================================
-   FOOTER NOTE
-========================================================= */
 
 .footer-note{
+
+  margin-top:22px;
 
   text-align:center;
 
   color:#8a95a5;
 
   font-size:10px;
-
-  margin-top:22px;
-
-  letter-spacing:.01em;
-}
-
-
-/* =========================================================
-   LOADER
-========================================================= */
-
-.loader{
-
-  position:fixed;
-
-  inset:0;
-
-  background:
-
-    radial-gradient(
-      circle at 50% 45%,
-      rgba(37,99,235,.16),
-      transparent 30%
-    ),
-
-    radial-gradient(
-      circle at 50% 100%,
-      rgba(139,92,246,.13),
-      transparent 35%
-    ),
-
-    #050914;
-
-  display:grid;
-
-  place-items:center;
-
-  z-index:9999;
-
-  transition:
-    opacity .35s ease,
-    visibility .35s ease;
-}
-
-
-.loader::before{
-
-  content:"";
-
-  position:absolute;
-
-  width:170px;
-  height:170px;
-
-  border-radius:50%;
-
-  border:
-    1px solid
-    rgba(96,165,250,.10);
-
-  box-shadow:
-    0 0 80px
-    rgba(37,99,235,.10);
-
-  animation:
-    loaderPulse 2s ease-in-out infinite;
-}
-
-
-.loader.hide{
-
-  opacity:0;
-
-  visibility:hidden;
-}
-
-
-.loader-ring{
-
-  width:48px;
-  height:48px;
-
-  border:
-    3px solid
-    rgba(255,255,255,.12);
-
-  border-top-color:
-    #60a5fa;
-
-  border-right-color:
-    #8b5cf6;
-
-  border-radius:50%;
-
-  animation:
-    spin .8s linear infinite;
-
-  box-shadow:
-    0 0 24px
-    rgba(37,99,235,.22);
-}
-
-
-@keyframes spin{
-
-  to{
-    transform:rotate(360deg);
-  }
-
-}
-
-
-@keyframes loaderPulse{
-
-  0%,
-  100%{
-    transform:scale(.92);
-    opacity:.55;
-  }
-
-  50%{
-    transform:scale(1.08);
-    opacity:1;
-  }
-
-}
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media(max-width:800px){
-
-  body{
-
-    padding:16px;
-  }
-
-
-  .page{
-
-    grid-template-columns:1fr;
-
-    border-radius:25px;
-
-    max-width:620px;
-  }
-
-
-  .intro{
-
-    min-height:auto;
-
-    padding:38px 30px 35px;
-  }
-
-
-  .intro h1{
-
-    font-size:40px;
-  }
-
-
-  .trust{
-
-    display:none;
-  }
-
-
-  .panel{
-
-    padding:34px 28px 38px;
-  }
-
-
-  .logo{
-
-    width:64px;
-    height:64px;
-
-    border-radius:18px;
-  }
-
-
-  h2{
-
-    font-size:31px;
-  }
 
 }
 
@@ -1691,33 +953,78 @@ input:focus{
    MOBILE
 ========================================================= */
 
+@media(max-width:800px){
+
+  body{
+
+    padding:16px;
+
+  }
+
+
+  .page{
+
+    grid-template-columns:1fr;
+
+    max-width:620px;
+
+  }
+
+
+  .intro{
+
+    min-height:auto;
+
+    padding:38px 30px;
+
+  }
+
+
+  .panel{
+
+    padding:35px 28px;
+
+  }
+
+
+  .trust{
+
+    display:none;
+
+  }
+
+}
+
+
 @media(max-width:480px){
 
   body{
 
     padding:10px;
 
-    place-items:start center;
-
-    padding-top:10px;
-
-    padding-bottom:10px;
   }
 
 
   .page{
 
-    width:100%;
-
     border-radius:21px;
 
-    margin:auto 0;
   }
 
 
   .intro{
 
-    padding:28px 21px 29px;
+    padding:28px 21px;
+
+  }
+
+
+  .logo{
+
+    width:58px;
+
+    height:58px;
+
   }
 
 
@@ -1725,9 +1032,6 @@ input:focus{
 
     font-size:34px;
 
-    letter-spacing:-.05em;
-
-    margin-top:17px;
   }
 
 
@@ -1735,41 +1039,13 @@ input:focus{
 
     font-size:13px;
 
-    line-height:1.7;
-  }
-
-
-  .eyebrow{
-
-    margin-top:20px;
-
-    font-size:10px;
-  }
-
-
-  .logo{
-
-    width:58px;
-    height:58px;
-
-    border-radius:17px;
   }
 
 
   .panel{
 
-    padding:27px 18px 30px;
-  }
+    padding:28px 18px 30px;
 
-
-  .icon{
-
-    width:57px;
-    height:57px;
-
-    border-radius:17px;
-
-    font-size:21px;
   }
 
 
@@ -1777,27 +1053,6 @@ input:focus{
 
     font-size:28px;
 
-    margin-top:18px;
-  }
-
-
-  .sub{
-
-    font-size:13px;
-
-    margin-bottom:23px;
-  }
-
-
-  input{
-
-    height:51px;
-  }
-
-
-  .submit{
-
-    height:53px;
   }
 
 
@@ -1805,361 +1060,408 @@ input:focus{
 
     padding:17px;
 
-    border-radius:18px;
   }
 
 
   .stamp{
 
     width:108px;
+
     height:108px;
 
-    font-size:14px;
   }
 
 
   .table{
 
     font-size:11.5px;
-  }
 
-
-  .table td{
-
-    padding:9px 5px;
-  }
-
-
-  .links{
-
-    justify-content:center;
-
-    gap:4px;
-  }
-
-
-  .footer-note{
-
-    margin-top:18px;
-  }
-
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-========================================================= */
-
-@media(max-width:360px){
-
-  body{
-
-    padding:7px;
-  }
-
-
-  .intro{
-
-    padding:24px 17px 25px;
-  }
-
-
-  .panel{
-
-    padding:23px 14px 27px;
-  }
-
-
-  .intro h1{
-
-    font-size:30px;
-  }
-
-
-  h2{
-
-    font-size:25px;
-  }
-
-
-  .result{
-
-    padding:14px;
-  }
-
-}
-
-
-/* =========================================================
-   ACCESSIBILITY / REDUCED MOTION
-========================================================= */
-
-@media(prefers-reduced-motion:reduce){
-
-  html{
-
-    scroll-behavior:auto!important;
-  }
-
-
-  *{
-
-    transition:none!important;
-
-    animation-duration:.001ms!important;
-
-    animation-iteration-count:1!important;
   }
 
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<!-- =====================================================
-     LOADER
-===================================================== -->
-
-<div class="loader" id="loader">
-  <div class="loader-ring"></div>
-</div>
-
-
-<!-- =====================================================
-     MAIN PAGE
-===================================================== -->
 
 <main class="page">
 
 
-  <!-- ===================================================
-       INTRO
-  ==================================================== -->
+<!-- =======================================================
+     INTRO
+======================================================== -->
 
-  <section class="intro">
-
-    <img
-      class="logo"
-      src="assets/images/logo.jpeg"
-      alt="Arsh Technical Academy"
-      fetchpriority="high"
-    >
+<section class="intro">
 
 
-    <div class="eyebrow">
-      <i class="fa-solid fa-certificate"></i>
-      CERTIFICATE PORTAL
-    </div>
+<img
+  class="logo"
+  src="assets/images/logo.jpeg"
+  alt="Arsh Technical Academy"
+>
 
 
-    <h1>
-      Verify a Certificate<br>
-      with confidence.
-    </h1>
+<div class="eyebrow">
+
+  <i class="fa-solid fa-certificate"></i>
+
+  CERTIFICATE PORTAL
+
+</div>
 
 
-    <p>
-      Check whether a certificate is registered with
-      Arsh Technical Academy using the Certificate
-      Number and Date of Birth.
-    </p>
+<h1>
+
+  Verify a Certificate
+  <br>
+
+  with confidence.
+
+</h1>
 
 
-    <div class="trust">
+<p>
 
-      <div>
-        <i class="fa-solid fa-circle-check"></i>
-        <span>Official StudentDB verification</span>
-      </div>
+  Check whether a certificate is officially
+  registered with Arsh Technical Academy
+  using the Certificate Number and Date of Birth.
 
-      <div>
-        <i class="fa-solid fa-shield-halved"></i>
-        <span>Secure server-side matching</span>
-      </div>
-
-      <div>
-        <i class="fa-solid fa-qrcode"></i>
-        <span>QR-code friendly verification</span>
-      </div>
-
-    </div>
-
-  </section>
+</p>
 
 
-  <!-- ===================================================
-       VERIFICATION PANEL
-  ==================================================== -->
+<div class="trust">
 
-  <section class="panel">
+  <div>
 
-    <div class="card">
+    <i class="fa-solid fa-circle-check"></i>
 
+    <span>
+      Official StudentDB verification
+    </span>
 
-      <div class="icon">
-        <i class="fa-solid fa-shield-halved"></i>
-      </div>
-
-
-      <h2>
-        Certificate Verification
-      </h2>
+  </div>
 
 
-      <p class="sub">
-        Enter the Certificate No. and Date of Birth.
-        If you arrived by QR code, the Certificate No.
-        will be filled automatically.
-      </p>
+  <div>
+
+    <i class="fa-solid fa-shield-halved"></i>
+
+    <span>
+      Secure server-side matching
+    </span>
+
+  </div>
 
 
-      <form id="verifyForm" novalidate>
+  <div>
+
+    <i class="fa-solid fa-qrcode"></i>
+
+    <span>
+      QR-code friendly verification
+    </span>
+
+  </div>
+
+</div>
 
 
-        <div class="field">
-
-          <label for="certificateNo">
-            Certificate No.
-          </label>
-
-          <div class="input-wrap">
-
-            <i class="fa-solid fa-hashtag"></i>
-
-            <input
-              id="certificateNo"
-              maxlength="100"
-              required
-              placeholder="Enter Certificate No."
-            >
-
-          </div>
-
-        </div>
+</section>
 
 
-        <div class="field">
 
-          <label for="dob">
-            Date Of Birth
-          </label>
+<!-- =======================================================
+     VERIFICATION PANEL
+======================================================== -->
 
-          <div class="input-wrap">
-
-            <i class="fa-solid fa-calendar-days"></i>
-
-            <input
-              id="dob"
-              type="date"
-              required
-            >
-
-          </div>
-
-        </div>
+<section class="panel">
 
 
-        <button
-          class="submit"
-          id="verifyBtn"
-          type="submit"
-        >
-          <i class="fa-solid fa-shield-halved"></i>
-          Verify Certificate
-        </button>
+<div class="card">
 
 
-        <div
-          class="status"
-          id="status"
-          aria-live="polite"
-        ></div>
+<div class="icon">
+
+  <i class="fa-solid fa-shield-halved"></i>
+
+</div>
 
 
-      </form>
+<h2>
+  Certificate Verification
+</h2>
 
 
-      <div
-        class="result"
-        id="result"
-      ></div>
+<p class="sub">
+
+  Enter the Certificate No. and Date of Birth.
+  If you opened this page through a QR code,
+  the Certificate No. will be filled automatically.
+
+</p>
 
 
-      <div class="links">
-
-        <a href="/">
-          <i class="fa-solid fa-house"></i>
-          Home
-        </a>
-
-        <a href="/login">
-          <i class="fa-solid fa-user-graduate"></i>
-          Student Login
-        </a>
-
-      </div>
+<form
+  id="verifyForm"
+  novalidate
+>
 
 
-      <div class="footer-note">
-        Arsh Technical Academy • Certificate Verification
-      </div>
+<div class="field">
+
+<label for="certificateNo">
+
+  Certificate No.
+
+</label>
 
 
-    </div>
+<div class="input-wrap">
 
-  </section>
+<i class="fa-solid fa-hashtag"></i>
+
+
+<input
+  id="certificateNo"
+  maxlength="100"
+  autocomplete="off"
+  required
+  placeholder="Enter Certificate No."
+>
+
+
+</div>
+
+</div>
+
+
+
+<div class="field">
+
+<label for="dob">
+
+  Date Of Birth
+
+</label>
+
+
+<div class="input-wrap">
+
+<i class="fa-solid fa-calendar-days"></i>
+
+
+<input
+  id="dob"
+  type="date"
+  required
+>
+
+
+</div>
+
+</div>
+
+
+
+<button
+  class="submit"
+  id="verifyBtn"
+  type="submit"
+>
+
+<i class="fa-solid fa-shield-halved"></i>
+
+Verify Certificate
+
+</button>
+
+
+<div
+  class="status"
+  id="status"
+  aria-live="polite"
+></div>
+
+
+</form>
+
+
+
+<div
+  class="result"
+  id="result"
+></div>
+
+
+
+<div class="links">
+
+<a href="/">
+
+<i class="fa-solid fa-house"></i>
+
+Home
+
+</a>
+
+
+<a href="/login">
+
+<i class="fa-solid fa-user-graduate"></i>
+
+Student Login
+
+</a>
+
+</div>
+
+
+
+<div class="footer-note">
+
+Arsh Technical Academy • Certificate Verification
+
+</div>
+
+
+</div>
+
+</section>
+
 
 </main>
 
 
+
 <script>
 
-'use strict';
-
+/* =========================================================
+   API CONFIG
+========================================================= */
 
 const API_URL =
   'https://script.google.com/macros/s/AKfycbw9rOT_EtD4MUmGcCJK0AqKme2K1DURQB4i636Oko-q-vWdq5P7KeU92JGcB43h4zAm/exec';
 
 
-const loader =
-  document.getElementById('loader');
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const form =
+  document.getElementById(
+    'verifyForm'
+  );
 
 
-window.addEventListener(
-  'load',
-  () =>
-    setTimeout(
-      () =>
-        loader.classList.add('hide'),
-      120
-    )
-);
+const certificateInput =
+  document.getElementById(
+    'certificateNo'
+  );
 
 
-function esc(v){
+const dobInput =
+  document.getElementById(
+    'dob'
+  );
 
-  return String(v ?? '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
+
+const statusBox =
+  document.getElementById(
+    'status'
+  );
+
+
+const verifyBtn =
+  document.getElementById(
+    'verifyBtn'
+  );
+
+
+const resultBox =
+  document.getElementById(
+    'result'
+  );
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function esc(value){
+
+  return String(
+    value ?? ''
+  )
+
+  .replace(
+    /&/g,
+    '&amp;'
+  )
+
+  .replace(
+    /</g,
+    '&lt;'
+  )
+
+  .replace(
+    />/g,
+    '&gt;'
+  )
+
+  .replace(
+    /"/g,
+    '&quot;'
+  )
+
+  .replace(
+    /'/g,
+    '&#039;'
+  );
 
 }
 
 
+/* =========================================================
+   SAFE VALUE
+========================================================= */
+
+function safeValue(value){
+
+  if(
+    value === undefined ||
+    value === null
+  ){
+
+    return '';
+
+  }
+
+  return String(
+    value
+  ).trim();
+
+}
+
+
+/* =========================================================
+   API CALL - JSONP
+========================================================= */
+
 function apiCall(
   action,
-  params={}
+  params = {}
 ){
 
   return new Promise(
     (resolve,reject)=>{
 
-      const cb =
-        'cb_' +
+
+      const callbackName =
+        'verify_cb_' +
         Date.now() +
         '_' +
         Math.random()
@@ -2168,80 +1470,133 @@ function apiCall(
 
 
       const script =
-        document.createElement('script');
-
-
-      const q =
-        new URLSearchParams({
-          action,
-          callback:cb
-        });
-
-
-      Object.entries(params)
-        .forEach(
-          ([k,v])=>{
-
-            if(
-              v !== undefined &&
-              v !== null
-            ){
-
-              q.set(k,v);
-
-            }
-
-          }
+        document.createElement(
+          'script'
         );
 
 
-      let done=false;
+      const query =
+        new URLSearchParams();
+
+
+      query.set(
+        'action',
+        action
+      );
+
+
+      query.set(
+        'callback',
+        callbackName
+      );
+
+
+      Object.entries(
+        params
+      ).forEach(
+        ([key,value])=>{
+
+          if(
+            value !== undefined &&
+            value !== null
+          ){
+
+            query.set(
+              key,
+              String(value)
+            );
+
+          }
+
+        }
+      );
+
+
+      let finished = false;
+
+
+      const cleanup =
+        ()=>{
+
+          try{
+
+            delete window[
+              callbackName
+            ];
+
+          }catch(e){}
+
+
+          try{
+
+            script.remove();
+
+          }catch(e){}
+
+        };
 
 
       const finish =
-        (fn,value)=>{
+        (
+          callback,
+          value
+        )=>{
 
-          if(done) return;
-
-          done=true;
-
-          clearTimeout(timer);
-
-          try{
-            delete window[cb];
+          if(finished){
+            return;
           }
-          catch(e){}
 
-          script.remove();
 
-          fn(value);
+          finished = true;
+
+
+          clearTimeout(
+            timer
+          );
+
+
+          cleanup();
+
+
+          callback(
+            value
+          );
 
         };
 
 
       const timer =
         setTimeout(
-          () =>
+          ()=>{
+
             finish(
               reject,
               new Error(
                 'Verification server timed out. Please try again.'
               )
-            ),
-          12000
+            );
+
+          },
+          15000
         );
 
 
-      window[cb] =
-        data =>
+      window[
+        callbackName
+      ] =
+        (response)=>{
+
           finish(
             resolve,
-            data
+            response
           );
+
+        };
 
 
       script.onerror =
-        () =>
+        ()=>{
+
           finish(
             reject,
             new Error(
@@ -2249,11 +1604,13 @@ function apiCall(
             )
           );
 
+        };
+
 
       script.src =
         API_URL +
         '?' +
-        q.toString();
+        query.toString();
 
 
       document.body.appendChild(
@@ -2266,263 +1623,485 @@ function apiCall(
 }
 
 
-function resultHTML(p){
+/* =========================================================
+   NORMALIZE STUDENT
+========================================================= */
 
-  const rows=[
+function normalizeStudent(
+  raw
+){
 
-    ['Name',p.name],
+  raw =
+    raw &&
+    typeof raw === 'object'
+      ? raw
+      : {};
 
-    ['Father\'s Name',p.fatherName],
 
-    ['Address',p.address],
+  return {
 
-    ['Course Name',p.courseName],
+    name:
+      safeValue(
+        raw.name
+      ),
 
-    ['Admission Date',p.admissionDate],
+    fatherName:
+      safeValue(
+        raw.fatherName
+      ),
 
-    ['Date Of Birth',p.dateOfBirth],
+    address:
+      safeValue(
+        raw.address
+      ),
 
-    ['Certificate No',p.certificateNo]
+    courseName:
+      safeValue(
+        raw.courseName
+      ),
+
+    dateOfBirth:
+      safeValue(
+        raw.dateOfBirth
+      ),
+
+    certificateNo:
+      safeValue(
+        raw.certificateNo
+      ),
+
+    certificateImageUrl:
+      safeValue(
+        raw.certificateImageUrl
+      )
+
+  };
+
+}
+
+
+/* =========================================================
+   RESULT HTML
+========================================================= */
+
+function buildResultHTML(
+  rawStudent
+){
+
+  const student =
+    normalizeStudent(
+      rawStudent
+    );
+
+
+  const rows = [
+
+    [
+      'Name',
+      student.name
+    ],
+
+    [
+      "Father's Name",
+      student.fatherName
+    ],
+
+    [
+      'Address',
+      student.address
+    ],
+
+    [
+      'Course Name',
+      student.courseName
+    ],
+
+    [
+      'Date Of Birth',
+      student.dateOfBirth
+    ],
+
+    [
+      'Certificate No',
+      student.certificateNo
+    ]
 
   ];
 
 
-  const image =
-    p.certificateImageUrl
-
-      ?
-
-      '<div class="certificate-image">' +
-
-      '<img src="' +
-      esc(p.certificateImageUrl) +
-      '" alt="Verified Certificate" loading="lazy" decoding="async">' +
-
-      '<p class="image-note">Certificate document</p>' +
-
-      '</div>'
-
-      :
-
-      '';
+  const imageUrl =
+    student.certificateImageUrl;
 
 
-  return
+  const imageHTML =
+    imageUrl
 
-    '<div class="stamp-wrap">' +
+      ? `
 
-      '<div class="stamp">' +
-        '✓ VERIFIED<br>STUDENT' +
-      '</div>' +
+        <div class="certificate-image">
 
-    '</div>' +
+          <img
+            src="${esc(imageUrl)}"
+            alt="Verified Certificate"
+            loading="lazy"
+            decoding="async"
+            onerror="
+              this.parentElement.style.display='none';
+            "
+          >
 
-    '<div class="verified-title">' +
-      'Certificate verified successfully' +
-    '</div>' +
+          <p class="image-note">
+            Certificate document
+          </p>
 
-    '<table class="table">' +
+        </div>
 
-      rows
-        .map(
-          r =>
-            '<tr>' +
+      `
 
-              '<td>' +
-                esc(r[0]) +
-              '</td>' +
+      : '';
 
-              '<td>' +
-                esc(r[1] || '-') +
-              '</td>' +
 
-            '</tr>'
-        )
-        .join('') +
+  return `
 
-    '</table>' +
+    <div class="stamp-wrap">
 
-    image;
+      <div class="stamp">
+
+        ✓ VERIFIED
+        <br>
+        STUDENT
+
+      </div>
+
+    </div>
+
+
+    <div class="verified-title">
+
+      Certificate verified successfully
+
+    </div>
+
+
+    <table class="table">
+
+      <tbody>
+
+        ${
+          rows
+            .map(
+              row => `
+
+                <tr>
+
+                  <td>
+                    ${esc(row[0])}
+                  </td>
+
+                  <td>
+                    ${
+                      esc(
+                        row[1] || '-'
+                      )
+                    }
+                  </td>
+
+                </tr>
+
+              `
+            )
+            .join('')
+        }
+
+      </tbody>
+
+    </table>
+
+
+    ${imageHTML}
+
+  `;
 
 }
 
 
-const qs =
+/* =========================================================
+   QR CERTIFICATE NUMBER
+========================================================= */
+
+const query =
   new URLSearchParams(
-    location.search
+    window.location.search
   );
 
 
 const qrCertificate =
-  qs.get('certificate') ||
-  qs.get('certificateNo') ||
-  qs.get('verify') ||
-  '';
+  (
+    query.get('certificate') ||
+    query.get('certificateNo') ||
+    query.get('verify') ||
+    ''
+  ).trim();
 
 
 if(qrCertificate){
 
-  document.getElementById(
-    'certificateNo'
-  ).value =
-    qrCertificate.trim();
+  certificateInput.value =
+    qrCertificate;
 
 }
 
 
-document
-  .getElementById('verifyForm')
-  .addEventListener(
-    'submit',
-    async e => {
+/* =========================================================
+   FORM SUBMIT
+========================================================= */
 
-      e.preventDefault();
+form.addEventListener(
+  'submit',
+  async function(event){
 
-
-      const certificateNo =
-        document
-          .getElementById(
-            'certificateNo'
-          )
-          .value
-          .trim();
+    event.preventDefault();
 
 
-      const dateOfBirth =
-        document
-          .getElementById(
-            'dob'
-          )
-          .value;
+    const certificateNo =
+      certificateInput.value
+        .trim();
 
 
-      const status =
-        document.getElementById(
-          'status'
+    const dateOfBirth =
+      dobInput.value;
+
+
+    /* -----------------------------------------------------
+       VALIDATION
+    ----------------------------------------------------- */
+
+    if(
+      !certificateNo
+    ){
+
+      statusBox.className =
+        'status error';
+
+      statusBox.textContent =
+        'Please enter Certificate No.';
+
+      certificateInput.focus();
+
+      return;
+
+    }
+
+
+    if(
+      !dateOfBirth
+    ){
+
+      statusBox.className =
+        'status error';
+
+      statusBox.textContent =
+        'Please select Date Of Birth.';
+
+      dobInput.focus();
+
+      return;
+
+    }
+
+
+    /* -----------------------------------------------------
+       LOADING
+    ----------------------------------------------------- */
+
+    verifyBtn.disabled =
+      true;
+
+
+    verifyBtn.innerHTML =
+      '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+
+
+    statusBox.className =
+      'status';
+
+
+    statusBox.textContent =
+      '';
+
+
+    resultBox.classList.remove(
+      'show'
+    );
+
+
+    resultBox.innerHTML =
+      '';
+
+
+    /* -----------------------------------------------------
+       API REQUEST
+    ----------------------------------------------------- */
+
+    try{
+
+
+      const response =
+        await apiCall(
+          'verifyCertificate',
+          {
+
+            certificateNo:
+              certificateNo,
+
+            dateOfBirth:
+              dateOfBirth
+
+          }
         );
 
 
-      const btn =
-        document.getElementById(
-          'verifyBtn'
+      /* ---------------------------------------------------
+         RESPONSE VALIDATION
+      --------------------------------------------------- */
+
+      if(
+        !response ||
+        typeof response !== 'object'
+      ){
+
+        throw new Error(
+          'Invalid response received from verification server.'
         );
 
-
-      const result =
-        document.getElementById(
-          'result'
-        );
+      }
 
 
       if(
-        !certificateNo ||
-        !dateOfBirth
+        response.success !== true
       ){
 
-        status.className =
-          'status error';
+        throw new Error(
 
-        status.textContent =
-          'Please enter Certificate No. and Date of Birth.';
+          safeValue(
+            response.message
+          ) ||
 
-        return;
+          'Certificate not found or details do not match.'
+
+        );
 
       }
 
 
-      btn.disabled=true;
+      if(
+        response.verified !== true
+      ){
+
+        throw new Error(
+          'Certificate verification could not be completed.'
+        );
+
+      }
 
 
-      btn.innerHTML =
-        '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+      /* ---------------------------------------------------
+         STUDENT
+      --------------------------------------------------- */
+
+      const student =
+        response.student || {};
 
 
-      status.className =
-        'status';
+      /* ---------------------------------------------------
+         RENDER
+      --------------------------------------------------- */
 
-
-      status.textContent =
-        '';
-
-
-      try{
-
-        const r =
-          await apiCall(
-            'verifyCertificate',
-            {
-              certificateNo,
-              dateOfBirth
-            }
-          );
-
-
-        if(!r?.success)
-
-          throw new Error(
-            r?.message ||
-            'Certificate not found or details do not match.'
-          );
-
-
-        result.innerHTML =
-          resultHTML(
-            r.student || {}
-          );
-
-
-        result.classList.add(
-          'show'
+      resultBox.innerHTML =
+        buildResultHTML(
+          student
         );
 
 
-        status.className =
-          'status success';
+      resultBox.classList.add(
+        'show'
+      );
 
 
-        status.textContent =
-          'Verified Student';
+      statusBox.className =
+        'status success';
 
 
-        result.scrollIntoView({
-          behavior:'smooth',
-          block:'nearest'
-        });
+      statusBox.textContent =
+        'Verified Student';
 
 
-      }
+      /* ---------------------------------------------------
+         SCROLL
+      --------------------------------------------------- */
 
-      catch(err){
+      setTimeout(
+        ()=>{
 
-        result.classList.remove(
-          'show'
-        );
+          resultBox.scrollIntoView({
 
+            behavior:'smooth',
 
-        status.className =
-          'status error';
+            block:'nearest'
 
+          });
 
-        status.textContent =
-          err.message ||
-          'Certificate verification failed.';
-
-      }
-
-      finally{
-
-        btn.disabled=false;
+        },
+        100
+      );
 
 
-        btn.innerHTML =
-          '<i class="fa-solid fa-shield-halved"></i> Verify Certificate';
+    }catch(error){
 
-      }
+
+      console.error(
+        'Certificate Verification Error:',
+        error
+      );
+
+
+      resultBox.classList.remove(
+        'show'
+      );
+
+
+      statusBox.className =
+        'status error';
+
+
+      statusBox.textContent =
+
+        error &&
+        error.message
+
+          ? error.message
+
+          : 'Certificate verification failed.';
+
+
+    }finally{
+
+
+      verifyBtn.disabled =
+        false;
+
+
+      verifyBtn.innerHTML =
+        '<i class="fa-solid fa-shield-halved"></i> Verify Certificate';
 
     }
-  );
+
+  }
+);
 
 </script>
 
+
 </body>
+
 </html>
