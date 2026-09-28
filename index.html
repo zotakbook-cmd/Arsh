@@ -10361,101 +10361,6 @@ const mainMenu = [
 
 
     /* =====================================================
-       DYNAMIC MOBILE / PHONE / WHATSAPP HELPERS
-       -----------------------------------------------------
-       Only contact-number resolution is handled here.
-       No other website feature depends on these helpers.
-    ====================================================== */
-
-    function getDynamicMobile() {
-
-      let mobile = "";
-
-      /* Contact sheet: accept common labels for the institute number. */
-      (SITE_DATA.contact || []).some(function(item) {
-
-        const label = String(item["Label"] || "").trim().toLowerCase();
-        const value = String(item["Value"] || "").trim();
-
-        if (!value) return false;
-
-        if (/^(mobile|mobile number|phone|phone number|contact|contact number|call|helpline|telephone)$/i.test(label) ||
-            /mobile|phone|contact|call|helpline|telephone/.test(label)) {
-          mobile = value;
-          return true;
-        }
-
-        return false;
-      });
-
-      /* Settings fallback. */
-      if (!mobile) mobile = setting("mobile", "");
-      if (!mobile) mobile = setting("phone", "");
-
-      return String(mobile || "").trim();
-    }
-
-
-    function normalizeIndianMobile(value) {
-
-      let digits = String(value || "").replace(/\D/g, "");
-
-      /* Keep country code when supplied, otherwise add India +91. */
-      if (digits.length === 10 && /^[6-9]\d{9}$/.test(digits)) {
-        return "91" + digits;
-      }
-
-      if (digits.length === 12 && digits.indexOf("91") === 0) {
-        return digits;
-      }
-
-      return digits;
-    }
-
-
-    function getDynamicWhatsApp() {
-
-      let whatsapp = "";
-
-      /* A separate WhatsApp setting/contact value has priority. */
-      (SITE_DATA.contact || []).some(function(item) {
-
-        const label = String(item["Label"] || "").trim().toLowerCase();
-        const value = String(item["Value"] || "").trim();
-
-        if (!value) return false;
-
-        if (/whatsapp|whats app/.test(label)) {
-          whatsapp = value;
-          return true;
-        }
-
-        return false;
-      });
-
-      if (!whatsapp) whatsapp = setting("whatsapp", "");
-      if (!whatsapp) whatsapp = getDynamicMobile();
-
-      return normalizeIndianMobile(whatsapp);
-    }
-
-
-    function getDynamicTel() {
-
-      const value = getDynamicMobile();
-      const digits = String(value || "").replace(/\D/g, "");
-
-      if (!digits) return "#";
-
-      return "tel:" + (
-        digits.length === 10
-          ? "+91" + digits
-          : "+" + digits.replace(/^\+/, "")
-      );
-    }
-
-
-    /* =====================================================
        TOPBAR DATE + CONTACT
     ====================================================== */
 
@@ -10468,6 +10373,7 @@ const mainMenu = [
       if (!emailEl || !mobileEl || !dateEl) return;
 
       let email = "";
+      let mobile = "";
 
       (SITE_DATA.contact || []).forEach(function(item) {
         const label = String(item["Label"] || "").toLowerCase();
@@ -10476,14 +10382,17 @@ const mainMenu = [
         if (!value) return;
 
         if (!email && /email|e-mail|mail/.test(label)) email = value;
+        if (!mobile && /mobile|phone|contact|whatsapp|call/.test(label)) mobile = value;
       });
 
       if (!email) email = setting("email", "info@example.com");
+      if (!mobile) mobile = setting("mobile", "+91 00000 00000");
 
-      const mobile = getDynamicMobile();
-      const mobileHref = getDynamicTel();
+      const emailHref = email.includes("@") ? "mailto:" + email : "#";
+      const mobileDigits = mobile.replace(/[^0-9+]/g, "");
+      const mobileHref = mobileDigits ? "tel:" + mobileDigits : "#";
 
-      emailEl.href = email ? "mailto:" + email : "#";
+      emailEl.href = emailHref;
       emailEl.querySelector("span").textContent = email;
       mobileEl.href = mobileHref;
       mobileEl.querySelector("span").textContent = mobile;
@@ -13230,7 +13139,9 @@ function renderGallery() {
        */
 
       const phone =
-        getDynamicMobile();
+        setting(
+          "phone"
+        );
 
       const email =
         setting(
@@ -13332,7 +13243,15 @@ function renderGallery() {
     function renderWhatsApp() {
 
       const number =
-        getDynamicWhatsApp();
+        String(
+          setting(
+            "whatsapp"
+          )
+        )
+        .replace(
+          /[^0-9]/g,
+          ""
+        );
 
 
       const button =
@@ -13340,8 +13259,6 @@ function renderGallery() {
           "whatsappButton"
         );
 
-
-      if (!button) return;
 
       if (!number) {
 
@@ -14743,718 +14660,157 @@ function renderGallery() {
     bindImageFallbacks();
 
   </script>
+
 <div class="quick-contact-wrap" aria-label="Quick contact actions">
-  <button
-    class="quick-enquiry-btn"
-    id="quickEnquiryBtn"
-    type="button"
-  >
-    <i class="fa-solid fa-paper-plane"></i>
-    <span>Quick Enquiry</span>
-  </button>
+  <button class="quick-enquiry-btn" id="quickEnquiryBtn" type="button"><i class="fa-solid fa-paper-plane"></i><span>Quick Enquiry</span></button>
 </div>
 
-<div
-  class="enquiry-modal"
-  id="quickEnquiryModal"
-  role="dialog"
-  aria-modal="true"
-  aria-hidden="true"
-  aria-labelledby="quickEnquiryTitle"
->
+<div class="enquiry-modal" id="quickEnquiryModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="quickEnquiryTitle">
   <div class="enquiry-dialog">
-
-    <button
-      class="enquiry-close"
-      id="quickEnquiryClose"
-      type="button"
-      aria-label="Close enquiry form"
-    >&times;</button>
-
-    <div class="quick-enquiry-icon">
-      <i class="fa-solid fa-headset"></i>
-    </div>
-
+    <button class="enquiry-close" id="quickEnquiryClose" type="button" aria-label="Close enquiry form">&times;</button>
+    <div class="quick-enquiry-icon"><i class="fa-solid fa-headset"></i></div>
     <h3 id="quickEnquiryTitle">Quick Enquiry</h3>
-
-    <p>
-      Enter your details and continue directly on WhatsApp.
-    </p>
-
+    <p>Enter your details and continue directly on WhatsApp.</p>
     <form id="quickEnquiryForm" novalidate>
-
       <div class="enquiry-form-grid">
-
-        <div class="full">
-          <label for="quickName">Name</label>
-
-          <input
-            id="quickName"
-            name="name"
-            required
-            autocomplete="name"
-            maxlength="100"
-            placeholder="Enter your name"
-          >
-        </div>
-
-        <div class="full">
-          <label for="quickMobile">Mobile</label>
-
-          <input
-            id="quickMobile"
-            name="mobile"
-            required
-            type="tel"
-            inputmode="numeric"
-            autocomplete="tel"
-            maxlength="10"
-            placeholder="Enter 10-digit mobile number"
-          >
-        </div>
-
+        <div class="full"><label for="quickName">Name</label><input id="quickName" name="name" required autocomplete="name" maxlength="100" placeholder="Enter your name"></div>
+        <div class="full"><label for="quickMobile">Mobile</label><input id="quickMobile" name="mobile" required type="tel" inputmode="numeric" autocomplete="tel" maxlength="10" placeholder="Enter 10-digit mobile number"></div>
       </div>
-
-      <button
-        class="enquiry-submit"
-        type="submit"
-      >
-        <i class="fa-brands fa-whatsapp"></i>
-        Send WhatsApp
-      </button>
-
-      <p
-        class="enquiry-note"
-        id="quickEnquiryStatus"
-      >
-        Your enquiry will be saved before WhatsApp opens.
-      </p>
-
+      <button class="enquiry-submit" type="submit"><i class="fa-brands fa-whatsapp"></i> Send WhatsApp</button>
+      <p class="enquiry-note" id="quickEnquiryStatus">Your enquiry will be saved before WhatsApp opens.</p>
     </form>
-
   </div>
 </div>
-
 <script>
 (function(){
-
   "use strict";
 
-  /* =========================================================
-     QUICK ENQUIRY ELEMENTS
-  ========================================================= */
+  const modal = document.getElementById("quickEnquiryModal");
+  const quickBtn = document.getElementById("quickEnquiryBtn");
+  const closeBtn = document.getElementById("quickEnquiryClose");
+  const form = document.getElementById("quickEnquiryForm");
+  const status = document.getElementById("quickEnquiryStatus");
+  const submit = form ? form.querySelector("button[type='submit']") : null;
 
-  const modal =
-    document.getElementById("quickEnquiryModal");
-
-  const quickBtn =
-    document.getElementById("quickEnquiryBtn");
-
-  const closeBtn =
-    document.getElementById("quickEnquiryClose");
-
-  const form =
-    document.getElementById("quickEnquiryForm");
-
-  const status =
-    document.getElementById("quickEnquiryStatus");
-
-  const submit =
-    form
-      ? form.querySelector("button[type='submit']")
-      : null;
-
-
-  /* =========================================================
-     GET DYNAMIC WHATSAPP NUMBER
-     
-     IMPORTANT:
-     - First use dynamic WhatsApp setting
-     - Then phone setting
-     - Then mobile setting
-     - Then SITE_DATA.contact
-     - No hard-coded number
-  ========================================================= */
-
-  function getQuickWhatsAppNumber(){
-
-    let number = "";
-
-
-    /* -------------------------------------------------------
-       1. WhatsApp setting
-    ------------------------------------------------------- */
-
-    try{
-
-      if(typeof setting === "function"){
-
-        number =
-          setting("whatsapp") ||
-          setting("phone") ||
-          setting("mobile") ||
-          "";
-
-      }
-
-    }catch(error){
-
-      console.warn(
-        "Quick Enquiry: setting() unavailable.",
-        error
-      );
-
-    }
-
-
-    /* -------------------------------------------------------
-       2. SITE_DATA contact fallback
-    ------------------------------------------------------- */
-
-    if(!number){
-
-      try{
-
-        const contacts =
-          Array.isArray(window.SITE_DATA?.contact)
-            ? window.SITE_DATA.contact
-            : [];
-
-        for(const item of contacts){
-
-          const label =
-            String(
-              item?.Label ||
-              item?.label ||
-              item?.Name ||
-              item?.name ||
-              ""
-            )
-            .toLowerCase();
-
-          const value =
-            String(
-              item?.Value ||
-              item?.value ||
-              item?.Phone ||
-              item?.phone ||
-              item?.Mobile ||
-              item?.mobile ||
-              ""
-            )
-            .trim();
-
-          if(!value) continue;
-
-          if(
-            /whatsapp|mobile|phone|contact/.test(label)
-          ){
-
-            number = value;
-            break;
-
-          }
-
-        }
-
-      }catch(error){
-
-        console.warn(
-          "Quick Enquiry: SITE_DATA unavailable.",
-          error
-        );
-
-      }
-
-    }
-
-
-    /* -------------------------------------------------------
-       3. Normalize
-    ------------------------------------------------------- */
-
-    number =
-      String(number || "")
-        .replace(/\D/g,"");
-
-
-    /* -------------------------------------------------------
-       4. Indian number normalization
-    ------------------------------------------------------- */
-
-    if(number.startsWith("91") && number.length === 12){
-
-      number =
-        number.substring(2);
-
-    }
-
-    if(
-      number.startsWith("0") &&
-      number.length === 11
-    ){
-
-      number =
-        number.substring(1);
-
-    }
-
-
-    /* -------------------------------------------------------
-       5. Return clean 10-digit number
-    ------------------------------------------------------- */
-
-    if(/^[6-9]\d{9}$/.test(number)){
-
-      return number;
-
-    }
-
-    return "";
-
-  }
-
-
-  /* =========================================================
-     OPEN ENQUIRY
-  ========================================================= */
+  /* Replace this with the institute's real WhatsApp number, country code included. */
+  const whatsappNumber = "+917632929282";
 
   function openEnquiry(){
-
     if(!modal) return;
-
     modal.classList.add("open");
-
-    modal.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
+    modal.setAttribute("aria-hidden","false");
     if(quickBtn){
-
-      quickBtn.classList.add(
-        "quick-enquiry-hidden"
-      );
-
-      quickBtn.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-      quickBtn.setAttribute(
-        "tabindex",
-        "-1"
-      );
-
+      quickBtn.classList.add("quick-enquiry-hidden");
+      quickBtn.setAttribute("aria-hidden","true");
+      quickBtn.setAttribute("tabindex","-1");
     }
-
-    document.body.style.overflow = "hidden";
-
-    if(status){
-
-      status.textContent =
-        "Your enquiry will be saved before WhatsApp opens.";
-
-    }
-
-    setTimeout(function(){
-
-      const nameInput =
-        document.getElementById("quickName");
-
-      if(nameInput){
-
-        nameInput.focus();
-
-      }
-
-    },120);
-
+    document.body.style.overflow="hidden";
+    if(status) status.textContent="Your enquiry will be saved before WhatsApp opens.";
+    setTimeout(function(){ document.getElementById("quickName")?.focus(); },120);
   }
-
-
-  /* =========================================================
-     CLOSE ENQUIRY
-  ========================================================= */
 
   function closeEnquiry(){
-
     if(!modal) return;
-
     modal.classList.remove("open");
-
-    modal.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
+    modal.setAttribute("aria-hidden","true");
     if(quickBtn){
+      quickBtn.classList.remove("quick-enquiry-hidden");
+      quickBtn.setAttribute("aria-hidden","false");
+      quickBtn.removeAttribute("tabindex");
+    }
+    document.body.style.overflow="";
+  }
 
-      quickBtn.classList.remove(
-        "quick-enquiry-hidden"
-      );
+  quickBtn?.addEventListener("click",openEnquiry);
+  closeBtn?.addEventListener("click",closeEnquiry);
+  document.querySelectorAll("[data-open-enquiry='true']").forEach(function(el){
+    el.addEventListener("click",openEnquiry);
+  });
+  modal?.addEventListener("click",function(e){
+    if(e.target===modal) closeEnquiry();
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape" && modal?.classList.contains("open")) closeEnquiry();
+  });
 
-      quickBtn.setAttribute(
-        "aria-hidden",
-        "false"
-      );
+  form?.addEventListener("submit",async function(e){
+    e.preventDefault();
 
-      quickBtn.removeAttribute(
-        "tabindex"
-      );
+    const name = String(document.getElementById("quickName")?.value || "").trim();
+    const mobileRaw = String(document.getElementById("quickMobile")?.value || "").trim();
+    const mobile = mobileRaw.replace(/\D/g, "");
 
+    if(!name){
+      if(status) status.textContent="Please enter your name.";
+      document.getElementById("quickName")?.focus();
+      return;
     }
 
-    document.body.style.overflow = "";
-
-  }
-
-
-  /* =========================================================
-     EVENTS
-  ========================================================= */
-
-  if(quickBtn){
-
-    quickBtn.addEventListener(
-      "click",
-      openEnquiry
-    );
-
-  }
-
-
-  if(closeBtn){
-
-    closeBtn.addEventListener(
-      "click",
-      closeEnquiry
-    );
-
-  }
-
-
-  document
-    .querySelectorAll(
-      "[data-open-enquiry='true']"
-    )
-    .forEach(function(el){
-
-      el.addEventListener(
-        "click",
-        openEnquiry
-      );
-
-    });
-
-
-  if(modal){
-
-    modal.addEventListener(
-      "click",
-      function(e){
-
-        if(e.target === modal){
-
-          closeEnquiry();
-
-        }
-
-      }
-    );
-
-  }
-
-
-  document.addEventListener(
-    "keydown",
-    function(e){
-
-      if(
-        e.key === "Escape" &&
-        modal &&
-        modal.classList.contains("open")
-      ){
-
-        closeEnquiry();
-
-      }
-
+    if(!/^[6-9]\d{9}$/.test(mobile)){
+      if(status) status.textContent="Please enter a valid 10-digit Indian mobile number.";
+      document.getElementById("quickMobile")?.focus();
+      return;
     }
-  );
 
-
-  /* =========================================================
-     FORM SUBMIT
-  ========================================================= */
-
-  if(form){
-
-    form.addEventListener(
-      "submit",
-      async function(e){
-
-        e.preventDefault();
-
-
-        /* ---------------------------------------------------
-           NAME
-        --------------------------------------------------- */
-
-        const name =
-          String(
-            document.getElementById("quickName")?.value || ""
-          ).trim();
-
-
-        /* ---------------------------------------------------
-           USER MOBILE
-        --------------------------------------------------- */
-
-        const mobileRaw =
-          String(
-            document.getElementById("quickMobile")?.value || ""
-          ).trim();
-
-
-        const mobile =
-          mobileRaw.replace(/\D/g,"");
-
-
-        /* ---------------------------------------------------
-           NAME VALIDATION
-        --------------------------------------------------- */
-
-        if(!name){
-
-          if(status){
-
-            status.textContent =
-              "Please enter your name.";
-
-          }
-
-          document
-            .getElementById("quickName")
-            ?.focus();
-
-          return;
-
-        }
-
-
-        /* ---------------------------------------------------
-           MOBILE VALIDATION
-        --------------------------------------------------- */
-
-        if(!/^[6-9]\d{9}$/.test(mobile)){
-
-          if(status){
-
-            status.textContent =
-              "Please enter a valid 10-digit Indian mobile number.";
-
-          }
-
-          document
-            .getElementById("quickMobile")
-            ?.focus();
-
-          return;
-
-        }
-
-
-        /* ---------------------------------------------------
-           GET INSTITUTE WHATSAPP NUMBER
-           
-           This is resolved HERE,
-           not when the page loads.
-        --------------------------------------------------- */
-
-        const whatsappNumber =
-          getQuickWhatsAppNumber();
-
-
-        if(!whatsappNumber){
-
-          if(status){
-
-            status.textContent =
-              "WhatsApp number is not configured correctly.";
-
-          }
-
-          return;
-
-        }
-
-
-        /* ---------------------------------------------------
-           DISABLE SUBMIT
-        --------------------------------------------------- */
-
-        if(submit){
-
-          submit.disabled = true;
-
-          submit.innerHTML =
-            '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-
-        }
-
-
-        if(status){
-
-          status.textContent =
-            "Saving your enquiry...";
-
-        }
-
-
-        /* ===================================================
-           SAVE ENQUIRY
-        =================================================== */
-
-        try{
-
-          if(typeof apiCall !== "function"){
-
-            throw new Error(
-              "Enquiry service unavailable."
-            );
-
-          }
-
-
-          const result =
-            await apiCall(
-              "submitEnquiry",
-              {
-                name: name,
-                mobile: mobile,
-                email: "",
-                course: "",
-                message: "Quick Enquiry - WhatsApp",
-                source: "Quick Enquiry"
-              }
-            );
-
-
-          /* -------------------------------------------------
-             API FAILURE
-          ------------------------------------------------- */
-
-          if(
-            !result ||
-            !result.success
-          ){
-
-            throw new Error(
-              result?.message ||
-              "Unable to save enquiry."
-            );
-
-          }
-
-
-          /* =================================================
-             WHATSAPP MESSAGE
-          ================================================= */
-
-          const customMessage =
-            "Hello Arsh Technical Academy,\n\n" +
-            "I want to make an enquiry.\n\n" +
-            "Name: " +
-            name +
-            "\n" +
-            "Mobile: " +
-            mobile +
-            "\n\n" +
-            "Please share the course, admission and training details. Thank you.";
-
-
-          if(status){
-
-            status.textContent =
-              "Enquiry saved. Opening WhatsApp...";
-
-          }
-
-
-          if(submit){
-
-            submit.innerHTML =
-              '<i class="fa-solid fa-check"></i> Opening WhatsApp...';
-
-          }
-
-
-          /* -------------------------------------------------
-             Reset form
-          ------------------------------------------------- */
-
-          form.reset();
-
-
-          /* -------------------------------------------------
-             WhatsApp URL
-          ------------------------------------------------- */
-
-          const whatsappUrl =
-            "https://wa.me/" +
-            whatsappNumber +
-            "?text=" +
-            encodeURIComponent(
-              customMessage
-            );
-
-
-          /* -------------------------------------------------
-             Open WhatsApp
-          ------------------------------------------------- */
-
-          setTimeout(function(){
-
-            window.location.href =
-              whatsappUrl;
-
-          },180);
-
-
-        }catch(err){
-
-          console.error(
-            "Quick Enquiry Error:",
-            err
-          );
-
-
-          if(status){
-
-            status.textContent =
-              err?.message ||
-              "Unable to save enquiry. Please try again.";
-
-          }
-
-
-          if(submit){
-
-            submit.disabled = false;
-
-            submit.innerHTML =
-              '<i class="fa-brands fa-whatsapp"></i> Send WhatsApp';
-
-          }
-
-        }
-
+    if(!/^[6-9]\d{9}$/.test(whatsappNumber.replace(/^91/,""))){
+      if(status) status.textContent="WhatsApp number is not configured correctly.";
+      return;
+    }
+
+    if(submit){
+      submit.disabled=true;
+      submit.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+    }
+    if(status) status.textContent="Saving your enquiry...";
+
+    try{
+      if(typeof apiCall !== "function") throw new Error("Enquiry service unavailable.");
+
+      /* This call is responsible for saving the enquiry into EnquiryDB on the Apps Script side. */
+      const result = await apiCall("submitEnquiry",{
+        name:name,
+        mobile:mobile,
+        email:"",
+        course:"",
+        message:"Quick Enquiry - WhatsApp",
+        source:"Quick Enquiry"
+      });
+
+      if(!result || !result.success){
+        throw new Error(result?.message || "Unable to save enquiry.");
       }
-    );
 
-  }
+      const customMessage =
+        "Hello Arsh Technical Academy,\n\n" +
+        "I want to make an enquiry.\n\n" +
+        "Name: " + name + "\n" +
+        "Mobile: " + mobile + "\n\n" +
+        "Please share the course, admission and training details. Thank you.";
 
+      if(status) status.textContent="Enquiry saved. Opening WhatsApp...";
+      if(submit) submit.innerHTML='<i class="fa-solid fa-check"></i> Opening WhatsApp...';
+
+      form.reset();
+
+      const whatsappUrl =
+        "https://wa.me/" +
+        whatsappNumber +
+        "?text=" +
+        encodeURIComponent(customMessage);
+
+      setTimeout(function(){
+        window.location.href = whatsappUrl;
+      },180);
+
+    }catch(err){
+      console.error("Quick Enquiry Error:",err);
+      if(status) status.textContent = err?.message || "Unable to save enquiry. Please try again.";
+      if(submit){
+        submit.disabled=false;
+        submit.innerHTML='<i class="fa-brands fa-whatsapp"></i> Send WhatsApp';
+      }
+    }
+  });
 })();
 </script>
 <script>(function(){function t(){var e=document.getElementById("currentTime");if(!e)return;e.textContent=new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true})}t();setInterval(t,1000)})();</script>
