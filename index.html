@@ -10361,6 +10361,81 @@ const mainMenu = [
 
 
     /* =====================================================
+       DYNAMIC MOBILE / PHONE / WHATSAPP HELPERS
+       -----------------------------------------------------
+       Centralized number resolution. No other feature uses
+       a hard-coded institute mobile number.
+    ====================================================== */
+
+    function getDynamicMobile() {
+
+      let mobile = "";
+
+      (SITE_DATA.contact || []).forEach(function(item) {
+
+        const label = String(item["Label"] || "").toLowerCase();
+        const value = String(item["Value"] || "").trim();
+
+        if (!value || mobile) return;
+
+        if (/mobile|phone|contact|call/.test(label)) {
+          mobile = value;
+        }
+
+      });
+
+      if (!mobile) {
+        mobile = setting("mobile", "");
+      }
+
+      if (!mobile) {
+        mobile = setting("phone", "");
+      }
+
+      return String(mobile || "").trim();
+    }
+
+
+    function getDynamicWhatsApp() {
+
+      let whatsapp = "";
+
+      (SITE_DATA.contact || []).forEach(function(item) {
+
+        const label = String(item["Label"] || "").toLowerCase();
+        const value = String(item["Value"] || "").trim();
+
+        if (!value || whatsapp) return;
+
+        if (/whatsapp/.test(label)) {
+          whatsapp = value;
+        }
+
+      });
+
+      if (!whatsapp) {
+        whatsapp = setting("whatsapp", "");
+      }
+
+      if (!whatsapp) {
+        whatsapp = getDynamicMobile();
+      }
+
+      return String(whatsapp || "")
+        .replace(/[^0-9]/g, "");
+    }
+
+
+    function getDynamicTel() {
+
+      const mobile = getDynamicMobile()
+        .replace(/[^0-9+]/g, "");
+
+      return mobile ? "tel:" + mobile : "#";
+    }
+
+
+    /* =====================================================
        TOPBAR DATE + CONTACT
     ====================================================== */
 
@@ -10373,7 +10448,6 @@ const mainMenu = [
       if (!emailEl || !mobileEl || !dateEl) return;
 
       let email = "";
-      let mobile = "";
 
       (SITE_DATA.contact || []).forEach(function(item) {
         const label = String(item["Label"] || "").toLowerCase();
@@ -10382,15 +10456,12 @@ const mainMenu = [
         if (!value) return;
 
         if (!email && /email|e-mail|mail/.test(label)) email = value;
-        if (!mobile && /mobile|phone|contact|whatsapp|call/.test(label)) mobile = value;
       });
 
       if (!email) email = setting("email", "info@example.com");
-      if (!mobile) mobile = setting("mobile", "+91 00000 00000");
 
-      const emailHref = email.includes("@") ? "mailto:" + email : "#";
-      const mobileDigits = mobile.replace(/[^0-9+]/g, "");
-      const mobileHref = mobileDigits ? "tel:" + mobileDigits : "#";
+      const mobile = getDynamicMobile();
+      const mobileHref = getDynamicTel();
 
       emailEl.href = emailHref;
       emailEl.querySelector("span").textContent = email;
@@ -13139,9 +13210,7 @@ function renderGallery() {
        */
 
       const phone =
-        setting(
-          "phone"
-        );
+        getDynamicMobile();
 
       const email =
         setting(
@@ -13243,15 +13312,7 @@ function renderGallery() {
     function renderWhatsApp() {
 
       const number =
-        String(
-          setting(
-            "whatsapp"
-          )
-        )
-        .replace(
-          /[^0-9]/g,
-          ""
-        );
+        getDynamicWhatsApp();
 
 
       const button =
@@ -14692,8 +14753,11 @@ function renderGallery() {
   const status = document.getElementById("quickEnquiryStatus");
   const submit = form ? form.querySelector("button[type='submit']") : null;
 
-  /* Replace this with the institute's real WhatsApp number, country code included. */
-  const whatsappNumber = mobile;
+  /* WhatsApp number is resolved dynamically from the institute contact/settings data. */
+  const whatsappNumber =
+    typeof getDynamicWhatsApp === "function"
+      ? getDynamicWhatsApp()
+      : "";
 
   function openEnquiry(){
     if(!modal) return;
