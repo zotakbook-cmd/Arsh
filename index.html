@@ -474,219 +474,73 @@ section:not(#home):not(#stats)::after{
     tabular-nums;
 
 }
-
 /* =========================================================
-   RESPONSIVE SITE BANNER
-   PC  : 1920 × 180
-   MOBILE : 1080 × 450
-   ========================================================= */
-
-.site-banner,
-#siteBanner{
-
-  width:100%;
-
-  margin:0;
-  padding:0;
-
-  position:relative;
-
-  overflow:hidden;
-
-  background:#050914;
-
-  line-height:0;
-
-}
-
-
-/* =========================================================
-   PICTURE
-   ========================================================= */
-
-.site-banner picture,
-#siteBanner picture{
-
-  display:block;
-
-  width:100%;
-
-  margin:0;
-  padding:0;
-
-  line-height:0;
-
-}
-
-
-/* =========================================================
-   IMAGE
-   ========================================================= */
-
-.site-banner img,
-#siteBanner img{
-
-  display:block;
-
-  width:100%;
-
-  height:auto;
-
-  margin:0;
-  padding:0;
-
-  border:0;
-
-  object-fit:contain;
-
-  object-position:center;
-
-}
-
-
-/* =========================================================
-   DESKTOP / PC
-   SOURCE = 1920 × 180
+   PC BANNER
+   Actual Image: 2172 × 465
    ========================================================= */
 
 @media (min-width:768px){
 
   .site-banner,
   #siteBanner{
-
     width:100%;
-
-    aspect-ratio:1920 / 180;
-
+    aspect-ratio:2172 / 465;
     height:auto;
-
-    min-height:0;
-    max-height:none;
-
+    overflow:hidden;
   }
 
   .site-banner picture,
   #siteBanner picture{
-
+    display:block;
     width:100%;
-
     height:100%;
-
   }
 
   .site-banner img,
   #siteBanner img{
-
+    display:block;
     width:100%;
-
     height:100%;
-
     object-fit:cover;
-
     object-position:center;
-
   }
 
 }
 
 
 /* =========================================================
-   MOBILE / PHONE
-   SOURCE = 1080 × 450
+   MOBILE BANNER
+   Actual Image: 1942 × 809
    ========================================================= */
 
 @media (max-width:767px){
 
   .site-banner,
   #siteBanner{
-
     width:100%;
-
-    aspect-ratio:1080 / 450;
-
+    aspect-ratio:1942 / 809;
     height:auto;
-
-    min-height:0;
-    max-height:none;
-
+    overflow:hidden;
   }
 
   .site-banner picture,
   #siteBanner picture{
-
+    display:block;
     width:100%;
-
     height:100%;
-
   }
 
   .site-banner img,
   #siteBanner img{
-
+    display:block;
     width:100%;
-
     height:100%;
-
     object-fit:cover;
-
     object-position:center;
-
   }
 
 }
-
-
-/* =========================================================
-   REMOVE ANY OLD SPACING
-   ========================================================= */
-
-.site-banner,
-.site-banner *,
-#siteBanner,
-#siteBanner *{
-
-  box-sizing:border-box;
-
-}
-
-
-/* =========================================================
-   SUBTLE OVERLAY
-   ========================================================= */
-
-.site-banner::after,
-#siteBanner::after{
-
-  content:"";
-
-  position:absolute;
-
-  inset:0;
-
-  pointer-events:none;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(5,9,20,.01),
-      rgba(5,9,20,.035)
-    );
-
-}
-
-
-/* =========================================================
-   PREVENT IMAGE SELECTION / INLINE GAP
-   ========================================================= */
-
-.site-banner img,
-#siteBanner img{
-
-  user-select:none;
-
-  -webkit-user-drag:none;
-
-}
+  
 /* =========================================================
    08. MAIN NAVIGATION
    ========================================================= */
@@ -6834,8 +6688,8 @@ html.fast-first-loaded .preloader{
   </div>
 <!-- =========================================================
      RESPONSIVE SITE BANNER
-     PC     : banner-pc.webp     → 1920 × 180
-     MOBILE : banner-mobile.webp → 1080 × 450
+     PC     : 2172 × 465
+     MOBILE : 1942 × 809
      ========================================================= -->
 
 <div
@@ -6848,7 +6702,6 @@ html.fast-first-loaded .preloader{
 
     <!-- =====================================================
          MOBILE / PHONE
-         767px और उससे कम
          ===================================================== -->
     <source
       media="(max-width: 767px)"
@@ -6857,7 +6710,6 @@ html.fast-first-loaded .preloader{
 
     <!-- =====================================================
          PC / DESKTOP
-         768px और उससे ऊपर
          ===================================================== -->
     <source
       media="(min-width: 768px)"
@@ -6871,8 +6723,8 @@ html.fast-first-loaded .preloader{
       id="siteBannerImage"
       src="assets/images/banner-pc.webp"
       alt="Arsh Technical Academy Pvt. Ltd."
-      width="1920"
-      height="180"
+      width="2172"
+      height="465"
       loading="eager"
       decoding="async"
     >
@@ -6880,7 +6732,6 @@ html.fast-first-loaded .preloader{
   </picture>
 
 </div>
-
   <!-- ===== MAIN MENU ONLY ===== -->
   <header id="siteHeader"><div class="navbar container">
     <ul id="navMenu" class="nav-menu" aria-label="Main menu"></ul>
