@@ -10363,36 +10363,53 @@ const mainMenu = [
     /* =====================================================
        DYNAMIC MOBILE / PHONE / WHATSAPP HELPERS
        -----------------------------------------------------
-       Centralized number resolution. No other feature uses
-       a hard-coded institute mobile number.
+       Only contact-number resolution is handled here.
+       No other website feature depends on these helpers.
     ====================================================== */
 
     function getDynamicMobile() {
 
       let mobile = "";
 
-      (SITE_DATA.contact || []).forEach(function(item) {
+      /* Contact sheet: accept common labels for the institute number. */
+      (SITE_DATA.contact || []).some(function(item) {
 
-        const label = String(item["Label"] || "").toLowerCase();
+        const label = String(item["Label"] || "").trim().toLowerCase();
         const value = String(item["Value"] || "").trim();
 
-        if (!value || mobile) return;
+        if (!value) return false;
 
-        if (/mobile|phone|contact|call/.test(label)) {
+        if (/^(mobile|mobile number|phone|phone number|contact|contact number|call|helpline|telephone)$/i.test(label) ||
+            /mobile|phone|contact|call|helpline|telephone/.test(label)) {
           mobile = value;
+          return true;
         }
 
+        return false;
       });
 
-      if (!mobile) {
-        mobile = setting("mobile", "");
-      }
-
-      if (!mobile) {
-        mobile = setting("phone", "");
-      }
+      /* Settings fallback. */
+      if (!mobile) mobile = setting("mobile", "");
+      if (!mobile) mobile = setting("phone", "");
 
       return String(mobile || "").trim();
+    }
+
+
+    function normalizeIndianMobile(value) {
+
+      let digits = String(value || "").replace(/\D/g, "");
+
+      /* Keep country code when supplied, otherwise add India +91. */
+      if (digits.length === 10 && /^[6-9]\d{9}$/.test(digits)) {
+        return "91" + digits;
+      }
+
+      if (digits.length === 12 && digits.indexOf("91") === 0) {
+        return digits;
+      }
+
+      return digits;
     }
 
 
@@ -10400,38 +10417,41 @@ const mainMenu = [
 
       let whatsapp = "";
 
-      (SITE_DATA.contact || []).forEach(function(item) {
+      /* A separate WhatsApp setting/contact value has priority. */
+      (SITE_DATA.contact || []).some(function(item) {
 
-        const label = String(item["Label"] || "").toLowerCase();
+        const label = String(item["Label"] || "").trim().toLowerCase();
         const value = String(item["Value"] || "").trim();
 
-        if (!value || whatsapp) return;
+        if (!value) return false;
 
-        if (/whatsapp/.test(label)) {
+        if (/whatsapp|whats app/.test(label)) {
           whatsapp = value;
+          return true;
         }
 
+        return false;
       });
 
-      if (!whatsapp) {
-        whatsapp = setting("whatsapp", "");
-      }
+      if (!whatsapp) whatsapp = setting("whatsapp", "");
+      if (!whatsapp) whatsapp = getDynamicMobile();
 
-      if (!whatsapp) {
-        whatsapp = getDynamicMobile();
-      }
-
-      return String(whatsapp || "")
-        .replace(/[^0-9]/g, "");
+      return normalizeIndianMobile(whatsapp);
     }
 
 
     function getDynamicTel() {
 
-      const mobile = getDynamicMobile()
-        .replace(/[^0-9+]/g, "");
+      const value = getDynamicMobile();
+      const digits = String(value || "").replace(/\D/g, "");
 
-      return mobile ? "tel:" + mobile : "#";
+      if (!digits) return "#";
+
+      return "tel:" + (
+        digits.length === 10
+          ? "+91" + digits
+          : "+" + digits.replace(/^\+/, "")
+      );
     }
 
 
@@ -10463,7 +10483,7 @@ const mainMenu = [
       const mobile = getDynamicMobile();
       const mobileHref = getDynamicTel();
 
-      emailEl.href = emailHref;
+      emailEl.href = email ? "mailto:" + email : "#";
       emailEl.querySelector("span").textContent = email;
       mobileEl.href = mobileHref;
       mobileEl.querySelector("span").textContent = mobile;
@@ -13321,6 +13341,8 @@ function renderGallery() {
         );
 
 
+      if (!button) return;
+
       if (!number) {
 
         button.classList.add(
@@ -14753,11 +14775,12 @@ function renderGallery() {
   const status = document.getElementById("quickEnquiryStatus");
   const submit = form ? form.querySelector("button[type='submit']") : null;
 
-  /* WhatsApp number is resolved dynamically from the institute contact/settings data. */
-  const whatsappNumber =
-    typeof getDynamicWhatsApp === "function"
+  /* Resolve the WhatsApp number at submit time, after website data has loaded. */
+  function getQuickWhatsAppNumber(){
+    return typeof getDynamicWhatsApp === "function"
       ? getDynamicWhatsApp()
       : "";
+  }
 
   function openEnquiry(){
     if(!modal) return;
@@ -14815,6 +14838,8 @@ function renderGallery() {
       document.getElementById("quickMobile")?.focus();
       return;
     }
+
+    const whatsappNumber = getQuickWhatsAppNumber();
 
     if(!/^[6-9]\d{9}$/.test(whatsappNumber.replace(/^91/,""))){
       if(status) status.textContent="WhatsApp number is not configured correctly.";
