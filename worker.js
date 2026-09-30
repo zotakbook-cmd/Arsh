@@ -794,132 +794,132 @@ async function listImages(env) {
 
   const branch = String(env.GITHUB_BRANCH || "").trim();
   const root = CONFIG.IMAGE_ROOT;
-  const files = [];
-  const seenFiles = new Set();
-  const seenDirs = new Set();
 
   /*
-   * FINAL IMAGE LIST FIX
+   * ROOT DIRECTORY LISTING
    *
-   * GitHub Contents API is the single source of truth.
-   * The root request is exactly the same request already proven
-   * by /api/github-images-debug to return all 3 images.
+   * The diagnostic endpoint has already proved that this exact
+   * GitHub Contents API request returns all 3 files. Therefore
+   * /api/images now uses the same direct response and does not
+   * run the previous filtering path on the root directory.
    */
+  const encodedRoot = root
+    .split("/")
+    .map(encodeURIComponent)
+    .join("/");
 
-  async function readDirectory(path, page = 1) {
+  const response = await github(
+    env,
+    `/contents/${encodedRoot}?ref=${encodeURIComponent(branch)}&per_page=100&page=1`
+  );
 
-    const encodedPath = path
+  const data = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    return json({
+      ok: false,
+      error: githubErrorMessage(data, "Unable to read GitHub images.")
+    }, 502);
+  }
+
+  if (!Array.isArray(data)) {
+    return json({
+      ok: false,
+      error: "GitHub did not return an image directory listing."
+    }, 502);
+  }
+
+  const files = [];
+  const seen = new Set();
+
+  /* Root files: deliberately map every image file directly. */
+  for (const item of data) {
+    if (!item || item.type !== "file" || !item.path) continue;
+
+    const name = String(item.name || item.path.split("/").pop() || "");
+    if (!isImage(name)) continue;
+
+    const path = String(item.path);
+    if (seen.has(path)) continue;
+    seen.add(path);
+
+    files.push(
+      makeImageFile(
+        env,
+        branch,
+        path,
+        item.sha || "",
+        Number(item.size || 0)
+      )
+    );
+  }
+
+  /*
+   * Recursively scan subdirectories only. Root files above are never
+   * re-read, so the three root images cannot be lost by recursion.
+   */
+  const dirs = data
+    .filter(item => item && item.type === "dir" && item.path)
+    .map(item => String(item.path));
+
+  async function readSubdirectory(path) {
+    const encoded = path
       .split("/")
       .map(encodeURIComponent)
       .join("/");
 
-    const endpoint =
-      `/contents/${encodedPath}` +
-      `?ref=${encodeURIComponent(branch)}` +
-      `&per_page=100&page=${page}`;
+    const r = await github(
+      env,
+      `/contents/${encoded}?ref=${encodeURIComponent(branch)}&per_page=100&page=1`
+    );
 
-    const response = await github(env, endpoint);
-    const data = await response.json().catch(() => null);
+    const items = await r.json().catch(() => null);
+    if (!r.ok || !Array.isArray(items)) return;
 
-    if (!response.ok) {
-      throw new Error(
-        githubErrorMessage(
-          data,
-          `Unable to read GitHub directory: ${path}`
-        )
-      );
-    }
-
-    if (!Array.isArray(data)) {
-      throw new Error(
-        `GitHub did not return a directory listing for ${path}.`
-      );
-    }
-
-    for (const item of data) {
-
-      if (
-        !item ||
-        typeof item.path !== "string" ||
-        typeof item.type !== "string"
-      ) {
-        continue;
-      }
+    for (const item of items) {
+      if (!item || !item.path || !item.type) continue;
 
       if (item.type === "file") {
+        const name = String(item.name || item.path.split("/").pop() || "");
+        if (!isImage(name)) continue;
 
-        const imagePath = safePath(item.path);
-
-        if (!imagePath) continue;
-
-        if (
-          !isImage(item.name || "") &&
-          !isImage(item.path)
-        ) {
-          continue;
-        }
-
-        if (seenFiles.has(imagePath)) continue;
-        seenFiles.add(imagePath);
+        const filePath = String(item.path);
+        if (seen.has(filePath)) continue;
+        seen.add(filePath);
 
         files.push(
           makeImageFile(
             env,
             branch,
-            imagePath,
+            filePath,
             item.sha || "",
             Number(item.size || 0)
           )
         );
-
-        continue;
       }
 
       if (item.type === "dir") {
-
-        const dirPath = safePath(item.path);
-
-        if (!dirPath || seenDirs.has(dirPath)) {
-          continue;
-        }
-
-        seenDirs.add(dirPath);
-        await readDirectory(dirPath, 1);
+        await readSubdirectory(String(item.path));
       }
     }
-
-    if (data.length === 100) {
-      await readDirectory(path, page + 1);
-    }
   }
 
-  try {
-    await readDirectory(root, 1);
-  } catch (error) {
-    return json({
-      ok: false,
-      error:
-        error instanceof Error
-          ? error.message
-          : "Unable to read GitHub images."
-    }, 502);
+  for (const dir of dirs) {
+    await readSubdirectory(dir);
   }
 
-  files.sort((a, b) =>
-    a.path.localeCompare(b.path)
-  );
+  files.sort((a, b) => a.path.localeCompare(b.path));
 
   return json({
     ok: true,
     root,
     branch,
-    source: "github-contents-api-final",
+    source: "github-contents-root-direct-v3",
     count: files.length,
     truncated: false,
     files
   });
 }
-
 
 /* =========================================================
    GET FILE SHA
