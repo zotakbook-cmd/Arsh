@@ -793,16 +793,17 @@ async function listImages(env) {
   }
 
   const branch = String(env.GITHUB_BRANCH || "").trim();
+  const root = CONFIG.IMAGE_ROOT;
   const files = [];
-  const visitedDirs = new Set();
+  const seenFiles = new Set();
+  const seenDirs = new Set();
 
   /*
-   * IMAGE LIST FIX
+   * FINAL IMAGE LIST FIX
    *
-   * GitHub's Contents API is used as the single source of truth.
-   * The root assets/images directory is read directly first, exactly
-   * like /api/github-images-debug. This guarantees that normal files
-   * in the root are not lost. Subdirectories are then walked recursively.
+   * GitHub Contents API is the single source of truth.
+   * The root request is exactly the same request already proven
+   * by /api/github-images-debug to return all 3 images.
    */
 
   async function readDirectory(path, page = 1) {
@@ -812,11 +813,12 @@ async function listImages(env) {
       .map(encodeURIComponent)
       .join("/");
 
-    const response = await github(
-      env,
-      `/contents/${encodedPath}?ref=${encodeURIComponent(branch)}&per_page=100&page=${page}`
-    );
+    const endpoint =
+      `/contents/${encodedPath}` +
+      `?ref=${encodeURIComponent(branch)}` +
+      `&per_page=100&page=${page}`;
 
+    const response = await github(env, endpoint);
     const data = await response.json().catch(() => null);
 
     if (!response.ok) {
@@ -836,67 +838,88 @@ async function listImages(env) {
 
     for (const item of data) {
 
-      if (!item || !item.path || !item.type) continue;
+      if (
+        !item ||
+        typeof item.path !== "string" ||
+        typeof item.type !== "string"
+      ) {
+        continue;
+      }
 
       if (item.type === "file") {
 
-        /* Use the filename itself for extension detection. */
-        if (isImage(item.name || item.path)) {
-          files.push(
-            makeImageFile(
-              env,
-              branch,
-              item.path,
-              item.sha,
-              item.size || 0
-            )
-          );
+        const imagePath = safePath(item.path);
+
+        if (!imagePath) continue;
+
+        if (
+          !isImage(item.name || "") &&
+          !isImage(item.path)
+        ) {
+          continue;
         }
+
+        if (seenFiles.has(imagePath)) continue;
+        seenFiles.add(imagePath);
+
+        files.push(
+          makeImageFile(
+            env,
+            branch,
+            imagePath,
+            item.sha || "",
+            Number(item.size || 0)
+          )
+        );
 
         continue;
       }
 
       if (item.type === "dir") {
 
-        const dirKey = item.path;
+        const dirPath = safePath(item.path);
 
-        if (visitedDirs.has(dirKey)) continue;
+        if (!dirPath || seenDirs.has(dirPath)) {
+          continue;
+        }
 
-        visitedDirs.add(dirKey);
-        await readDirectory(item.path, 1);
+        seenDirs.add(dirPath);
+        await readDirectory(dirPath, 1);
       }
     }
 
-    /* Handle GitHub Contents API pagination for directories >100 items. */
     if (data.length === 100) {
       await readDirectory(path, page + 1);
     }
   }
 
   try {
-    /* This is intentionally the exact same root used by the diagnostic endpoint. */
-    await readDirectory(CONFIG.IMAGE_ROOT, 1);
+    await readDirectory(root, 1);
   } catch (error) {
     return json({
       ok: false,
-      error: error instanceof Error
-        ? error.message
-        : "Unable to read GitHub images."
+      error:
+        error instanceof Error
+          ? error.message
+          : "Unable to read GitHub images."
     }, 502);
   }
 
-  files.sort((a, b) => a.path.localeCompare(b.path));
+  files.sort((a, b) =>
+    a.path.localeCompare(b.path)
+  );
 
   return json({
     ok: true,
-    root: CONFIG.IMAGE_ROOT,
+    root,
     branch,
-    source: "contents-direct-v2",
-    truncated: false,
+    source: "github-contents-api-final",
     count: files.length,
+    truncated: false,
     files
   });
 }
+
 
 /* =========================================================
    GET FILE SHA
