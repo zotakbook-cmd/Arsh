@@ -917,25 +917,52 @@ function updateCropPointer(e, rect){
     }
     cropState.left=l; cropState.top=t; cropState.right=r; cropState.bottom=b;
   }
-  clampCrop(); renderCropBox();
+  clampCrop();
+  renderCropBox();
+  if(editorEl('editLock').checked){
+    syncEditorHeight();
+  }
 }
 
 function getCropRect(sw, sh, ratioText){
   return cropState.active ? cropRectNatural() : {x:0,y:0,w:sw,h:sh};
 }
 
+function getCurrentCropAspect(){
+  const crop = cropState.active ? cropRectNatural() : {
+    x:0, y:0,
+    w:editorState.sourceWidth,
+    h:editorState.sourceHeight
+  };
+  return crop.w > 0 && crop.h > 0 ? crop.w / crop.h : 1;
+}
+
 function syncEditorHeight(){
   const w = Number(editorEl('editWidth').value) || 1;
-  const h = Number(editorEl('editHeight').value) || 1;
-  if(editorEl('editLock').checked && editorState.sourceWidth && editorState.sourceHeight){
-    editorEl('editHeight').value = Math.max(1, Math.round(w * editorState.sourceHeight / editorState.sourceWidth));
+  if(editorEl('editLock').checked){
+    const ratio = getCurrentCropAspect();
+    editorEl('editHeight').value = Math.max(1, Math.round(w / ratio));
   }
 }
 
 function syncEditorWidth(){
-  const w = Number(editorEl('editWidth').value) || 1;
-  if(editorEl('editLock').checked && editorState.sourceWidth && editorState.sourceHeight){
-    editorEl('editHeight').value = Math.max(1, Math.round(w * editorState.sourceHeight / editorState.sourceWidth));
+  const h = Number(editorEl('editHeight').value) || 1;
+  if(editorEl('editLock').checked){
+    const ratio = getCurrentCropAspect();
+    editorEl('editWidth').value = Math.max(1, Math.round(h * ratio));
+  }
+}
+
+function syncOutputToCrop(){
+  if(!editorState.sourceWidth || !editorState.sourceHeight) return;
+  const crop = cropState.active ? cropRectNatural() : {
+    x:0, y:0,
+    w:editorState.sourceWidth,
+    h:editorState.sourceHeight
+  };
+  if(crop.w > 0 && crop.h > 0){
+    editorEl('editWidth').value = Math.max(1, Math.round(crop.w));
+    editorEl('editHeight').value = Math.max(1, Math.round(crop.h));
   }
 }
 
@@ -1007,8 +1034,9 @@ async function buildEditedImage(){
   let outW = Math.max(1, Number(editorEl('editWidth').value) || Math.round(crop.w));
   let outH = Math.max(1, Number(editorEl('editHeight').value) || Math.round(crop.h));
 
-  /* If an aspect crop was selected, make the output match that crop. */
-  if(editorEl('editCrop').value !== 'free' && editorEl('editLock').checked){
+  /* Crop first, then resize the selected crop. When lock is enabled,
+     preserve the actual selected crop aspect ratio (including free-drag crops). */
+  if(editorEl('editLock').checked && crop.w > 0 && crop.h > 0){
     outH = Math.max(1, Math.round(outW * crop.h / crop.w));
   }
 
@@ -1064,11 +1092,9 @@ async function buildEditedImage(){
 
 /* Editor controls */
 editorEl('editWidth').addEventListener('input', syncEditorHeight);
-editorEl('editHeight').addEventListener('input', () => {
-  if(editorEl('editLock').checked && editorState.sourceWidth && editorState.sourceHeight){
-    const h = Number(editorEl('editHeight').value) || 1;
-    editorEl('editWidth').value = Math.max(1, Math.round(h * editorState.sourceWidth / editorState.sourceHeight));
-  }
+editorEl('editHeight').addEventListener('input', syncEditorWidth);
+editorEl('editLock').addEventListener('change', () => {
+  if(editorEl('editLock').checked) syncEditorHeight();
 });
 editorEl('editQuality').addEventListener('input', syncEditorQuality);
 editorEl('editorClose').onclick = () => closeEditor(null);
@@ -1078,9 +1104,9 @@ editorEl('editorModal').addEventListener('click', e => {
 });
 editorEl('editCrop').addEventListener('change', () => {
   initCropBox();
-  const crop = cropRectNatural();
-  const w = Number(editorEl('editWidth').value) || Math.round(crop.w);
-  if(editorEl('editCrop').value !== 'free') editorEl('editHeight').value = Math.max(1, Math.round(w * crop.h / crop.w));
+  // Crop and resize are one pipeline: after changing the crop shape,
+  // keep the output dimensions aligned with the selected crop.
+  syncOutputToCrop();
 });
 
 editorEl('cropBox').addEventListener('pointerdown', e => {
