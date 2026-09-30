@@ -110,3 +110,100 @@ body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,system-ui,s
 .crop-handle.nw{left:-8px;top:-8px;cursor:nwse-resize}.crop-handle.ne{right:-8px;top:-8px;cursor:nesw-resize}.crop-handle.sw{left:-8px;bottom:-8px;cursor:nesw-resize}.crop-handle.se{right:-8px;bottom:-8px;cursor:nwse-resize}
 .crop-grid-v,.crop-grid-h{display:none}
 @media(max-width:850px){#editorCanvas{min-height:280px}}
+
+/* =========================================================
+   FIX - EDITOR APPLY & UPLOAD BUTTON
+   ========================================================= */
+
+#editorApply {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  height: 44px !important;
+  min-width: 155px !important;
+
+  padding: 0 20px !important;
+
+  border: 0 !important;
+  border-radius: 12px !important;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #7c3aed
+  ) !important;
+
+  color: #ffffff !important;
+
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+
+  line-height: 1 !important;
+
+  cursor: pointer !important;
+
+  box-shadow:
+    0 9px 24px rgba(37, 99, 235, 0.25) !important;
+
+  position: relative !important;
+  z-index: 9999 !important;
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    opacity .2s ease !important;
+}
+
+
+/* HOVER */
+
+#editorApply:hover {
+  transform: translateY(-1px) !important;
+
+  box-shadow:
+    0 12px 28px rgba(37, 99, 235, 0.35) !important;
+}
+
+
+/* ACTIVE */
+
+#editorApply:active {
+  transform: translateY(0) !important;
+}
+
+
+/* DISABLED / UPLOADING */
+
+#editorApply:disabled {
+  opacity: .6 !important;
+  cursor: wait !important;
+  transform: none !important;
+
+  box-shadow:
+    0 5px 15px rgba(37, 99, 235, 0.15) !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+  #editorApply {
+    min-width: 145px !important;
+    height: 42px !important;
+    padding: 0 15px !important;
+    font-size: 12px !important;
+  }
+
+}
+
+
+
+
