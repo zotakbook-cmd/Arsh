@@ -783,17 +783,145 @@ function editorFormatInfo(file, selected){
   return {mime:'image/webp', ext:'webp'};
 }
 
-function getCropRect(sw, sh, ratioText){
-  if(ratioText === 'free') return {x:0,y:0,w:sw,h:sh};
-  const [rw,rh] = ratioText.split(':').map(Number);
-  const target = rw / rh;
-  const source = sw / sh;
-  if(source > target){
-    const w = sh * target;
-    return {x:(sw-w)/2,y:0,w,h:sh};
+const cropState = {
+  active:false,
+  left:0, top:0, right:1, bottom:1,
+  start:null,
+  mode:null,
+  handle:null
+};
+
+function getImageDisplayRect(){
+  const wrap = editorEl('editorCanvas');
+  const img = editorEl('editorPreview');
+  if(!wrap || !img || !img.naturalWidth) return null;
+  const wr = wrap.getBoundingClientRect();
+  const ir = img.getBoundingClientRect();
+  return {
+    left: ir.left - wr.left,
+    top: ir.top - wr.top,
+    width: ir.width,
+    height: ir.height
+  };
+}
+
+function ratioValue(text){
+  if(text === 'free') return null;
+  const parts = text.split(':').map(Number);
+  return parts[0] / parts[1];
+}
+
+function initCropBox(){
+  const overlay = editorEl('cropOverlay');
+  if(!overlay) return;
+  const ratio = ratioValue(editorEl('editCrop').value);
+  const sw = editorState.sourceWidth;
+  const sh = editorState.sourceHeight;
+  let w = 1, h = 1;
+  if(ratio){
+    const sourceRatio = sw / sh;
+    if(sourceRatio > ratio) w = (sh * ratio) / sw;
+    else h = (sw / ratio) / sh;
   }
-  const h = sw / target;
-  return {x:0,y:(sh-h)/2,w:sw,h};
+  cropState.left = (1-w)/2;
+  cropState.top = (1-h)/2;
+  cropState.right = cropState.left + w;
+  cropState.bottom = cropState.top + h;
+  cropState.active = true;
+  overlay.classList.remove('hidden');
+  renderCropBox();
+}
+
+function renderCropBox(){
+  const overlay = editorEl('cropOverlay');
+  if(!overlay || !cropState.active) return;
+  const rect = getImageDisplayRect();
+  if(!rect || !rect.width || !rect.height) return;
+  overlay.style.left = `${rect.left}px`;
+  overlay.style.top = `${rect.top}px`;
+  overlay.style.width = `${rect.width}px`;
+  overlay.style.height = `${rect.height}px`;
+  overlay.style.right = 'auto';
+  overlay.style.bottom = 'auto';
+  overlay.style.setProperty('--crop-left', `${cropState.left*100}%`);
+  overlay.style.setProperty('--crop-top', `${cropState.top*100}%`);
+  overlay.style.setProperty('--crop-right', `${cropState.right*100}%`);
+  overlay.style.setProperty('--crop-bottom', `${cropState.bottom*100}%`);
+}
+
+function clampCrop(){
+  cropState.left = Math.max(0, Math.min(.99, cropState.left));
+  cropState.top = Math.max(0, Math.min(.99, cropState.top));
+  cropState.right = Math.max(cropState.left+.005, Math.min(1, cropState.right));
+  cropState.bottom = Math.max(cropState.top+.005, Math.min(1, cropState.bottom));
+}
+
+function cropRectNatural(){
+  const sw = editorState.sourceWidth, sh = editorState.sourceHeight;
+  return {
+    x: cropState.left * sw,
+    y: cropState.top * sh,
+    w: (cropState.right-cropState.left) * sw,
+    h: (cropState.bottom-cropState.top) * sh
+  };
+}
+
+function beginCropPointer(e, mode, handle=null){
+  e.preventDefault(); e.stopPropagation();
+  const rect = getImageDisplayRect();
+  if(!rect) return;
+  cropState.start = {
+    x:e.clientX, y:e.clientY,
+    left:cropState.left, top:cropState.top, right:cropState.right, bottom:cropState.bottom
+  };
+  cropState.mode = mode; cropState.handle = handle;
+  const move = ev => updateCropPointer(ev, rect);
+  const up = () => {
+    window.removeEventListener('pointermove', move);
+    window.removeEventListener('pointerup', up);
+    cropState.start = null; cropState.mode = null; cropState.handle = null;
+  };
+  window.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', up, {once:true});
+}
+
+function updateCropPointer(e, rect){
+  if(!cropState.start) return;
+  const dx=(e.clientX-cropState.start.x)/rect.width;
+  const dy=(e.clientY-cropState.start.y)/rect.height;
+  const ratio=ratioValue(editorEl('editCrop').value);
+  const s=cropState.start;
+
+  if(cropState.mode==='move') {
+    const w=s.right-s.left, h=s.bottom-s.top;
+    let l=s.left+dx, t=s.top+dy;
+    l=Math.max(0,Math.min(1-w,l)); t=Math.max(0,Math.min(1-h,t));
+    cropState.left=l; cropState.right=l+w; cropState.top=t; cropState.bottom=t+h;
+  } else {
+    let l=s.left, t=s.top, r=s.right, b=s.bottom;
+    const handle=cropState.handle;
+    if(handle.includes('w')) l=Math.max(0,Math.min(r-.01,s.left+dx));
+    if(handle.includes('e')) r=Math.min(1,Math.max(l+.01,s.right+dx));
+    if(handle.includes('n')) t=Math.max(0,Math.min(b-.01,s.top+dy));
+    if(handle.includes('s')) b=Math.min(1,Math.max(t+.01,s.bottom+dy));
+
+    if(ratio){
+      const imageRatio=editorState.sourceWidth/editorState.sourceHeight;
+      let w=r-l, h=b-t;
+      const desiredNorm=ratio/imageRatio;
+      if(w/h > desiredNorm) h=w/desiredNorm; else w=h*desiredNorm;
+      if(handle.includes('w')) l=r-w; else if(handle.includes('e')) r=l+w;
+      else if(handle.includes('n')) t=b-h; else b=t+h;
+      if(l<0){r-=l;l=0} if(r>1){l-=r-1;r=1}
+      if(t<0){b-=t;t=0} if(b>1){t-=b-1;b=1}
+    }
+    cropState.left=l; cropState.top=t; cropState.right=r; cropState.bottom=b;
+  }
+  clampCrop(); renderCropBox();
+}
+
+function getCropRect(sw, sh, ratioText){
+  return cropState.active ? cropRectNatural() : {x:0,y:0,w:sw,h:sh};
 }
 
 function syncEditorHeight(){
@@ -846,11 +974,14 @@ function openImageEditor(file, target = null){
       editorEl('editHeight').value = editorState.sourceHeight;
       editorEl('editCrop').value = 'free';
       editorEl('editFormat').value = 'original';
+      cropState.active = false;
+      editorEl('cropOverlay').classList.add('hidden');
       editorEl('editQuality').value = 88;
       syncEditorQuality();
       editorEl('editorDimensions').textContent =
         `${editorState.sourceWidth} × ${editorState.sourceHeight}px · ${formatBytes(file.size)}`;
       editorEl('editorModal').classList.remove('hidden');
+      initCropBox();
       URL.revokeObjectURL(url);
     };
     img.onerror = () => {
@@ -946,11 +1077,22 @@ editorEl('editorModal').addEventListener('click', e => {
   if(e.target.id === 'editorModal') closeEditor(null);
 });
 editorEl('editCrop').addEventListener('change', () => {
-  const crop = getCropRect(editorState.sourceWidth, editorState.sourceHeight, editorEl('editCrop').value);
-  if(editorEl('editCrop').value !== 'free'){
-    const w = Number(editorEl('editWidth').value) || Math.round(crop.w);
-    editorEl('editHeight').value = Math.max(1, Math.round(w * crop.h / crop.w));
-  }
+  initCropBox();
+  const crop = cropRectNatural();
+  const w = Number(editorEl('editWidth').value) || Math.round(crop.w);
+  if(editorEl('editCrop').value !== 'free') editorEl('editHeight').value = Math.max(1, Math.round(w * crop.h / crop.w));
+});
+
+editorEl('cropBox').addEventListener('pointerdown', e => {
+  if(e.target.closest('.crop-handle')) return;
+  beginCropPointer(e, 'move');
+});
+editorEl('cropBox').querySelectorAll('.crop-handle').forEach(handle => {
+  handle.addEventListener('pointerdown', e => beginCropPointer(e, 'resize', handle.dataset.handle));
+});
+
+window.addEventListener('resize', () => {
+  if(cropState.active) renderCropBox();
 });
 editorEl('editorApply').onclick = async () => {
   const btn = editorEl('editorApply');
