@@ -321,33 +321,6 @@ function deleteSessionCookie() {
    PATH SECURITY
    ========================================================= */
 
-function safeUploadImagePath(path) {
-
-  if (typeof path !== "string") {
-    return null;
-  }
-
-  let value = path
-    .trim()
-    .replace(/\\/g, "/")
-    .replace(/^\/+/, "");
-
-  /* Accept both:
-   * assets/images/photo.webp
-   * photo.webp
-   * /assets/images/photo.webp
-   */
-  const root = CONFIG.IMAGE_ROOT;
-
-  if (!value.startsWith(root + "/")) {
-    value = value.replace(/^assets\/images\/?/i, "");
-    value = root + "/" + value;
-  }
-
-  return safePath(value);
-}
-
-
 function safePath(path) {
 
   if (
@@ -377,15 +350,17 @@ function safePath(path) {
 
   }
 
-  if (
-    path !== CONFIG.IMAGE_ROOT &&
-    !path.startsWith(
-      CONFIG.IMAGE_ROOT + "/"
-    )
-  ) {
-
-    return null;
-
+  /*
+   * Upload UI may send only the filename (for example logo.webp).
+   * Normalize that to the CMS image root. Existing full paths such as
+   * assets/images/logo.webp continue to work unchanged.
+   */
+  if (path !== CONFIG.IMAGE_ROOT && !path.startsWith(CONFIG.IMAGE_ROOT + "/")) {
+    if (!path.includes("/")) {
+      path = CONFIG.IMAGE_ROOT + "/" + path;
+    } else {
+      return null;
+    }
   }
 
   return path;
@@ -993,7 +968,7 @@ async function uploadImage(
       .catch(() => ({}));
 
   const path =
-    safeUploadImagePath(body.path);
+    safePath(body.path);
 
   if (
     !path ||
@@ -1003,8 +978,8 @@ async function uploadImage(
     return json(
       {
         ok: false,
-        error: "Invalid image path.",
-        expected: "assets/images/<filename>.<jpg|jpeg|png|webp|gif|svg|avif|bmp|ico>"
+        error:
+          "Invalid image path."
       },
       400
     );
