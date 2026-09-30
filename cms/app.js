@@ -282,6 +282,7 @@ function render() {
 
         <div class="actions">
           <button onclick="preview(${i})">Preview</button>
+          <button class="edit-action" onclick="editExisting(${i})">✎ Edit</button>
           <button onclick="replaceImage(${i})">Replace</button>
           <button onclick="renameImage(${i})">Rename</button>
           <button class="delete" onclick="deleteImage(${i})">Delete</button>
@@ -390,6 +391,29 @@ window.renameImage = async i => {
 
   } catch (e) {
     toast(e.message);
+  }
+};
+
+window.editExisting = async i => {
+  const f = state.filtered[i];
+  if (!f) return;
+
+  try {
+    toast('Loading image…');
+
+    const response = await fetch(f.url, { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`Unable to load image (${response.status})`);
+    }
+
+    const blob = await response.blob();
+    const type = blob.type || 'image/*';
+    const file = new File([blob], f.name, { type });
+
+    await processFiles([file], [f]);
+  } catch (error) {
+    console.error('[Arsh CMS] existing image editor:', error);
+    toast(error.message || 'Unable to edit image.');
   }
 };
 
@@ -675,6 +699,9 @@ $('#logoutBtn').onclick = async () => {
 $('#refreshBtn').onclick = loadImages;
 
 $('#uploadBtn').onclick = () =>
+  document.querySelector('[data-view="upload"]').click();
+
+$('#topUploadBtn').onclick = () =>
   document.querySelector('[data-view="upload"]').click();
 
 document.querySelectorAll('.nav').forEach(b =>
