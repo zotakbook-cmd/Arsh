@@ -812,8 +812,8 @@ function openImageEditor(file, target = null){
         ? `Edit & replace — ${target.name}`
         : `Edit — ${file.name}`;
       editorEl('editorPreview').src = url;
-      editorEl('editorWidth').value = editorState.sourceWidth;
-      editorEl('editorHeight').value = editorState.sourceHeight;
+      editorEl('editWidth').value = editorState.sourceWidth;
+      editorEl('editHeight').value = editorState.sourceHeight;
       editorEl('editCrop').value = 'free';
       editorEl('editFormat').value = 'original';
       editorEl('editQuality').value = 88;
@@ -902,8 +902,8 @@ async function buildEditedImage(){
 }
 
 /* Editor controls */
-editorEl('editorWidth').addEventListener('input', syncEditorHeight);
-editorEl('editorHeight').addEventListener('input', () => {
+editorEl('editWidth').addEventListener('input', syncEditorHeight);
+editorEl('editHeight').addEventListener('input', () => {
   if(editorEl('editLock').checked && editorState.sourceWidth && editorState.sourceHeight){
     const h = Number(editorEl('editHeight').value) || 1;
     editorEl('editWidth').value = Math.max(1, Math.round(h * editorState.sourceWidth / editorState.sourceHeight));
