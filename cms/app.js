@@ -40,7 +40,10 @@ async function api(path, options = {}) {
   const data = await r.json().catch(() => ({}));
 
   if (!r.ok) {
-    throw new Error(data.error || `Request failed (${r.status})`);
+    let message = data.error || `Request failed (${r.status})`;
+    if (data.receivedPath !== undefined) message += ` | receivedPath: ${data.receivedPath ?? '(none)'}`;
+    if (data.imageRoot) message += ` | root: ${data.imageRoot}`;
+    throw new Error(message);
   }
 
   return data;
@@ -999,7 +1002,7 @@ async function processFiles(fileList, replaceTargets = []){
          */
         path = folder
           ? `assets/images/${folder}/${prefixPart}${filename}`
-          : `${prefixPart}${filename}`;
+          : `assets/images/${prefixPart}${filename}`;
       }
 
       /* Final client-side path guard. */
@@ -1025,6 +1028,7 @@ async function processFiles(fileList, replaceTargets = []){
         headers: {'content-type':'application/json'},
         body: JSON.stringify({
           path,
+          filename: edited.name,
           content: edited.dataUrl
         })
       });
