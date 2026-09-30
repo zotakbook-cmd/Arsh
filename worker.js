@@ -321,50 +321,51 @@ function deleteSessionCookie() {
    PATH SECURITY
    ========================================================= */
 
-function safePath(path) {
-
-  if (
-    !path ||
-    typeof path !== "string"
-  ) {
-
-    return null;
-
-  }
-
-  path =
-    path
-      .trim()
-      .replace(/\\/g, "/")
-      .replace(/^\/+/, "");
-
-  if (
-    !path ||
-    path.includes("..") ||
-    path.includes("//") ||
-    path.includes("\0") ||
-    path.split("/").some(segment => !segment || segment === "." || segment === "..")
-  ) {
-
-    return null;
-
-  }
-
+function safePath(input) {
   /*
-   * Upload UI may send only the filename (for example logo.webp).
-   * Normalize that to the CMS image root. Existing full paths such as
-   * assets/images/logo.webp continue to work unchanged.
+   * ONE canonical rule for every image operation:
+   * - accept filename.webp
+   * - accept assets/images/filename.webp
+   * - accept nested assets/images/folder/filename.webp
+   * - NEVER allow a path outside assets/images
    */
-  if (path !== CONFIG.IMAGE_ROOT && !path.startsWith(CONFIG.IMAGE_ROOT + "/")) {
+  if (typeof input !== "string") return null;
+
+  let path = input
+    .trim()
+    .replace(/\\/g, "/")
+    .replace(/^\/+/, "");
+
+  if (!path) return null;
+
+  // Remove accidental duplicate slashes.
+  path = path.replace(/\/{2,}/g, "/");
+
+  // Block traversal/control characters.
+  if (
+    path.includes("..") ||
+    path.includes("\0") ||
+    /[\r\n]/.test(path)
+  ) {
+    return null;
+  }
+
+  // If frontend sends only a filename, put it inside assets/images.
+  if (!path.startsWith(CONFIG.IMAGE_ROOT + "/") && path !== CONFIG.IMAGE_ROOT) {
     if (!path.includes("/")) {
-      path = CONFIG.IMAGE_ROOT + "/" + path;
+      path = `${CONFIG.IMAGE_ROOT}/${path}`;
     } else {
       return null;
     }
   }
 
-  return path;
+  // Final containment check.
+  if (!path.startsWith(CONFIG.IMAGE_ROOT + "/")) return null;
 
+  const parts = path.split("/");
+  if (parts.some(part => !part || part === "." || part === "..")) return null;
+
+  return path;
 }
 
 
@@ -978,8 +979,9 @@ async function uploadImage(
     return json(
       {
         ok: false,
-        error:
-          "Invalid image path."
+        error: "Invalid image path.",
+        receivedPath: typeof body.path === "string" ? body.path : null,
+        imageRoot: CONFIG.IMAGE_ROOT
       },
       400
     );
