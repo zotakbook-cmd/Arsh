@@ -321,6 +321,33 @@ function deleteSessionCookie() {
    PATH SECURITY
    ========================================================= */
 
+function safeUploadImagePath(path) {
+
+  if (typeof path !== "string") {
+    return null;
+  }
+
+  let value = path
+    .trim()
+    .replace(/\\/g, "/")
+    .replace(/^\/+/, "");
+
+  /* Accept both:
+   * assets/images/photo.webp
+   * photo.webp
+   * /assets/images/photo.webp
+   */
+  const root = CONFIG.IMAGE_ROOT;
+
+  if (!value.startsWith(root + "/")) {
+    value = value.replace(/^assets\/images\/?/i, "");
+    value = root + "/" + value;
+  }
+
+  return safePath(value);
+}
+
+
 function safePath(path) {
 
   if (
@@ -793,130 +820,107 @@ async function listImages(env) {
   }
 
   const branch = String(env.GITHUB_BRANCH || "").trim();
-  const root = CONFIG.IMAGE_ROOT;
-
-  /*
-   * ROOT DIRECTORY LISTING
-   *
-   * The diagnostic endpoint has already proved that this exact
-   * GitHub Contents API request returns all 3 files. Therefore
-   * /api/images now uses the same direct response and does not
-   * run the previous filtering path on the root directory.
-   */
-  const encodedRoot = root
-    .split("/")
-    .map(encodeURIComponent)
-    .join("/");
-
-  const response = await github(
-    env,
-    `/contents/${encodedRoot}?ref=${encodeURIComponent(branch)}&per_page=100&page=1`
-  );
-
-  const data = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    return json({
-      ok: false,
-      error: githubErrorMessage(data, "Unable to read GitHub images.")
-    }, 502);
-  }
-
-  if (!Array.isArray(data)) {
-    return json({
-      ok: false,
-      error: "GitHub did not return an image directory listing."
-    }, 502);
-  }
-
   const files = [];
-  const seen = new Set();
-
-  /* Root files: deliberately map every image file directly. */
-  for (const item of data) {
-    if (!item || item.type !== "file" || !item.path) continue;
-
-    const name = String(item.name || item.path.split("/").pop() || "");
-    if (!isImage(name)) continue;
-
-    const path = String(item.path);
-    if (seen.has(path)) continue;
-    seen.add(path);
-
-    files.push(
-      makeImageFile(
-        env,
-        branch,
-        path,
-        item.sha || "",
-        Number(item.size || 0)
-      )
-    );
-  }
+  const visitedDirs = new Set();
 
   /*
-   * Recursively scan subdirectories only. Root files above are never
-   * re-read, so the three root images cannot be lost by recursion.
+   * IMAGE LIST FIX
+   *
+   * GitHub's Contents API is used as the single source of truth.
+   * The root assets/images directory is read directly first, exactly
+   * like /api/github-images-debug. This guarantees that normal files
+   * in the root are not lost. Subdirectories are then walked recursively.
    */
-  const dirs = data
-    .filter(item => item && item.type === "dir" && item.path)
-    .map(item => String(item.path));
 
-  async function readSubdirectory(path) {
-    const encoded = path
+  async function readDirectory(path, page = 1) {
+
+    const encodedPath = path
       .split("/")
       .map(encodeURIComponent)
       .join("/");
 
-    const r = await github(
+    const response = await github(
       env,
-      `/contents/${encoded}?ref=${encodeURIComponent(branch)}&per_page=100&page=1`
+      `/contents/${encodedPath}?ref=${encodeURIComponent(branch)}&per_page=100&page=${page}`
     );
 
-    const items = await r.json().catch(() => null);
-    if (!r.ok || !Array.isArray(items)) return;
+    const data = await response.json().catch(() => null);
 
-    for (const item of items) {
+    if (!response.ok) {
+      throw new Error(
+        githubErrorMessage(
+          data,
+          `Unable to read GitHub directory: ${path}`
+        )
+      );
+    }
+
+    if (!Array.isArray(data)) {
+      throw new Error(
+        `GitHub did not return a directory listing for ${path}.`
+      );
+    }
+
+    for (const item of data) {
+
       if (!item || !item.path || !item.type) continue;
 
       if (item.type === "file") {
-        const name = String(item.name || item.path.split("/").pop() || "");
-        if (!isImage(name)) continue;
 
-        const filePath = String(item.path);
-        if (seen.has(filePath)) continue;
-        seen.add(filePath);
+        /* Use the filename itself for extension detection. */
+        if (isImage(item.name || item.path)) {
+          files.push(
+            makeImageFile(
+              env,
+              branch,
+              item.path,
+              item.sha,
+              item.size || 0
+            )
+          );
+        }
 
-        files.push(
-          makeImageFile(
-            env,
-            branch,
-            filePath,
-            item.sha || "",
-            Number(item.size || 0)
-          )
-        );
+        continue;
       }
 
       if (item.type === "dir") {
-        await readSubdirectory(String(item.path));
+
+        const dirKey = item.path;
+
+        if (visitedDirs.has(dirKey)) continue;
+
+        visitedDirs.add(dirKey);
+        await readDirectory(item.path, 1);
       }
+    }
+
+    /* Handle GitHub Contents API pagination for directories >100 items. */
+    if (data.length === 100) {
+      await readDirectory(path, page + 1);
     }
   }
 
-  for (const dir of dirs) {
-    await readSubdirectory(dir);
+  try {
+    /* This is intentionally the exact same root used by the diagnostic endpoint. */
+    await readDirectory(CONFIG.IMAGE_ROOT, 1);
+  } catch (error) {
+    return json({
+      ok: false,
+      error: error instanceof Error
+        ? error.message
+        : "Unable to read GitHub images."
+    }, 502);
   }
 
   files.sort((a, b) => a.path.localeCompare(b.path));
 
   return json({
     ok: true,
-    root,
+    root: CONFIG.IMAGE_ROOT,
     branch,
-    source: "github-contents-root-direct-v3",
-    count: files.length,
+    source: "contents-direct-v2",
     truncated: false,
+    count: files.length,
     files
   });
 }
@@ -989,7 +993,7 @@ async function uploadImage(
       .catch(() => ({}));
 
   const path =
-    safePath(body.path);
+    safeUploadImagePath(body.path);
 
   if (
     !path ||
@@ -999,8 +1003,8 @@ async function uploadImage(
     return json(
       {
         ok: false,
-        error:
-          "Invalid image path."
+        error: "Invalid image path.",
+        expected: "assets/images/<filename>.<jpg|jpeg|png|webp|gif|svg|avif|bmp|ico>"
       },
       400
     );
