@@ -992,9 +992,14 @@ async function processFiles(fileList, replaceTargets = []){
         const prefix = safeFilename($('#filenamePrefix').value.trim(), '').replace(/^-+|-+$/g, '');
         const prefixPart = prefix ? `${prefix}-` : '';
         const filename = safeFilename(edited.name, `image.${edited.extension}`);
+        /*
+         * Root upload intentionally sends filename only.
+         * The Worker normalizes it to assets/images/<filename>.
+         * This keeps the client compatible with both old and new Workers.
+         */
         path = folder
           ? `assets/images/${folder}/${prefixPart}${filename}`
-          : `assets/images/${prefixPart}${filename}`;
+          : `${prefixPart}${filename}`;
       }
 
       /* Final client-side path guard. */
@@ -1003,7 +1008,12 @@ async function processFiles(fileList, replaceTargets = []){
         .replace(/^\/+/, '')
         .replace(/\/+/g, '/');
 
-      if(!path.startsWith('assets/images/') || !isImageName(path)){
+      // Root uploads may be filename-only; nested folders use the full path.
+      const validationPath = path.includes('/')
+        ? path
+        : `assets/images/${path}`;
+
+      if(!isImageName(validationPath) || validationPath.includes('..')){
         throw new Error(`Invalid upload path: ${path}`);
       }
 
