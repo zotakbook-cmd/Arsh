@@ -322,40 +322,35 @@ function deleteSessionCookie() {
    ========================================================= */
 
 function normalizeImagePath(input, fallbackName = "") {
-  let raw = input;
-  if (typeof raw !== "string" || !raw.trim()) raw = fallbackName;
+  let raw = (typeof input === "string" && input.trim()) ? input : fallbackName;
   if (typeof raw !== "string") return null;
 
-  let path = raw.trim().replace(/\\/g, "/").replace(/^\/+/, "");
+  let path = raw.trim().replace(/\\/g, "/").replace(/^\/+/, "").replace(/\/{2,}/g, "/");
   if (!path) return null;
 
-  path = path.replace(/\/{2,}/g, "/");
+  if (path.includes("..") || path.includes("\0") || /[\r\n]/.test(path)) return null;
 
-  // Reject traversal and control characters.
-  if (path.includes("..") || path.includes("\0") || /[\r\n]/.test(path)) {
-    return null;
-  }
-
-  // Remove an accidental leading image-root prefix only once is not needed;
-  // full paths remain unchanged.
-  if (path === CONFIG.IMAGE_ROOT) return null;
-
-  // Filename-only uploads are always placed in assets/images/.
   if (!path.startsWith(CONFIG.IMAGE_ROOT + "/")) {
     if (path.includes("/")) return null;
     path = CONFIG.IMAGE_ROOT + "/" + path;
   }
 
   const parts = path.split("/");
+  if (parts.length < 3) return null;
+  if (parts[0] !== "assets" || parts[1] !== "images") return null;
   if (parts.some(part => !part || part === "." || part === "..")) return null;
-  if (!path.startsWith(CONFIG.IMAGE_ROOT + "/")) return null;
-  if (!isImage(path)) return null;
+
+  const filename = parts[parts.length - 1].trim();
+  if (!filename || filename.length > 180) return null;
+  if (/[\\\r\n\0]/.test(filename)) return null;
+
+  if (!/\.(?:jpe?g|png|webp|gif|svg|avif|bmp|ico)$/i.test(filename)) return null;
 
   return path;
 }
 
-function safePath(path) {
-  return normalizeImagePath(path);
+function safePath(path, fallbackName = "") {
+  return normalizeImagePath(path, fallbackName);
 }
 
 
@@ -958,24 +953,21 @@ async function uploadImage(
       .json()
       .catch(() => ({}));
 
-  const path =
-    safePath(body.path);
+  const receivedPath = typeof body.path === "string" ? body.path : "";
+  const receivedFilename = typeof body.filename === "string" ? body.filename : "";
+  const path = safePath(receivedPath, receivedFilename);
 
-  if (
-    !path ||
-    !isImage(path)
-  ) {
-
+  if (!path) {
     return json(
       {
         ok: false,
         error: "Invalid image path.",
-        receivedPath: typeof body.path === "string" ? body.path : null,
-        imageRoot: CONFIG.IMAGE_ROOT
+        receivedPath,
+        receivedFilename,
+        root: CONFIG.IMAGE_ROOT
       },
       400
     );
-
   }
 
   if (
