@@ -321,51 +321,41 @@ function deleteSessionCookie() {
    PATH SECURITY
    ========================================================= */
 
-function safePath(input) {
-  /*
-   * ONE canonical rule for every image operation:
-   * - accept filename.webp
-   * - accept assets/images/filename.webp
-   * - accept nested assets/images/folder/filename.webp
-   * - NEVER allow a path outside assets/images
-   */
-  if (typeof input !== "string") return null;
+function normalizeImagePath(input, fallbackName = "") {
+  let raw = input;
+  if (typeof raw !== "string" || !raw.trim()) raw = fallbackName;
+  if (typeof raw !== "string") return null;
 
-  let path = input
-    .trim()
-    .replace(/\\/g, "/")
-    .replace(/^\/+/, "");
-
+  let path = raw.trim().replace(/\\/g, "/").replace(/^\/+/, "");
   if (!path) return null;
 
-  // Remove accidental duplicate slashes.
   path = path.replace(/\/{2,}/g, "/");
 
-  // Block traversal/control characters.
-  if (
-    path.includes("..") ||
-    path.includes("\0") ||
-    /[\r\n]/.test(path)
-  ) {
+  // Reject traversal and control characters.
+  if (path.includes("..") || path.includes("\0") || /[\r\n]/.test(path)) {
     return null;
   }
 
-  // If frontend sends only a filename, put it inside assets/images.
-  if (!path.startsWith(CONFIG.IMAGE_ROOT + "/") && path !== CONFIG.IMAGE_ROOT) {
-    if (!path.includes("/")) {
-      path = `${CONFIG.IMAGE_ROOT}/${path}`;
-    } else {
-      return null;
-    }
-  }
+  // Remove an accidental leading image-root prefix only once is not needed;
+  // full paths remain unchanged.
+  if (path === CONFIG.IMAGE_ROOT) return null;
 
-  // Final containment check.
-  if (!path.startsWith(CONFIG.IMAGE_ROOT + "/")) return null;
+  // Filename-only uploads are always placed in assets/images/.
+  if (!path.startsWith(CONFIG.IMAGE_ROOT + "/")) {
+    if (path.includes("/")) return null;
+    path = CONFIG.IMAGE_ROOT + "/" + path;
+  }
 
   const parts = path.split("/");
   if (parts.some(part => !part || part === "." || part === "..")) return null;
+  if (!path.startsWith(CONFIG.IMAGE_ROOT + "/")) return null;
+  if (!isImage(path)) return null;
 
   return path;
+}
+
+function safePath(path) {
+  return normalizeImagePath(path);
 }
 
 
@@ -1200,23 +1190,20 @@ async function deleteImage(
       .json()
       .catch(() => ({}));
 
-  const path =
-    safePath(body.path);
+  const path = normalizeImagePath(
+    body.path,
+    body.filename || body.name || ""
+  );
 
-  if (
-    !path ||
-    !isImage(path)
-  ) {
-
-    return json(
-      {
-        ok: false,
-        error:
-          "Invalid image path."
-      },
-      400
-    );
-
+  if (!path) {
+    return json({
+      ok: false,
+      error: "Invalid image path.",
+      receivedPath: typeof body.path === "string" ? body.path : null,
+      receivedFilename: typeof body.filename === "string" ? body.filename : null,
+      imageRoot: CONFIG.IMAGE_ROOT,
+      hint: "Send filename.webp or assets/images/filename.webp"
+    }, 400);
   }
 
   const sha =
@@ -1597,7 +1584,9 @@ async function api(
         missingSecrets(env, false),
 
       missingForGithub:
-        githubConfigurationError(env)
+        githubConfigurationError(env),
+      imageRoot: CONFIG.IMAGE_ROOT,
+      workerVersion: "2026-09-30-upload-v7"
     });
   }
 
@@ -1611,7 +1600,7 @@ async function api(
     return json({
       ok: true,
       service: "arsh-image-cms",
-      version: "2026-09-26",
+      version: "2026-09-30-upload-v7",
       authenticated:
         await validateSession(request, env)
     });
