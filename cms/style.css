@@ -73,3 +73,21 @@ body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,system-ui,s
    ========================================================= */
 .editor-card{width:min(1050px,100%);padding:24px}.editor-head{padding-right:45px;margin-bottom:18px}.editor-head h3{margin:5px 0 0;font-size:24px}.editor-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:22px}.editor-preview-wrap{min-width:0}.editor-preview-bg{min-height:430px;max-height:60vh;border:1px solid var(--line);border-radius:16px;background:repeating-conic-gradient(#f2f4f7 0 25%,#fff 0 50%) 50%/22px 22px;display:grid;place-items:center;overflow:hidden}.editor-preview-bg img{display:block;max-width:100%;max-height:58vh;object-fit:contain}.editor-dimensions{font-size:12px;color:var(--muted);text-align:center;margin-top:9px}.editor-controls{display:grid;align-content:start;gap:14px}.control-group,.control-grid{display:grid;gap:10px}.control-grid{grid-template-columns:1fr 1fr}.editor-controls label{display:grid;gap:6px;font-size:12px;font-weight:700}.editor-controls input[type=number],.editor-controls select{height:42px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 10px;outline:0;font:inherit}.editor-controls input[type=range]{width:100%;accent-color:var(--primary)}.check-row{display:flex!important;align-items:center;gap:8px!important;font-weight:600!important}.check-row input{width:16px;height:16px}.editor-hint{font-size:11px;line-height:1.55;color:var(--muted);background:#f8fafc;border:1px solid var(--line);padding:11px 12px;border-radius:11px}.editor-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:5px}.editor-actions button{height:42px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:0 14px;cursor:pointer;font-weight:700}.editor-actions .primary{border:0;color:#fff}.editor-actions button:disabled{opacity:.6;cursor:wait}
 @media(max-width:850px){.editor-layout{grid-template-columns:1fr}.editor-preview-bg{min-height:280px}.control-grid{grid-template-columns:1fr}.editor-card{padding:18px}}
+
+
+/* =========================================================
+   V4 - UPLOAD / EXISTING IMAGE EDIT ACTIONS
+   ========================================================= */
+.topbar-actions{display:flex;align-items:center;gap:10px}
+.upload-top-btn{height:44px;border:0;border-radius:12px;padding:0 18px;color:#fff;background:linear-gradient(135deg,#2563eb,#7c3aed);font:700 13px Inter,system-ui,sans-serif;cursor:pointer;box-shadow:0 9px 24px #2563eb33;white-space:nowrap}
+.upload-top-btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px #2563eb44}
+.actions .edit-action{border-color:#c7d2fe;background:#eef2ff;color:#3730a3;font-weight:700}
+@media(max-width:800px){
+  .topbar-actions{gap:6px}
+  .upload-top-btn{padding:0 12px;font-size:12px}
+  .topbar h2{font-size:23px}
+}
+@media(max-width:520px){
+  .upload-top-btn{font-size:0;width:42px;padding:0}
+  .upload-top-btn::before{content:'＋';font-size:20px}
+}
