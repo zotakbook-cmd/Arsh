@@ -706,3 +706,344 @@ $('#search').oninput = render;
 $('#folderFilter').onchange = render;
 
 boot();
+
+/* =========================================================
+   IMAGE EDITOR + SAFE UPLOAD OVERRIDE
+   ========================================================= */
+
+const editorState = {
+  file: null,
+  target: null,
+  image: null,
+  resolve: null,
+  sourceWidth: 0,
+  sourceHeight: 0
+};
+
+function editorEl(id){ return document.getElementById(id); }
+
+function safeFilename(name, fallback = 'image'){
+  let value = String(name || '')
+    .trim()
+    .replace(/\\/g, '-')
+    .replace(/[^a-zA-Z0-9._-]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^[-.]+|[-.]+$/g, '');
+
+  if (!value) value = fallback;
+  if (value.length > 140) value = value.slice(0, 140);
+  return value;
+}
+
+function getExtension(name){
+  const m = String(name || '').toLowerCase().match(/\.([a-z0-9]+)$/);
+  return m ? m[1] : '';
+}
+
+function editorFormatInfo(file, selected){
+  const original = getExtension(file.name);
+  if(selected === 'original'){
+    if(['jpg','jpeg'].includes(original)) return {mime:'image/jpeg', ext:'jpg'};
+    if(original === 'png') return {mime:'image/png', ext:'png'};
+    if(original === 'webp') return {mime:'image/webp', ext:'webp'};
+    return {mime:'image/webp', ext:'webp'};
+  }
+  if(selected === 'jpg') return {mime:'image/jpeg', ext:'jpg'};
+  if(selected === 'png') return {mime:'image/png', ext:'png'};
+  return {mime:'image/webp', ext:'webp'};
+}
+
+function getCropRect(sw, sh, ratioText){
+  if(ratioText === 'free') return {x:0,y:0,w:sw,h:sh};
+  const [rw,rh] = ratioText.split(':').map(Number);
+  const target = rw / rh;
+  const source = sw / sh;
+  if(source > target){
+    const w = sh * target;
+    return {x:(sw-w)/2,y:0,w,h:sh};
+  }
+  const h = sw / target;
+  return {x:0,y:(sh-h)/2,w:sw,h};
+}
+
+function syncEditorHeight(){
+  const w = Number(editorEl('editWidth').value) || 1;
+  const h = Number(editorEl('editHeight').value) || 1;
+  if(editorEl('editLock').checked && editorState.sourceWidth && editorState.sourceHeight){
+    editorEl('editHeight').value = Math.max(1, Math.round(w * editorState.sourceHeight / editorState.sourceWidth));
+  }
+}
+
+function syncEditorWidth(){
+  const w = Number(editorEl('editWidth').value) || 1;
+  if(editorEl('editLock').checked && editorState.sourceWidth && editorState.sourceHeight){
+    editorEl('editHeight').value = Math.max(1, Math.round(w * editorState.sourceHeight / editorState.sourceWidth));
+  }
+}
+
+function syncEditorQuality(){
+  editorEl('editQualityValue').textContent = `${editorEl('editQuality').value}%`;
+}
+
+function closeEditor(result){
+  editorEl('editorModal').classList.add('hidden');
+  const resolve = editorState.resolve;
+  editorState.resolve = null;
+  editorState.file = null;
+  editorState.target = null;
+  editorState.image = null;
+  if(resolve) resolve(result);
+}
+
+function openImageEditor(file, target = null){
+  return new Promise((resolve, reject) => {
+    editorState.file = file;
+    editorState.target = target;
+    editorState.resolve = resolve;
+
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      editorState.image = img;
+      editorState.sourceWidth = img.naturalWidth || img.width;
+      editorState.sourceHeight = img.naturalHeight || img.height;
+
+      editorEl('editorTitle').textContent = target
+        ? `Edit & replace — ${target.name}`
+        : `Edit — ${file.name}`;
+      editorEl('editorPreview').src = url;
+      editorEl('editorWidth').value = editorState.sourceWidth;
+      editorEl('editorHeight').value = editorState.sourceHeight;
+      editorEl('editCrop').value = 'free';
+      editorEl('editFormat').value = 'original';
+      editorEl('editQuality').value = 88;
+      syncEditorQuality();
+      editorEl('editorDimensions').textContent =
+        `${editorState.sourceWidth} × ${editorState.sourceHeight}px · ${formatBytes(file.size)}`;
+      editorEl('editorModal').classList.remove('hidden');
+      URL.revokeObjectURL(url);
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      editorState.resolve = null;
+      reject(new Error('Unable to read this image.'));
+    };
+    img.src = url;
+  });
+}
+
+async function buildEditedImage(){
+  const file = editorState.file;
+  const img = editorState.image;
+  if(!file || !img) throw new Error('No image selected.');
+
+  const crop = getCropRect(
+    editorState.sourceWidth,
+    editorState.sourceHeight,
+    editorEl('editCrop').value
+  );
+
+  let outW = Math.max(1, Number(editorEl('editWidth').value) || Math.round(crop.w));
+  let outH = Math.max(1, Number(editorEl('editHeight').value) || Math.round(crop.h));
+
+  /* If an aspect crop was selected, make the output match that crop. */
+  if(editorEl('editCrop').value !== 'free' && editorEl('editLock').checked){
+    outH = Math.max(1, Math.round(outW * crop.h / crop.w));
+  }
+
+  outW = Math.min(outW, 6000);
+  outH = Math.min(outH, 6000);
+
+  const format = editorFormatInfo(file, editorEl('editFormat').value);
+
+  /* Preserve an untouched SVG when the user explicitly keeps original. */
+  if(file.type === 'image/svg+xml' && editorEl('editFormat').value === 'original' && editorEl('editCrop').value === 'free'){
+    return {
+      name: safeFilename(file.name, 'image.svg'),
+      dataUrl: await readDataUrl(file),
+      mime: file.type,
+      extension: 'svg'
+    };
+  }
+
+  const canvas = document.createElement('canvas');
+  canvas.width = outW;
+  canvas.height = outH;
+  const ctx = canvas.getContext('2d', {alpha: format.mime === 'image/png'});
+  if(!ctx) throw new Error('Canvas is not available in this browser.');
+
+  if(format.mime === 'image/jpeg'){
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, outW, outH);
+  }
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(
+    img,
+    crop.x, crop.y, crop.w, crop.h,
+    0, 0, outW, outH
+  );
+
+  const quality = Math.max(0.4, Math.min(1, Number(editorEl('editQuality').value) / 100));
+  const blob = await new Promise((resolve, reject) => {
+    canvas.toBlob(b => b ? resolve(b) : reject(new Error('Image conversion failed.')), format.mime, quality);
+  });
+
+  const originalBase = safeFilename(file.name.replace(/\.[^.]+$/, ''), 'image');
+  const name = `${originalBase}.${format.ext}`;
+
+  return {
+    name,
+    dataUrl: await readDataUrl(blob),
+    mime: format.mime,
+    extension: format.ext
+  };
+}
+
+/* Editor controls */
+editorEl('editorWidth').addEventListener('input', syncEditorHeight);
+editorEl('editorHeight').addEventListener('input', () => {
+  if(editorEl('editLock').checked && editorState.sourceWidth && editorState.sourceHeight){
+    const h = Number(editorEl('editHeight').value) || 1;
+    editorEl('editWidth').value = Math.max(1, Math.round(h * editorState.sourceWidth / editorState.sourceHeight));
+  }
+});
+editorEl('editQuality').addEventListener('input', syncEditorQuality);
+editorEl('editorClose').onclick = () => closeEditor(null);
+editorEl('editorCancel').onclick = () => closeEditor(null);
+editorEl('editorModal').addEventListener('click', e => {
+  if(e.target.id === 'editorModal') closeEditor(null);
+});
+editorEl('editCrop').addEventListener('change', () => {
+  const crop = getCropRect(editorState.sourceWidth, editorState.sourceHeight, editorEl('editCrop').value);
+  if(editorEl('editCrop').value !== 'free'){
+    const w = Number(editorEl('editWidth').value) || Math.round(crop.w);
+    editorEl('editHeight').value = Math.max(1, Math.round(w * crop.h / crop.w));
+  }
+});
+editorEl('editorApply').onclick = async () => {
+  const btn = editorEl('editorApply');
+  try{
+    btn.disabled = true;
+    btn.textContent = 'Preparing…';
+    const result = await buildEditedImage();
+    closeEditor(result);
+  }catch(err){
+    toast(err.message || 'Unable to edit image.');
+    btn.disabled = false;
+    btn.textContent = 'Apply & Upload';
+  }
+};
+
+/* Replace the original upload flow with the editor-aware flow. */
+async function processFiles(fileList, replaceTargets = []){
+  const files = [...fileList];
+  if(!files.length) return;
+
+  $('#uploadQueue').innerHTML = '';
+
+  for(const file of files){
+    if(file.size > 8 * 1024 * 1024){
+      toast(`${file.name}: over 8 MB`);
+      continue;
+    }
+
+    const target = replaceTargets.length ? replaceTargets[0] : null;
+    const item = document.createElement('div');
+    item.className = 'queue-item';
+    item.innerHTML = `
+      <img src="${URL.createObjectURL(file)}">
+      <div class="qinfo">
+        <b>${esc(file.name)}</b>
+        <div class="path">${formatBytes(file.size)}</div>
+        <div class="progress"><i></i></div>
+      </div>
+      <span class="qstatus">Editing…</span>
+    `;
+    $('#uploadQueue').appendChild(item);
+
+    const bar = item.querySelector('i');
+    const status = item.querySelector('.qstatus');
+
+    try{
+      const edited = await openImageEditor(file, target);
+      if(!edited){
+        status.textContent = 'Cancelled';
+        continue;
+      }
+
+      let path;
+      if(target){
+        const oldExt = getExtension(target.path);
+        const newExt = edited.extension;
+
+        if(oldExt === newExt || (oldExt === 'jpeg' && newExt === 'jpg')){
+          path = target.path;
+        }else{
+          const base = safeFilename(target.name.replace(/\.[^.]+$/, ''), 'image');
+          const folder = target.folder
+            ? `assets/images/${target.folder}/`
+            : 'assets/images/';
+          path = `${folder}${base}.${newExt}`;
+        }
+      }else{
+        const folder = String($('#uploadFolder').value || '').split('/').map(part => safeFilename(part, '')).filter(Boolean).join('/');
+        const prefix = safeFilename($('#filenamePrefix').value.trim(), '').replace(/^-+|-+$/g, '');
+        const prefixPart = prefix ? `${prefix}-` : '';
+        const filename = safeFilename(edited.name, `image.${edited.extension}`);
+        path = folder
+          ? `assets/images/${folder}/${prefixPart}${filename}`
+          : `assets/images/${prefixPart}${filename}`;
+      }
+
+      /* Final client-side path guard. */
+      path = path
+        .replace(/\\/g, '/')
+        .replace(/^\/+/, '')
+        .replace(/\/+/g, '/');
+
+      if(!path.startsWith('assets/images/') || !isImageName(path)){
+        throw new Error(`Invalid upload path: ${path}`);
+      }
+
+      status.textContent = 'Uploading…';
+      bar.style.width = '40%';
+
+      await api('/api/images/upload', {
+        method: 'POST',
+        headers: {'content-type':'application/json'},
+        body: JSON.stringify({
+          path,
+          content: edited.dataUrl
+        })
+      });
+
+      /* If replacement changed the extension/path, remove the old file. */
+      if(target && target.path !== path){
+        try{
+          await api('/api/images/delete', {
+            method:'POST',
+            headers:{'content-type':'application/json'},
+            body:JSON.stringify({path:target.path, sha:target.sha})
+          });
+        }catch(deleteError){
+          console.warn('[Arsh CMS] Old image could not be removed:', deleteError);
+          toast('New image uploaded; old image was not deleted.');
+        }
+      }
+
+      bar.style.width = '100%';
+      status.textContent = target ? 'Replaced' : 'Uploaded';
+      toast(target ? 'Image replaced' : 'Image uploaded');
+
+      if(target) break;
+    }catch(e){
+      console.error('[Arsh CMS] upload:', e);
+      status.textContent = e.message || 'Upload failed';
+      status.style.color = '#dc2626';
+    }
+  }
+
+  await loadImages();
+}
