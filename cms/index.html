@@ -15,7 +15,7 @@
     <div class="brand-mark">A</div>
     <span class="eyebrow">ARSH TECHNICAL ACADEMY</span>
     <h1>Image CMS</h1>
-    <p>Manage website images directly from CMS Panel.</p>
+    <p>Manage website images directly from GitHub.</p>
     <form id="loginForm">
       <label>Admin Password
         <input id="password" type="password" autocomplete="current-password" required placeholder="Enter password">
@@ -102,8 +102,22 @@
 
     <div class="editor-layout">
       <div class="editor-preview-wrap">
-        <div class="editor-preview-bg">
+        <div class="editor-preview-bg" id="editorCanvas">
           <img id="editorPreview" alt="Image preview">
+          <div id="cropOverlay" class="crop-overlay hidden">
+            <div class="crop-shade crop-shade-top"></div>
+            <div class="crop-shade crop-shade-right"></div>
+            <div class="crop-shade crop-shade-bottom"></div>
+            <div class="crop-shade crop-shade-left"></div>
+            <div id="cropBox" class="crop-box">
+              <span class="crop-grid-v v1"></span><span class="crop-grid-v v2"></span>
+              <span class="crop-grid-h h1"></span><span class="crop-grid-h h2"></span>
+              <button type="button" class="crop-handle nw" data-handle="nw"></button>
+              <button type="button" class="crop-handle ne" data-handle="ne"></button>
+              <button type="button" class="crop-handle sw" data-handle="sw"></button>
+              <button type="button" class="crop-handle se" data-handle="se"></button>
+            </div>
+          </div>
         </div>
         <div id="editorDimensions" class="editor-dimensions"></div>
       </div>
@@ -143,7 +157,7 @@
           </label>
         </div>
 
-        <div class="editor-hint">Crop is centered automatically. Resize and format are applied in your browser before the file is sent to GitHub.</div>
+        <div class="editor-hint">Drag the crop box to move it. Drag any corner to resize it. Select an aspect ratio to lock the crop shape. Resize and format are applied in your browser before the file is sent to GitHub.</div>
 
         <div class="editor-actions">
           <button id="editorCancel" type="button">Cancel</button>
