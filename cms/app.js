@@ -172,6 +172,10 @@ async function loadImagesFromDebug() {
 
 }
 
+/* =========================================================
+   LOAD ALL IMAGES
+   ========================================================= */
+
 async function loadImages() {
 
   if (state.loading) {
@@ -180,161 +184,279 @@ async function loadImages() {
 
   state.loading = true;
 
-  $('#grid').innerHTML =
-    '<div class="stats loading-state">Loading all images…</div>';
 
-  $('#stats').textContent = '';
+  $('#grid').innerHTML =
+    '<div class="stats loading-state">Loading all images and folders…</div>';
+
+  $('#stats').textContent = "";
+
 
   try {
 
     let normalFiles = [];
 
-    /*
-     * Primary source.
-     */
+
+    /* =====================================================
+       PRIMARY API
+       ===================================================== */
+
     try {
 
-      const normalData =
-        await api('/api/images');
+      const response =
+        await api(
+          '/api/images'
+        );
+
 
       if (
-        normalData &&
-        Array.isArray(normalData.files)
+        response &&
+        Array.isArray(
+          response.files
+        )
       ) {
 
         normalFiles =
-          dedupeFiles(
-            normalData.files
-          );
+          response.files;
 
       }
 
-    } catch (normalError) {
+    } catch (error) {
 
       console.warn(
         '[Arsh CMS] /api/images failed:',
-        normalError
+        error
       );
 
     }
 
-    /*
-     * Only use debug as a fallback when the primary endpoint
-     * actually failed/returned nothing.
-     *
-     * Do NOT compare against a hard-coded image count.
-     */
-    if (!normalFiles.length) {
 
-      try {
+    /* =====================================================
+       DEBUG API FALLBACK
+       ===================================================== */
 
-        normalFiles =
-          await loadImagesFromDebug();
+    let debugFiles = [];
 
-      } catch (debugError) {
 
-        console.warn(
-          '[Arsh CMS] Debug image fallback failed:',
-          debugError
-        );
+    try {
 
-        throw (
-          debugError instanceof Error
-            ? debugError
-            : new Error(
-                'Unable to load images.'
-              )
-        );
+      debugFiles =
+        await loadImagesFromDebug();
 
-      }
+    } catch (error) {
+
+      console.warn(
+        '[Arsh CMS] Debug endpoint failed:',
+        error
+      );
 
     }
+
+
+    /* =====================================================
+       MERGE BOTH SOURCES
+       ===================================================== */
+
+    normalFiles =
+      dedupeFiles([
+        ...normalFiles,
+        ...debugFiles
+      ]);
+
+
+    /* =====================================================
+       IMPORTANT
+       NEVER LIMIT TO 3 / 4 / 10 IMAGES
+       ===================================================== */
 
     state.files =
       normalFiles;
 
+
+    /* =====================================================
+       BUILD ALL FOLDERS
+       ===================================================== */
+
     buildFolders();
+
+
+    /* =====================================================
+       RENDER ALL IMAGES
+       ===================================================== */
+
     render();
 
-    if (!state.files.length) {
+
+    /* =====================================================
+       EMPTY STATE
+       ===================================================== */
+
+    if (
+      !state.files.length
+    ) {
 
       $('#grid').innerHTML =
         '<div class="stats">No images found in assets/images.</div>';
 
     }
 
-  } catch (err) {
+
+  } catch (error) {
 
     console.error(
       '[Arsh CMS] Image loading error:',
-      err
+      error
     );
 
-    $('#stats').textContent = '';
+
+    $('#stats').textContent =
+      "";
+
 
     $('#grid').innerHTML =
-      `<div class="stats error-box">${esc(
-        err.message ||
-        'Unable to load images.'
-      )}</div>`;
+      `
+      <div class="stats error-box">
+        ${esc(
+          error.message ||
+          'Unable to load images.'
+        )}
+      </div>
+      `;
+
 
   } finally {
 
-    state.loading = false;
+    state.loading =
+      false;
 
   }
 
 }
 
+/* =========================================================
+   BUILD ALL FOLDERS
+   ========================================================= */
 
 function buildFolders() {
 
-  const folders = [
-    ...new Set(
-      state.files
-        .map(f =>
-          String(f.folder || '')
-            .replace(/^\/+|\/+$/g, '')
-            .trim()
-        )
-        .filter(Boolean)
-    )
-  ].sort(
-    (a, b) =>
-      a.localeCompare(
-        b,
-        undefined,
-        {
-          numeric: true,
-          sensitivity: 'base'
-        }
+  const folders =
+    [
+      ...new Set(
+
+        state.files
+
+          .map(file => {
+
+            const path =
+              String(
+                file.path || ""
+              )
+              .replace(
+                /^\/+|\/+$/g,
+                ""
+              );
+
+            const parts =
+              path.split("/");
+
+
+            /*
+             * assets/images/
+             * ----------------
+             * root image:
+             * assets/images/logo.webp
+             *
+             * folder image:
+             * assets/images/banner/home.webp
+             */
+
+            if (
+              parts.length <= 3
+            ) {
+              return "";
+            }
+
+
+            return parts
+              .slice(
+                2,
+                -1
+              )
+              .join("/");
+
+          })
+
+          .filter(Boolean)
+
       )
-  );
+    ]
+
+    .sort(
+      (a, b) =>
+        a.localeCompare(
+          b,
+          undefined,
+          {
+            numeric: true,
+            sensitivity: "base"
+          }
+        )
+    );
+
 
   const currentFolder =
     $('#folderFilter').value;
 
+
+  /* =====================================================
+     FOLDER FILTER
+     ===================================================== */
+
   $('#folderFilter').innerHTML =
+
     '<option value="">All folders</option>' +
-    folders.map(folder =>
-      `<option value="${esc(folder)}">${esc(folder)}</option>`
-    ).join('');
+
+    folders
+      .map(folder =>
+        `
+        <option value="${esc(folder)}">
+          ${esc(folder)}
+        </option>
+        `
+      )
+      .join("");
+
 
   if (
-    folders.includes(currentFolder)
+    folders.includes(
+      currentFolder
+    )
   ) {
+
     $('#folderFilter').value =
       currentFolder;
+
   }
 
+
+  /* =====================================================
+     UPLOAD FOLDER
+     ===================================================== */
+
   $('#uploadFolder').innerHTML =
+
     '<option value="">assets/images</option>' +
-    folders.map(folder =>
-      `<option value="${esc(folder)}">assets/images/${esc(folder)}</option>`
-    ).join('');
+
+    folders
+      .map(folder =>
+        `
+        <option value="${esc(folder)}">
+          assets/images/${esc(folder)}
+        </option>
+        `
+      )
+      .join("");
 
 }
-
 
 function render() {
   const q = $('#search').value.trim().toLowerCase();
