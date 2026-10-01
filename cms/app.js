@@ -103,9 +103,13 @@ function normalizeImage(item) {
   return {
     path,
     name: String(item.name || parts[parts.length - 1]),
-    folder: item.folder != null
-      ? String(item.folder)
-      : parts.slice(2, -1).join('/'),
+    folder: String(
+      item.folder != null
+        ? item.folder
+        : parts.slice(2, -1).join('/')
+    )
+      .replace(/^\/+|\/+$/g, '')
+      .trim(),
     sha: String(item.sha || ''),
     size: Number(item.size || 0),
     url: String(item.url || githubRawUrl(path))
@@ -127,115 +131,210 @@ function dedupeFiles(files) {
 }
 
 /*
- * Frontend fallback to the diagnostic endpoint.
- * That endpoint has already been verified to return:
- * banner-mobile.webp
- * banner-pc.webp
- * logo.webp
+ * =========================================================
+ * IMAGE LOADING
+ * =========================================================
+ *
+ * The Worker is the single source of truth.
+ *
+ * IMPORTANT:
+ * Never decide that the list is complete because it contains
+ * 3, 4, 10, or any other arbitrary number of images.
+ *
+ * The previous code did:
+ *     if (normalFiles.length < 3) ...
+ *
+ * That caused a serious bug: if the Worker returned only 4
+ * images from one folder, the frontend accepted those 4 as
+ * the complete repository and never loaded the remaining folders.
+ *
+ * The Worker now uses GitHub's recursive Git Tree API and returns
+ * every image under assets/images/, including nested folders.
  */
-async function loadImagesFromDebug() {
-  const data = await api('/api/github-images-debug');
 
-  if (!Array.isArray(data.items)) {
-    throw new Error('GitHub image list is invalid.');
+async function loadImagesFromDebug() {
+
+  const data =
+    await api('/api/github-images-debug');
+
+  if (
+    !data ||
+    !Array.isArray(data.items)
+  ) {
+    throw new Error(
+      'GitHub image list is invalid.'
+    );
   }
 
-  return dedupeFiles(data.items);
+  return dedupeFiles(
+    data.items
+  );
+
 }
 
 async function loadImages() {
-  if (state.loading) return;
+
+  if (state.loading) {
+    return;
+  }
 
   state.loading = true;
 
-  $('#grid').innerHTML = '<div class="stats loading-state">Loading images…</div>';
+  $('#grid').innerHTML =
+    '<div class="stats loading-state">Loading all images…</div>';
+
   $('#stats').textContent = '';
 
   try {
-    let normalData = null;
 
-    try {
-      normalData = await api('/api/images');
-    } catch (normalError) {
-      console.warn('[Arsh CMS] /api/images failed:', normalError);
-    }
-
-    let normalFiles = dedupeFiles(
-      normalData && Array.isArray(normalData.files)
-        ? normalData.files
-        : []
-    );
+    let normalFiles = [];
 
     /*
-     * Always ask debug endpoint when the normal endpoint has fewer than
-     * the expected root images. This is the important frontend fix.
-     *
-     * It also handles the current Worker situation where /api/images
-     * returns only logo.webp while the diagnostic endpoint returns all 3.
+     * Primary source.
      */
-    if (normalFiles.length < 3) {
-      try {
-        const debugFiles = await loadImagesFromDebug();
+    try {
 
-        if (debugFiles.length > normalFiles.length) {
-          normalFiles = dedupeFiles([
-            ...normalFiles,
-            ...debugFiles
-          ]);
-        }
-      } catch (debugError) {
-        console.warn('[Arsh CMS] Debug image fallback failed:', debugError);
+      const normalData =
+        await api('/api/images');
+
+      if (
+        normalData &&
+        Array.isArray(normalData.files)
+      ) {
+
+        normalFiles =
+          dedupeFiles(
+            normalData.files
+          );
+
       }
+
+    } catch (normalError) {
+
+      console.warn(
+        '[Arsh CMS] /api/images failed:',
+        normalError
+      );
+
     }
 
-    state.files = normalFiles;
+    /*
+     * Only use debug as a fallback when the primary endpoint
+     * actually failed/returned nothing.
+     *
+     * Do NOT compare against a hard-coded image count.
+     */
+    if (!normalFiles.length) {
+
+      try {
+
+        normalFiles =
+          await loadImagesFromDebug();
+
+      } catch (debugError) {
+
+        console.warn(
+          '[Arsh CMS] Debug image fallback failed:',
+          debugError
+        );
+
+        throw (
+          debugError instanceof Error
+            ? debugError
+            : new Error(
+                'Unable to load images.'
+              )
+        );
+
+      }
+
+    }
+
+    state.files =
+      normalFiles;
 
     buildFolders();
     render();
 
     if (!state.files.length) {
+
       $('#grid').innerHTML =
-        '<div class="stats">No images found.</div>';
+        '<div class="stats">No images found in assets/images.</div>';
+
     }
 
   } catch (err) {
-    console.error('[Arsh CMS] Image loading error:', err);
+
+    console.error(
+      '[Arsh CMS] Image loading error:',
+      err
+    );
 
     $('#stats').textContent = '';
+
     $('#grid').innerHTML =
-      `<div class="stats error-box">${esc(err.message)}</div>`;
+      `<div class="stats error-box">${esc(
+        err.message ||
+        'Unable to load images.'
+      )}</div>`;
+
   } finally {
+
     state.loading = false;
+
   }
+
 }
 
+
 function buildFolders() {
+
   const folders = [
     ...new Set(
       state.files
-        .map(f => f.folder)
+        .map(f =>
+          String(f.folder || '')
+            .replace(/^\/+|\/+$/g, '')
+            .trim()
+        )
         .filter(Boolean)
     )
-  ].sort();
+  ].sort(
+    (a, b) =>
+      a.localeCompare(
+        b,
+        undefined,
+        {
+          numeric: true,
+          sensitivity: 'base'
+        }
+      )
+  );
 
-  const currentFolder = $('#folderFilter').value;
+  const currentFolder =
+    $('#folderFilter').value;
 
   $('#folderFilter').innerHTML =
     '<option value="">All folders</option>' +
-    folders.map(f =>
-      `<option value="${esc(f)}">${esc(f)}</option>`
+    folders.map(folder =>
+      `<option value="${esc(folder)}">${esc(folder)}</option>`
     ).join('');
 
-  if (folders.includes(currentFolder)) {
-    $('#folderFilter').value = currentFolder;
+  if (
+    folders.includes(currentFolder)
+  ) {
+    $('#folderFilter').value =
+      currentFolder;
   }
 
   $('#uploadFolder').innerHTML =
     '<option value="">assets/images</option>' +
-    folders.map(f =>
-      `<option value="${esc(f)}">assets/images/${esc(f)}</option>`
+    folders.map(folder =>
+      `<option value="${esc(folder)}">assets/images/${esc(folder)}</option>`
     ).join('');
+
 }
+
 
 function render() {
   const q = $('#search').value.trim().toLowerCase();
