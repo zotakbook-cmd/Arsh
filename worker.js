@@ -781,109 +781,154 @@ async function listImages(env) {
   }
 
   const branch = String(env.GITHUB_BRANCH || "").trim();
+  const imageRoot = CONFIG.IMAGE_ROOT.replace(/\/+$/, "");
   const files = [];
-  const visitedDirs = new Set();
 
   /*
-   * IMAGE LIST FIX
+   * =========================================================
+   * ROBUST IMAGE LIST
+   * =========================================================
    *
-   * GitHub's Contents API is used as the single source of truth.
-   * The root assets/images directory is read directly first, exactly
-   * like /api/github-images-debug. This guarantees that normal files
-   * in the root are not lost. Subdirectories are then walked recursively.
+   * Do NOT use /contents recursively here.
+   *
+   * GitHub Contents API is directory-oriented and each directory
+   * request is paginated. That can easily result in an incomplete
+   * image list when a repository has many folders/files.
+   *
+   * Git Trees API gives us the complete repository tree in one
+   * recursive request. We then keep only image blobs inside
+   * assets/images/.
+   *
+   * This supports:
+   *
+   * assets/images/logo.webp
+   * assets/images/banner/banner.webp
+   * assets/images/courses/abc/a.webp
+   * assets/images/gallery/2026/jan/01.webp
+   * etc.
    */
 
-  async function readDirectory(path, page = 1) {
+  try {
 
-    const encodedPath = path
-      .split("/")
-      .map(encodeURIComponent)
-      .join("/");
+    const encodedBranch =
+      encodeURIComponent(branch);
 
-    const response = await github(
-      env,
-      `/contents/${encodedPath}?ref=${encodeURIComponent(branch)}&per_page=100&page=${page}`
-    );
+    const response =
+      await github(
+        env,
+        `/git/trees/${encodedBranch}?recursive=1`
+      );
 
-    const data = await response.json().catch(() => null);
+    const data =
+      await response
+        .json()
+        .catch(() => null);
 
     if (!response.ok) {
+
       throw new Error(
         githubErrorMessage(
           data,
-          `Unable to read GitHub directory: ${path}`
+          "Unable to read GitHub repository tree."
         )
       );
+
     }
 
-    if (!Array.isArray(data)) {
+    if (
+      !data ||
+      !Array.isArray(data.tree)
+    ) {
+
       throw new Error(
-        `GitHub did not return a directory listing for ${path}.`
+        "GitHub returned an invalid repository tree."
       );
+
     }
 
-    for (const item of data) {
+    for (const item of data.tree) {
 
-      if (!item || !item.path || !item.type) continue;
-
-      if (item.type === "file") {
-
-        /* Use the filename itself for extension detection. */
-        if (isImage(item.name || item.path)) {
-          files.push(
-            makeImageFile(
-              env,
-              branch,
-              item.path,
-              item.sha,
-              item.size || 0
-            )
-          );
-        }
-
+      if (
+        !item ||
+        item.type !== "blob" ||
+        typeof item.path !== "string"
+      ) {
         continue;
       }
 
-      if (item.type === "dir") {
+      const path =
+        item.path.trim();
 
-        const dirKey = item.path;
-
-        if (visitedDirs.has(dirKey)) continue;
-
-        visitedDirs.add(dirKey);
-        await readDirectory(item.path, 1);
+      if (
+        !path ||
+        !path.startsWith(imageRoot + "/")
+      ) {
+        continue;
       }
+
+      if (!isImage(path)) {
+        continue;
+      }
+
+      files.push(
+        makeImageFile(
+          env,
+          branch,
+          path,
+          item.sha,
+          item.size || 0
+        )
+      );
+
     }
 
-    /* Handle GitHub Contents API pagination for directories >100 items. */
-    if (data.length === 100) {
-      await readDirectory(path, page + 1);
-    }
-  }
+    files.sort(
+      (a, b) =>
+        a.path.localeCompare(b.path)
+    );
 
-  try {
-    /* This is intentionally the exact same root used by the diagnostic endpoint. */
-    await readDirectory(CONFIG.IMAGE_ROOT, 1);
+    /*
+     * GitHub can mark a recursive tree as truncated when the
+     * repository is extremely large. Do not silently show an
+     * incomplete CMS list in that case.
+     */
+    if (data.truncated === true) {
+
+      return json({
+        ok: false,
+        error:
+          "GitHub repository tree is too large for a complete recursive listing. Please split the image repository or use smaller image roots.",
+        root: imageRoot,
+        branch,
+        truncated: true
+      }, 502);
+
+    }
+
+    return json({
+      ok: true,
+      root: imageRoot,
+      branch,
+      source: "git-tree-recursive-v3",
+      truncated: false,
+      count: files.length,
+      files
+    });
+
   } catch (error) {
+
     return json({
       ok: false,
-      error: error instanceof Error
-        ? error.message
-        : "Unable to read GitHub images."
+      error:
+        error instanceof Error
+          ? error.message
+          : "Unable to read GitHub images.",
+      root: imageRoot,
+      branch
     }, 502);
+
   }
 
-  files.sort((a, b) => a.path.localeCompare(b.path));
-
-  return json({
-    ok: true,
-    root: CONFIG.IMAGE_ROOT,
-    branch,
-    source: "contents-direct-v2",
-    truncated: false,
-    count: files.length,
-    files
-  });
 }
 
 /* =========================================================
@@ -1578,7 +1623,7 @@ async function api(
       missingForGithub:
         githubConfigurationError(env),
       imageRoot: CONFIG.IMAGE_ROOT,
-      workerVersion: "2026-09-30-upload-v7"
+      workerVersion: "2026-10-01-image-tree-v8"
     });
   }
 
@@ -1592,7 +1637,7 @@ async function api(
     return json({
       ok: true,
       service: "arsh-image-cms",
-      version: "2026-09-30-upload-v7",
+      version: "2026-10-01-image-tree-v8",
       authenticated:
         await validateSession(request, env)
     });
@@ -1656,63 +1701,61 @@ async function api(
   }
 
 
-  /* GITHUB IMAGES DEBUG — safe metadata only */
+  /* GITHUB IMAGES DEBUG — full recursive image metadata */
 
   if (
     request.method === "GET" &&
     path === "/api/github-images-debug"
   ) {
 
-    if (!githubConfigured(env)) {
-      return json(
-        {
-          ok: false,
-          error: "GitHub configuration is incomplete.",
-          missing: githubConfigurationError(env)
-        },
-        500
-      );
+    /*
+     * Keep this endpoint compatible with the CMS frontend, but make
+     * it use the SAME complete recursive image source as /api/images.
+     *
+     * This endpoint is diagnostic only; it never exposes the GitHub token.
+     */
+
+    const result = await listImages(env);
+
+    let data;
+
+    try {
+      data = await result.clone().json();
+    } catch {
+      data = null;
     }
 
-    const branch = String(env.GITHUB_BRANCH || "").trim();
-    const imageRoot = CONFIG.IMAGE_ROOT;
-    const encodedPath = imageRoot
-      .split("/")
-      .map(encodeURIComponent)
-      .join("/");
+    if (!data || !Array.isArray(data.files)) {
+      return json({
+        ok: false,
+        error:
+          data?.error ||
+          "Unable to build GitHub image debug list."
+      }, 502);
+    }
 
-    const response = await github(
-      env,
-      `/contents/${encodedPath}?ref=${encodeURIComponent(branch)}&per_page=100&page=1`
-    );
-
-    const data = await response.json().catch(() => null);
-
-    const safeItems = Array.isArray(data)
-      ? data.map(item => ({
-          name: item?.name || "",
-          type: item?.type || "",
-          path: item?.path || "",
-          sha: item?.sha || "",
-          size: Number(item?.size || 0)
-        }))
-      : [];
+    const items =
+      data.files.map(item => ({
+        name: item.name || "",
+        type: "file",
+        path: item.path || "",
+        folder: item.folder || "",
+        sha: item.sha || "",
+        size: Number(item.size || 0),
+        url: item.url || ""
+      }));
 
     return json({
-      ok: response.ok,
-      status: response.status,
-      statusText: response.statusText,
-      endpoint: `/contents/${imageRoot}?ref=${branch}`,
-      isArray: Array.isArray(data),
-      itemCount: safeItems.length,
-      items: safeItems,
-      responseKeys:
-        data && typeof data === "object" && !Array.isArray(data)
-          ? Object.keys(data)
-          : []
-    }, response.ok ? 200 : 502);
-  }
+      ok: true,
+      source: "git-tree-recursive-v3",
+      root: CONFIG.IMAGE_ROOT,
+      branch: data.branch || "",
+      truncated: Boolean(data.truncated),
+      itemCount: items.length,
+      items
+    });
 
+  }
 
   /* IMAGE LIST */
 
